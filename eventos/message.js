@@ -163,38 +163,21 @@ module.exports = class MessageEvent {
             .setColor(colors.red)
             .setTitle(defaults.error)
             .setDescription("¡Este comando está deshabilitado!");
-          let toDelete;
-          if (message.channel.permissionsFor(this.client.user).has('MANAGE_MESSAGES')) return (toDelete = await message.channel.send({ embed }));
-          else return null;
-          setTimeout(function(){
-            if (message.channel.permissionsFor(this.client.user).has('MANAGE_MESSAGES') || message.guild.me.permissions.has('MANAGE_MESSAGES')) {
-              message.delete();
-            }
-            toDelete.delete();
-          }, 5000);
-          return;
+          return message.channel.send({ embed });
         }
         if ((cmd.config.ownerOnly) && (!client.config.misc.owners.includes(message.author.id))) {
           embed
             .setColor(colors.red)
             .setTitle(defaults.error)
             .setDescription("¡Este comando es solo para dueños del bot!");
-          let toDelete = await message.channel.send({ embed });
-          setTimeout(function(){
-            toDelete.delete();
-          }, 5000);
-          return;
+          return message.channel.send({ embed });
         }
         if ((cmd.config.guildOnly) && (!message.guild)) {
           embed
             .setColor(colors.red)
             .setTitle(defaults.error)
             .setDescription("¡Este comando solo puede ser ejecutado en un servidor!");
-          let toDelete = await message.channel.send({ embed });
-          setTimeout(function(){
-            toDelete.delete();
-          }, 5000);
-          return;
+          return message.channel.send({ embed });
         }
       if (message.guild) {
         if ((cmd.config.nsfwOnly) && (!message.channel.nsfw)) {
@@ -202,16 +185,7 @@ module.exports = class MessageEvent {
             .setColor(colors.red)
             .setTitle(defaults.error)
             .setDescription("¡Este comando solo puede ser ejecutado en canales marcados como NSFW!");
-          let toDelete;
-          if (message.channel.permissionsFor(this.client.user).has('MANAGE_MESSAGES')) return (toDelete = await message.channel.send({ embed }));
-          else return null;
-          setTimeout(function(){
-            if (message.channel.permissionsFor(this.client.user).has('MANAGE_MESSAGES') || message.guild.me.permissions.has('MANAGE_MESSAGES')) {
-              message.delete();
-            }
-            toDelete.delete();
-          }, 5000);
-          return;
+          return message.channel.send({ embed });
         }
         let neededPermissions = [];
         if (!cmd.config.botPermissions.includes("EMBED_LINKS")) {
@@ -230,16 +204,7 @@ module.exports = class MessageEvent {
             .setColor(colors.red)
             .setTitle(defaults.error)
             .setDescription("No puedo utilizar este comando, necesito los siguientes permisos:\n`" + neededPermissions.map(p => discordPermissions[p]).join("`, `") + "`");
-          let toDelete;
-          if (message.channel.permissionsFor(this.client.user).has('MANAGE_MESSAGES')) return (toDelete = await message.channel.send({ embed }));
-          else return null;
-          setTimeout(function(){
-            if (message.channel.permissionsFor(this.client.user).has('MANAGE_MESSAGES') || message.guild.me.permissions.has('MANAGE_MESSAGES')) {
-              message.delete();
-            }
-            toDelete.delete();
-          }, 5000);
-          return;
+          return message.channel.send({ embed });
         }
         neededPermissions = [];
         cmd.config.memberPermissions.forEach(p => {
@@ -252,16 +217,7 @@ module.exports = class MessageEvent {
             .setColor(colors.red)
             .setTitle(defaults.error)
             .setDescription("No puedes utilizar este comando, necesitas los siguientes permisos:\n`" + neededPermissions.map(p => discordPermissions[p]).join("`, `") + "`");
-          let toDelete;
-          if (message.channel.permissionsFor(this.client.user).has('MANAGE_MESSAGES')) return (toDelete = await message.channel.send({ embed }));
-          else return null;
-          setTimeout(function(){
-            if (message.channel.permissionsFor(this.client.user).has('MANAGE_MESSAGES') || message.guild.me.permissions.has('MANAGE_MESSAGES')) {
-              message.delete();
-            }
-            toDelete.delete();
-          }, 5000);
-          return;
+          return message.channel.send({ embed });
         }
       }
       let webhook = new WebhookClient(client.config.tokens.logs.id, client.config.tokens.logs.token)

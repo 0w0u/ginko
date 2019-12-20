@@ -1,6 +1,6 @@
 const { MessageEmbed } = require("discord.js");
 
-module.exports = class GuildMemberAddEvent {
+module.exports = class GuildMemberRemoveEvent {
   constructor(client) {
     this.client = client;
   }
@@ -14,15 +14,6 @@ module.exports = class GuildMemberAddEvent {
         .setFooter(member.guild.name, member.guild.iconURL({ size: 2048}))
         .setTimestamp();
       let guild = await this.client.findOrCreateGuild({ id: member.guild.id });
-      if (guild.plugins.autoRoles.roles >= 1) {
-        if (!member.guild.me.permissions.has('MANAGE_ROLES')) {
-          return;
-        } else if (member.roles.highest.comparePositionTo(member.guild.me.roles.highest) < 0) {
-          return;
-        } else {
-          member.roles.add(guild.plugins.autoRoles.roles);
-        }
-      }
       if (guild.plugins.logs.memberLogs.enabled === true) {
         if (guild.plugins.logs.memberLogs.logs.memberJoin.enabled === false) {
           return;
@@ -33,16 +24,16 @@ module.exports = class GuildMemberAddEvent {
           if (!channel) {
             return;
           } else {
-            let day = new Date(member.user.createdAt);
+            let day = new Date(member.joinedAt);
             let created = `${day.getDate()}/${day.getMonth() + 1}/${day.getFullYear()}`;
             embed
               .setColor(this.client.colors.green)
-              .setTitle(this.client.defaults.greenun + '¡Ha entrado un usuario!')
-              .setDescription('Un usuario se ha unido al servidor')
+              .setTitle(this.client.defaults.greenun + '¡Ha salido un usuario!')
+              .setDescription('Un usuario se ha salido al servidor')
               .addField('Tag', member.user.tag, true)
               .addField('ID', member.user.id, true)
-              .addField('Miembro número', member.guild.members.size, true)
-              .addField('Cuenta creada', created)
+              .addField('Total de miembros en el servidor', member.guild.members.size, true)
+              .addField('Ingreso al servidor', created);
             channel.send({ embed });
           }
         }
@@ -51,7 +42,7 @@ module.exports = class GuildMemberAddEvent {
       console.log(e);
       this.client.postError({
         type: "event",
-        eventName: "guildMemberAdd",
+        eventName: "guildMemberRemove",
         description: e
       });
     }
