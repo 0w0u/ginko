@@ -37,7 +37,7 @@ module.exports = class Help extends Command {
             .setDescription('Debes mencionar a alguien más');
           return message.channel.send({ embed });
         } else {
-          return await o(member)
+          return await o(member);
         }
         members = message.guild.members.array().filter(m => (m !== message.member) && `${m.nickname ? `${m.nickname + m.user.tag}` : `${m.displayName + m.user.tag}`}`.toLowerCase().includes(args.join(" ").toLowerCase()));
         if (members.length < 1) {
@@ -90,7 +90,7 @@ module.exports = class Help extends Command {
       }
       async function o(m) {
         embed
-          .setColor(message.colors.ginko)
+          .setColor(message.colors.ginko);
         message.channel.send({ embed });
       }
     } catch (e) {

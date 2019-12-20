@@ -38,7 +38,7 @@ module.exports = {
   toDate(date) {
     if (!date) {
       throw new Error("Necesitas introducir una fecha");
-    } else if (typeof date !== "date") {
+    } else if (typeof(date) !== "date") {
       throw new TypeError("Necesita ser una fecha");
     } else {
       return date.toLocaleString().split(/,+/g)[0];
@@ -47,17 +47,17 @@ module.exports = {
   msElapsed(duration) {
     if (!duration) {
       throw new Error("Necesitas introducir un número, en microsegundos");
-    } else if (typeof duration !== "number") {
+    } else if (typeof(duration) !== "number") {
       throw new TypeError("Necesita ser un número, en microsegundos");
     } else {
-      let mstring = duration.toString()
+      let mstring = duration.toString();
       let milliseconds = parseInt((duration % 1000) / 100),
         seconds = Math.floor((duration / 1000)),
         minutes = Math.floor((duration / (1000 * 60))),
         hours = Math.floor((duration / (1000 * 60 * 60))),
         days = Math.floor((duration / (1000 * 60 * 60 * 60))),
         months = Math.floor((duration / (1000 * 60 * 60 * 60 * 24))),
-        years = Math.floor((duration / (1000 * 60 * 60 * 60 * 24 * 30)))
+        years = Math.floor((duration / (1000 * 60 * 60 * 60 * 24 * 30)));
 
       days = days < 10 ? "0" + days : days;
       hours = hours < 10 ? "0" + hours : hours;

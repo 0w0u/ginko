@@ -30,12 +30,12 @@ module.exports = class MessageDeleteBulkEvent {
                 .setColor(this.client.colors.red)
                 .setTitle(this.client.defaults.redun + 'Mensajes borrados en masa')
                 .setDescription('Canal: `' + messages.first().channel.name + '`')
-                .addField('Primeros 5 mensajes', messages.map(m => m.content).slice(0, 5).join('\n') + '\nY otros mensajes...')
+                .addField('Primeros 5 mensajes', messages.map(m => m.content).slice(0, 5).join('\n') + '\nY otros mensajes...');
               channel.send({ embed });
             }
           }
         }
-      }, 1500)
+      }, 1500);
     } catch (e) {
       console.log(e);
       this.client.postError({
@@ -45,4 +45,4 @@ module.exports = class MessageDeleteBulkEvent {
       });
     }
   }
-}
+};

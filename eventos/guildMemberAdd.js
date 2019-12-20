@@ -42,7 +42,7 @@ module.exports = class GuildMemberAddEvent {
               .addField('Tag', member.user.tag, true)
               .addField('ID', member.user.id, true)
               .addField('Miembro número', member.guild.members.size, true)
-              .addField('Cuenta creada', created)
+              .addField('Cuenta creada', created);
             channel.send({ embed });
           }
         }

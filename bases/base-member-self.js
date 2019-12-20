@@ -62,7 +62,7 @@ module.exports = class Help extends Command {
                     max: 1,
                     time: 60000,
                     errors: ["cancel", "cancelar"]
-                  })
+                  });
               if (!index.first()) {
                 embed
                   .setColor(message.colors.red)
@@ -83,7 +83,7 @@ module.exports = class Help extends Command {
         async function o(m) {
           embed
             .setColor(message.colors.ginko)
-            .setDescription('Recuerda que en nuetro MD puedes buscar un avatar por ID')
+            .setDescription('Recuerda que en nuetro MD puedes buscar un avatar por ID');
           message.channel.send({ embed });
         }
       } else if (message.channel.type === "dm") {
@@ -98,7 +98,7 @@ module.exports = class Help extends Command {
         async function o(m) {
           embed
             .setColor(message.colors.ginko)
-            .setDescription('En MD solo puedes usar ID\'s como buscador')
+            .setDescription('En MD solo puedes usar ID\'s como buscador');
           message.channel.send({ embed });
         }
       }

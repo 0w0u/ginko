@@ -61,7 +61,7 @@ module.exports = class AvatarCommand extends Command {
                   max: 1,
                   time: 60000,
                   errors: ["cancel", "cancelar"]
-                })
+                });
             if (!index.first()) {
               embed
                 .setColor(message.colors.red)

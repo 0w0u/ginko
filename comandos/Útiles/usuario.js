@@ -61,7 +61,7 @@ module.exports = class AvatarCommand extends Command {
                   max: 1,
                   time: 60000,
                   errors: ["cancel", "cancelar"]
-                })
+                });
             if (!index.first()) {
               embed
                 .setColor(message.colors.red)
@@ -89,7 +89,7 @@ module.exports = class AvatarCommand extends Command {
           else if (p && p.web === 'dnd') status = '<:au_UserStatusDnd:650475659704926238> **No molestar**: en **web**';
           else if (p && p.mobile === 'online') status = '<:au_UserStatusOnlineMobile:650169275356676125> **Conectado**: en **móvil**';
           else if (p && p.mobile === 'idle') status = '<:au_UserStatusIdleMobile:650169275125858318> **Ausente*:* en **móvil**';
-          else if (p && p.mobile === 'idle') status = '<:au_UserStatusDndMobile:650169275478441994> **No molestar**: en **móvil**'
+          else if (p && p.mobile === 'idle') status = '<:au_UserStatusDndMobile:650169275478441994> **No molestar**: en **móvil**';
           else status = '<:au_UserStatusOffline:650475659365187606> **Desconectado**';
           let userday = new Date(m.user.createdAt);
           let usercreated = `${userday.getDate()}/${userday.getMonth() + 1}/${userday.getFullYear()}`;

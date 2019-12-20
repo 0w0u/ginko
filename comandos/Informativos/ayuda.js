@@ -47,13 +47,13 @@ module.exports = class HelpCommand extends Command {
         let categorias = [];
         comandos.forEach(command => {
           if (!categorias.includes(command.help.category)) {
-            categorias.push(command.help.category)
+            categorias.push(command.help.category);
           }
         });
         let temp = [];
-        for (let i = 0; i < categorias.length; i++) { temp.push(null) };
-        for (let cat of categorias) { temp[or[cat.toUpperCase()]] = cat };
-        categorias = temp.filter(x => x !== null)
+        for (let i = 0; i < categorias.length; i++) { temp.push(null);}
+        for (let cat of categorias) { temp[or[cat.toUpperCase()]] = cat;}
+        categorias = temp.filter(x => x !== null);
         embed
           .setColor(message.colors.ginko)
           .setTitle(message.defaults.ginkoun + '¡Ésta es mi lista de comandos!')

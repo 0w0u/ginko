@@ -21,8 +21,8 @@ module.exports = class Owner extends Command {
 
   async run(message, args, data, embed) {
     try {
-      let opciones = ['añadir', 'remover']
-      let cmd = require('child_process')
+      let opciones = ['añadir', 'remover'];
+      let cmd = require('child_process');
       if (!args[0]) {
         embed
           .setColor(message.colors.red)
@@ -90,7 +90,7 @@ module.exports = class Owner extends Command {
                 .setTitle(message.defaults.done)
                 .setDescription('El paquete se ha desinstalado correctamente\n' + message.defaults.grayun + 'Reiniciando bot...');
               msg.edit({ embed });
-              cmd.exec(`refresh`)
+              cmd.exec(`refresh`);
             }
           }); 
         }
@@ -98,7 +98,7 @@ module.exports = class Owner extends Command {
         embed
           .setColor(message.colors.red)
           .setTitle(message.defaults.error)
-          .setDescription('Esa no es una opción válida, las opciones válidas son:\n`' + opciones.join('`, `') + '`')
+          .setDescription('Esa no es una opción válida, las opciones válidas son:\n`' + opciones.join('`, `') + '`');
         message.channel.send({ embed });
       }
     } catch (e) {
