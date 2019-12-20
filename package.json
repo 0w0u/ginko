@@ -26,7 +26,7 @@
     "moment": "^2.24.0",
     "moment-duration-format": "^2.3.2",
     "mongodb": "^3.3.2",
-    "mongoose": "^5.7.1",
+    "mongoose": "5.7.1",
     "nekos.life": "^2.0.4",
     "phin": "^3.4.0",
     "util": "^0.12.1",
