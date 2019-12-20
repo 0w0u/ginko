@@ -79,6 +79,18 @@ module.exports = class AvatarCommand extends Command {
           }
         }
         async function o(m) {
+          let p = m.presence.clientStatus;
+          let status;
+          if (p && p.desktop === 'online') status = '<:au_UserStatusOnline:650475659663114260> **Conectado**: en **escritorio**';
+          else if (p && p.desktop === 'idle') status = '<:au_UserStatusIdle:650475659302273045> **Ausente**: en **escritorio**';
+          else if (p && p.desktop === 'dnd') status = '<:au_UserStatusDnd:650475659704926238> **No molestar**: en **escritorio**';
+          else if (p && p.web === 'online') status = '<:au_UserStatusOnline:650475659663114260> **Conectado**: en **web**';
+          else if (p && p.web === 'idle') status = '<:au_UserStatusIdle:650475659302273045> **Ausente**: en **web**';
+          else if (p && p.web === 'dnd') status = '<:au_UserStatusDnd:650475659704926238> **No molestar**: en **web**';
+          else if (p && p.mobile === 'online') status = '<:au_UserStatusOnlineMobile:650169275356676125> **Conectado**: en **móvil**';
+          else if (p && p.mobile === 'idle') status = '<:au_UserStatusIdleMobile:650169275125858318> **Ausente*:* en **móvil**';
+          else if (p && p.mobile === 'idle') status = '<:au_UserStatusDndMobile:650169275478441994> **No molestar**: en **móvil**'
+          else status = '<:au_UserStatusOffline:650475659365187606> **Desconectado**';
           let userday = new Date(m.user.createdAt);
           let usercreated = `${userday.getDate()}/${userday.getMonth() + 1}/${userday.getFullYear()}`;
           let memberday = new Date(m.joinedAt);
@@ -89,17 +101,14 @@ module.exports = class AvatarCommand extends Command {
             .setTitle(message.defaults.ginkoun + 'Información de usuario')
             .setDescription('Recuerda que en mi `mensaje directo` puedes buscar un usuario por ID')
             .setThumbnail(m.user.displayAvatarURL({ size: 2048 }))
-            .addField('Tag', m.user.tag, true)
-            .addField('ID', m.user.id, true)
-            .addField('Cuenta creada', usercreated, true)
-            .addField('Ingreso al servidor', membercreated, true)
+            .addField('Información general', `Nombre: ${m.nickname ? `${m.nickname} (${m.user.username})` : `${m.user.username}`}\nTag: ${m.user.tag}\nID: ${m.user.id}`)
+            .addField('Presencia', `${status}\nJugando a: ${m.user.presence.activity ? `${m.user.presence.activity.name ? m.user.presence.activity.name : '*No está jugando nada*'}` : '*No está jugando nada*'}\nEstado personalizado: ${m.user.presence.activity ? `${m.user.presence.activity.state ? `${m.user.presence.activity.emoji ? (m.user.presence.activity.emoji.animated ? `<a:${m.user.presence.activity.emoji.name}:${m.user.presence.activity.emoji.id}>`  : `<:${m.user.presence.activity.emoji.name}:${m.user.presence.activity.emoji.id}>`) : `${m.user.presence.activity.state}`} ` : "*No tiene*"}` : '*No tiene*'}`)
+            .addField('Fechas', `Cuenta creada: ${usercreated}\nIngreso al servidor: ${membercreated}`)
             .addField('Rol más alto', highestRole === "@everyone" ? `*No tiene*` : `<@&${highestRole.id}>`, true)
             .addField('Permisos', `\`\`\`md\n${m.permissions.toArray().map(x => x.split("_").join(" ")).join(" | ")}\`\`\``);
           message.channel.send({ embed });
         }
       } else if (message.channel.type === "dm") {
-        let userday = new Date(m.createdAt);
-        let usercreated = `${userday.getDate()}/${userday.getMonth() + 1}/${userday.getFullYear()}`;
         if (!args[0]) return await o(message.author);
         else {
           if (!isNaN(args[0])) {
@@ -108,15 +117,29 @@ module.exports = class AvatarCommand extends Command {
             else return await o(message.author);
           } else return await o(message.author);
         }
-        async function o(m) {
+        async function o(u) {
+          let p = u.presence.clientStatus;
+          let status;
+          if (p && p.desktop === 'online') status = '<:au_UserStatusOnline:650475659663114260> **Conectado**: en **escritorio**';
+          else if (p && p.desktop === 'idle') status = '<:au_UserStatusIdle:650475659302273045> **Ausente**: en **escritorio**';
+          else if (p && p.desktop === 'dnd') status = '<:au_UserStatusDnd:650475659704926238> **No molestar**: en **escritorio**';
+          else if (p && p.web === 'online') status = '<:au_UserStatusOnline:650475659663114260> **Conectado**: en **web**';
+          else if (p && p.web === 'idle') status = '<:au_UserStatusIdle:650475659302273045> **Ausente**: en **web**';
+          else if (p && p.web === 'dnd') status = '<:au_UserStatusDnd:650475659704926238> **No molestar**: en **web**';
+          else if (p && p.mobile === 'online') status = '<:au_UserStatusOnlineMobile:650169275356676125> **Conectado**: en **móvil**';
+          else if (p && p.mobile === 'idle') status = '<:au_UserStatusIdleMobile:650169275125858318> **Ausente**: en **móvil**';
+          else if (p && p.mobile === 'idle') status = '<:au_UserStatusDndMobile:650169275478441994> **No molestar**: en **móvil**';
+          else status = '<:au_UserStatusOffline:650475659365187606> **Desconectado**';
+          let userday = new Date(u.createdAt);
+          let usercreated = `${userday.getDate()}/${userday.getMonth() + 1}/${userday.getFullYear()}`;
           embed
             .setColor(message.colors.ginko)
             .setTitle(message.defaults.ginkoun + 'Información del usuario')
             .setDescription('En `mensaje directo` solo puedes usar ID\'s como buscador')
-            .setThumbnail(m.displayAvatarURL({ size: 2048 }))
-            .addField('Tag', m.tag, true)
-            .addField('ID', m.id, true) 
-            .addField('Cuenta creada', usercreated);
+            .setThumbnail(u.displayAvatarURL({ size: 2048 }))
+            .addField('Información general', `Nombre: ${u.username}\nTag: ${u.tag}\nID: ${u.id}`)
+            .addField('Presencia', `${status}\nJugando a: ${u.presence.activity ? `${u.presence.activity.name ? u.presence.activity.name : '*No está jugando nada*'}` : '*No está jugando nada*'}\nEstado personalizado: ${u.presence.activity ? `${u.presence.activity.state ? `${u.presence.activity.emoji ? (u.presence.activity.emoji.animated ? `<a:${u.presence.activity.emoji.name}:${u.presence.activity.emoji.id}>`  : `<:${u.presence.activity.emoji.name}:${u.presence.activity.emoji.id}>`) : `${u.presence.activity.state}`} ` : "*No tiene*"}` : '*No tiene*'}`)
+            .addField('Fechas', `Cuenta creada: ${usercreated}`);
           message.channel.send({ embed });
         }
       }
