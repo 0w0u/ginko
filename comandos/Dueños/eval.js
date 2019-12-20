@@ -1,6 +1,6 @@
 const Command = require("../../base/Command.js"),
-  { MessageEmbed, MessageAttachment } = require("discord.js");
-
+  { MessageEmbed, MessageAttachment } = require("discord.js"),
+  { exec } = require('child_process');
 module.exports = class Owner extends Command {
   constructor(client) {
     super(client, {
