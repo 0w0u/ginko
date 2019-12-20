@@ -27,7 +27,7 @@ module.exports = class HelpCommand extends Command {
       if (!args[0]) {
         embed
           .setColor(message.colors.ginko)
-          .setTitle(message.defaults.ginkoun + '¡Hola! Mi nombre es Ginko')
+          .setTitle(message.defaults.ginkoun + '¡Hola! Mi nombre es ' + this.client.user.username)
           .setDescription('Éste es el comando de ayuda, y ésta es información que debes saber sobre mí\nUsa `' + message.dmguildprefix + 'ayuda lista` para ver mi lista de comandos')
           .setThumbnail(message.client.user.displayAvatarURL({ size: 2048 }))
           .addField('¡Advertencias!', 'No uses literalmente `< >`, `[ ]`, ` | ` a la hora de ejecutar un comando,\nestos son representados como; `Argumento obligatorio`, `Argumento opcional` y `Opciones de argumentos` respectivamente')
