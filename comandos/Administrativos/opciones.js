@@ -35,7 +35,7 @@ module.exports = class OptionsCommand extends Command {
         return;
       } else if (args[0].toLowerCase() === options[0]) {
         let options = ['habilitar', 'deshabilitar', 'mensaje'],
-            optionsJoin = options.join('`, `')
+            optionsJoin = options.join('`, `');
         if (!args[1]) {
           embed
             .setColor(message.colors.red)
@@ -150,7 +150,7 @@ module.exports = class OptionsCommand extends Command {
               embed
                 .setColor(message.colors.red)
                 .setTitle(message.defaults.noargs)
-                .setDescription('Necesitas escribir el mensaje que se enviará' + (guild.plugins.suggestions.options.reply.dm.enabled.default ? '\nSi quieres desactivar los mensajes puedes escribir `' + guild.prefix + 'opciones sugerencias mensaje md cambiar`' : null) + "\nVariables colocables dentro de la respuesta\n>>> " + "`{servidor:nombre}` • Coloca el nombre del servidor\n" + "`{servidor:id}` • Coloca la ID del servidor\n" + "`{autor:nombre}` • Coloca el nombre del autor de la sugerencia\n" + "`{autor:mencion}` • Coloca una mención al autor de la sugerencia\n" + "`{autor:tag}` • Coloca el tag del autor de la sugerencia, ej; `mon#0010`\n" + "`{autor:id}` • Coloca la ID del autor de la sugerencia")
+                .setDescription('Necesitas escribir el mensaje que se enviará' + (guild.plugins.suggestions.options.reply.dm.enabled.default ? '\nSi quieres desactivar los mensajes puedes escribir `' + guild.prefix + 'opciones sugerencias mensaje md cambiar`' : null) + "\nVariables colocables dentro de la respuesta\n>>> " + "`{servidor:nombre}` • Coloca el nombre del servidor\n" + "`{servidor:id}` • Coloca la ID del servidor\n" + "`{autor:nombre}` • Coloca el nombre del autor de la sugerencia\n" + "`{autor:mencion}` • Coloca una mención al autor de la sugerencia\n" + "`{autor:tag}` • Coloca el tag del autor de la sugerencia, ej; `mon#0010`\n" + "`{autor:id}` • Coloca la ID del autor de la sugerencia");
               message.channel.send({ embed });
               return;
             } else if (args[3].toLowerCase() === 'cambiar') {
@@ -176,7 +176,7 @@ module.exports = class OptionsCommand extends Command {
               embed
                 .setColor(message.colors.green)
                 .setTitle(message.defaults.done)
-                .setDescription('El mensaje que se enviará se ha establecido a: `' + sugg + '`')
+                .setDescription('El mensaje que se enviará se ha establecido a: `' + sugg + '`');
               message.channel.send({ embed });
               guild.plugins.suggestions.options.reply.dm = sugg;
               guild.save();
@@ -187,7 +187,7 @@ module.exports = class OptionsCommand extends Command {
               embed
                 .setColor(message.colors.red)
                 .setTitle(message.defaults.noargs)
-                .setDescription('Necesitas escribir el mensaje que se enviará' + (guild.plugins.suggestions.options.reply.channel.enabled ? '\nSi quieres desactivar los mensajes puedes escribir `' + guild.prefix + 'opciones sugerencias mensaje canal cambiar`' : null) + "\nVariables colocables dentro de la respuesta\n>>> " + "`{servidor:nombre}` • Coloca el nombre del servidor\n" + "`{servidor:id}` • Coloca la ID del servidor\n" + "`{autor:nombre}` • Coloca el nombre del autor de la sugerencia\n" + "`{autor:mencion}` • Coloca una mención al autor de la sugerencia\n" + "`{autor:tag}` • Coloca el tag del autor de la sugerencia, ej; `mon#0010`\n" + "`{autor:id}` • Coloca la ID del autor de la sugerencia")
+                .setDescription('Necesitas escribir el mensaje que se enviará' + (guild.plugins.suggestions.options.reply.channel.enabled ? '\nSi quieres desactivar los mensajes puedes escribir `' + guild.prefix + 'opciones sugerencias mensaje canal cambiar`' : null) + "\nVariables colocables dentro de la respuesta\n>>> " + "`{servidor:nombre}` • Coloca el nombre del servidor\n" + "`{servidor:id}` • Coloca la ID del servidor\n" + "`{autor:nombre}` • Coloca el nombre del autor de la sugerencia\n" + "`{autor:mencion}` • Coloca una mención al autor de la sugerencia\n" + "`{autor:tag}` • Coloca el tag del autor de la sugerencia, ej; `mon#0010`\n" + "`{autor:id}` • Coloca la ID del autor de la sugerencia");
               message.channel.send({ embed });
               return;
             } else if (args[3].toLowerCase() === 'cambiar') {
@@ -213,7 +213,7 @@ module.exports = class OptionsCommand extends Command {
               embed
                 .setColor(message.colors.green)
                 .setTitle(message.defaults.done)
-                .setDescription('El mensaje que se enviará se ha establecido a: `' + sugg + '`')
+                .setDescription('El mensaje que se enviará se ha establecido a: `' + sugg + '`');
               message.channel.send({ embed });
               guild.plugins.suggestions.options.reply.channel = sugg;
               guild.save();
@@ -223,7 +223,7 @@ module.exports = class OptionsCommand extends Command {
             embed
               .setColor(message.colors.red)
               .setTitle(message.defaults.error)
-              .setDescription('Esa no es una opción válida, las opciones válidas son:\n`' + optionsJoin + '`')
+              .setDescription('Esa no es una opción válida, las opciones válidas son:\n`' + optionsJoin + '`');
             message.channel.send({ embed });
             return;
           }
@@ -973,7 +973,7 @@ module.exports = class OptionsCommand extends Command {
               embed
                 .setColor(message.colors.red)
                 .setTitle(message.defaults.error)
-                .setDescription("Ese rol ya está entre los auto-roles")
+                .setDescription("Ese rol ya está entre los auto-roles");
               return message.channel.send({ embed });
             } else if (dataroles.length === 15) {
               embed
@@ -1057,7 +1057,7 @@ module.exports = class OptionsCommand extends Command {
               embed
                 .setColor(message.colors.red)
                 .setTitle(message.defaults.error)
-                .setDescription("Ese rol no está en los auto-roles, verifica de nuevo usando `" + data.guild.prefix + "opciones auto-roles lista`")
+                .setDescription("Ese rol no está en los auto-roles, verifica de nuevo usando `" + data.guild.prefix + "opciones auto-roles lista`");
               return message.channel.send({ embed });
             } else {
               embed
@@ -1084,7 +1084,7 @@ module.exports = class OptionsCommand extends Command {
           embed
             .setColor(message.colors.red)
             .setTitle(message.defaults.error)
-            .setDescription('Esa no es una opción válida, las opciones válidas son:\n`' + optionsJoin + '`')
+            .setDescription('Esa no es una opción válida, las opciones válidas son:\n`' + optionsJoin + '`');
           message.channel.send({ embed });
           return;
         }
@@ -1092,7 +1092,7 @@ module.exports = class OptionsCommand extends Command {
         embed
           .setColor(message.colors.red)
           .setTitle(message.defaults.error)
-          .setDescription('Esa no es una opción válida, las opciones válidas son:\n`' + optionsJoin + '`')
+          .setDescription('Esa no es una opción válida, las opciones válidas son:\n`' + optionsJoin + '`');
         message.channel.send({ embed });
         return;
       }

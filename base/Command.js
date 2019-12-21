@@ -16,7 +16,7 @@ module.exports = class Command {
       memberPermissions = new Array(),
       dirname = undefined
     }) {
-    this.client = client
+    this.client = client;
     let category = dirname ? dirname.split(path.sep)[parseInt(dirname.split(path.sep).length - 1, 10)] : 'Otro';
     this.config = {
       enabled,
@@ -35,5 +35,5 @@ module.exports = class Command {
       usage, 
       examples 
     };
-  };
+  }
 };

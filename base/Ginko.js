@@ -30,7 +30,7 @@ module.exports = class client extends Client {
     let Neko = require('nekos.life'),
         { sfw, nsfw } = new Neko(),
         Weez = require('weez'),
-        weez = new Weez.WeezAPI(this.config.tokens.weez)
+        weez = new Weez.WeezAPI(this.config.tokens.weez);
     this.tools = {
       weez: weez,
       sfw: sfw,

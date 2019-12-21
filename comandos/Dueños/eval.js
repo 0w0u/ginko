@@ -28,7 +28,7 @@ module.exports = class Owner extends Command {
         client = message.client;
       try {
         let evalued = await eval(args.join(" "));
-        if (typeof evalued !== "string")
+        if (typeof(evalued) !== "string")
           evalued = require("util").inspect(evalued, { depth: 0 });
         if (evalued.length > 1950) {
           message.channel.send("> " + message.defaults.error + " El resultado es muy largo");
@@ -38,9 +38,9 @@ module.exports = class Owner extends Command {
           message.channel.send("> " + message.defaults.done + "\n```js\n" + evalued + "\n```");
         }
       } catch (err) {
-        err = err.toString()
-        if (err.includes(client.config.tokens.bot || client.config.tokens.mongo)) err = err.replace((client.config.tokens.bot || client.config.tokens.mongo), "T0K3N")
-        message.channel.send("> " + message.defaults.error + "\n```js\n " + err + "\n```")
+        err = err.toString();
+        if (err.includes(client.config.tokens.bot || client.config.tokens.mongo)) err = err.replace((client.config.tokens.bot || client.config.tokens.mongo), "T0K3N");
+        message.channel.send("> " + message.defaults.error + "\n```js\n " + err + "\n```");
       }
     } catch (e) {
       console.error(e);
