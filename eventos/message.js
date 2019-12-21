@@ -101,7 +101,7 @@ module.exports = class MessageEvent {
         if (data.guild) data.guild.save();
       } else if (message.channel.type === 'dm') {
         embed.setFooter(client.user.username, client.user.displayAvatarURL({ size: 2048 }));
-        prefix = 'g!'
+        prefix = 'g!';
         if (message.content.toLowerCase().startsWith('prefijo')) {
           embed
             .setColor(client.colors.ginko)
@@ -125,7 +125,7 @@ module.exports = class MessageEvent {
       message.dmguildprefix = dmserverprefix;
       if (user) {
         user.premium = false;
-        user.save()
+        user.save();
       }
       if (message.guild && data.guild.plugins.suggestions) {
         data.guild.plugins.suggestions = {
@@ -220,13 +220,13 @@ module.exports = class MessageEvent {
           return message.channel.send({ embed });
         }
       }
-      let webhook = new WebhookClient(client.config.tokens.logs.id, client.config.tokens.logs.token)
+      let webhook = new WebhookClient(client.config.tokens.logs.id, client.config.tokens.logs.token);
       try {
         cmd.run(message, args, data, embed);
         if (cmd.help.name === 'eval') {return;} else {webhook.send(`El usuario \`${message.author.tag}\`, ha usado el comando \`${cmd.help.name}\` en: \`${message.guild ? message.guild.name : `mensaje directo`}\``);}
       } catch(e) {
         if (cmd.help.name === 'eval') {return;} else {webhook.send(`El usuario \`${message.author.tag}\`, ha usado el comando \`${cmd.help.name}\` en: \`${message.guild ? message.guild.name : `mensaje directo`}\``);}
-        console.log(e)
+        console.log(e);
       }
     } catch (e) {
       console.log(e);
