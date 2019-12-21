@@ -195,7 +195,7 @@ module.exports = class MessageEvent {
           cmd.config.botPermissions.includes("SEND_MESSAGES");
         }
         cmd.config.botPermissions.forEach(p => {
-          if (!cmd.config.botPermissions.includes(p)) {
+          if (!message.channel.permissionsFor(message.guild.me).has(p)) {
             neededPermissions.push(p);
           }
         });
@@ -203,12 +203,12 @@ module.exports = class MessageEvent {
           embed
             .setColor(colors.red)
             .setTitle(defaults.error)
-            .setDescription("No puedo utilizar este comando, necesito los siguientes permisos:\n`" + neededPermissions.map(p => discordPermissions[p]).join("`, `") + "`");
+            .setDescription("No puedo utilizar este comando, necesito los siguientes permisos:\n`" + neededPermissions.map(p => p).join("`, `") + "`");
           return message.channel.send({ embed });
         }
         neededPermissions = [];
         cmd.config.memberPermissions.forEach(p => {
-          if (!cmd.config.memberPermissions.includes(p)) {
+          if (!message.channel.permissionsFor(message.member).has(p)) {
             neededPermissions.push(p);
           }
         });
@@ -216,7 +216,7 @@ module.exports = class MessageEvent {
           embed
             .setColor(colors.red)
             .setTitle(defaults.error)
-            .setDescription("No puedes utilizar este comando, necesitas los siguientes permisos:\n`" + neededPermissions.map(p => discordPermissions[p]).join("`, `") + "`");
+            .setDescription("No puedes utilizar este comando, necesitas los siguientes permisos:\n`" + neededPermissions.map(p => p).join("`, `") + "`");
           return message.channel.send({ embed });
         }
       }
