@@ -44,7 +44,7 @@ module.exports = class Owner extends Command {
             .setTitle(message.defaults.grayun + 'Instalando paquete...')
             .setDescription('Sé paciente, esto puede durar unos minutos');
           let msg = await message.channel.send({ embed });
-          cmd.exec('pnpm install ' + args[1] + ' --save', function(err, stdout, stderr) {
+          cmd.exec('pnpm install ' + args[1] + ' --save', function (err, stdout, stderr) {
             if (err) {
               embed
                 .setColor(message.colors.red)
@@ -60,7 +60,7 @@ module.exports = class Owner extends Command {
               msg.edit({ embed });
               return;
             }
-          }); 
+          });
         }
       } else if (args[0].toLowerCase() === 'remove' || args[0].toLowerCase() === 'remover') {
         if (!args[1]) {
@@ -76,7 +76,7 @@ module.exports = class Owner extends Command {
             .setTitle(message.defaults.grayun + 'Desinstalando paquete...')
             .setDescription('Sé paciente, esto puede durar unos minutos');
           let msg = await message.channel.send({ embed });
-          cmd.exec('pnpm uninstall ' + args[1] + ' --save', function(err, stdout, stderr) {
+          cmd.exec('pnpm uninstall ' + args[1] + ' --save', function (err, stdout, stderr) {
             if (err) {
               embed
                 .setColor(message.colors.red)
@@ -92,7 +92,7 @@ module.exports = class Owner extends Command {
               msg.edit({ embed });
               cmd.exec(`refresh`);
             }
-          }); 
+          });
         }
       } else {
         embed

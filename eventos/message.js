@@ -3,7 +3,7 @@ module.exports = class MessageEvent {
   constructor(client) {
     this.client = client;
   }
-  async run (message) {
+  async run(message) {
     let client = this.client;
     try {
       let data = {};
@@ -130,21 +130,21 @@ module.exports = class MessageEvent {
       if (message.guild && data.guild.plugins.suggestions) {
         data.guild.plugins.suggestions = {
           enabled: data.guild.plugins.suggestions.enabled !== false ? true : false,
-            channel: data.guild.plugins.suggestions.channel !== undefined ? data.guild.plugins.suggestions.channel : undefined,
-            options: {
-              autoDelete: data.guild.plugins.suggestions.options.autoDelete !== false ? true : false,
-              reply: {
-                dm: {
-                  enabled: data.guild.plugins.suggestions.options.reply.dm.enabled !== false ? true : false,
-                  message: data.guild.plugins.suggestions.options.reply.dm.message !== undefined ? data.guild.plugins.suggestions.options.reply.dm.message : undefined
-                },
-                channel: {
-                  enabled: data.guild.plugins.suggestions.options.reply.channel.enabled !== false ? true : false,
-                  message: data.guild.plugins.suggestions.options.reply.channel.message !== "¡Gracias por tu sugerencia, {autor:menion}!" ? data.guild.plugins.suggestions.options.reply.channel.message : "¡Gracias por tu sugerencia, {autor:mencion}!"
-                }
+          channel: data.guild.plugins.suggestions.channel !== undefined ? data.guild.plugins.suggestions.channel : undefined,
+          options: {
+            autoDelete: data.guild.plugins.suggestions.options.autoDelete !== false ? true : false,
+            reply: {
+              dm: {
+                enabled: data.guild.plugins.suggestions.options.reply.dm.enabled !== false ? true : false,
+                message: data.guild.plugins.suggestions.options.reply.dm.message !== undefined ? data.guild.plugins.suggestions.options.reply.dm.message : undefined
+              },
+              channel: {
+                enabled: data.guild.plugins.suggestions.options.reply.channel.enabled !== false ? true : false,
+                message: data.guild.plugins.suggestions.options.reply.channel.message !== "¡Gracias por tu sugerencia, {autor:menion}!" ? data.guild.plugins.suggestions.options.reply.channel.message : "¡Gracias por tu sugerencia, {autor:mencion}!"
               }
             }
-          };
+          }
+        };
         data.guild.save();
       }
       if (message.content.match(new RegExp(`^<@!?${client.user.id}>( |)$`))) {
@@ -155,30 +155,30 @@ module.exports = class MessageEvent {
         message.channel.send({ embed });
       }
       let args = message.content.slice(prefix.length).trim().split(/ +/g),
-          command = args.shift().toLowerCase(),
-          cmd = client.commands.get(command) || client.commands.get(client.aliases.get(command));
+        command = args.shift().toLowerCase(),
+        cmd = client.commands.get(command) || client.commands.get(client.aliases.get(command));
       if (!cmd) return;
-        if (!cmd.config.enabled) {
-          embed
-            .setColor(colors.red)
-            .setTitle(defaults.error)
-            .setDescription("¡Este comando está deshabilitado!");
-          return message.channel.send({ embed });
-        }
-        if ((cmd.config.ownerOnly) && (!client.config.misc.owners.includes(message.author.id))) {
-          embed
-            .setColor(colors.red)
-            .setTitle(defaults.error)
-            .setDescription("¡Este comando es solo para dueños del bot!");
-          return message.channel.send({ embed });
-        }
-        if ((cmd.config.guildOnly) && (!message.guild)) {
-          embed
-            .setColor(colors.red)
-            .setTitle(defaults.error)
-            .setDescription("¡Este comando solo puede ser ejecutado en un servidor!");
-          return message.channel.send({ embed });
-        }
+      if (!cmd.config.enabled) {
+        embed
+          .setColor(colors.red)
+          .setTitle(defaults.error)
+          .setDescription("¡Este comando está deshabilitado!");
+        return message.channel.send({ embed });
+      }
+      if ((cmd.config.ownerOnly) && (!client.config.misc.owners.includes(message.author.id))) {
+        embed
+          .setColor(colors.red)
+          .setTitle(defaults.error)
+          .setDescription("¡Este comando es solo para dueños del bot!");
+        return message.channel.send({ embed });
+      }
+      if ((cmd.config.guildOnly) && (!message.guild)) {
+        embed
+          .setColor(colors.red)
+          .setTitle(defaults.error)
+          .setDescription("¡Este comando solo puede ser ejecutado en un servidor!");
+        return message.channel.send({ embed });
+      }
       if (message.guild) {
         if ((cmd.config.nsfwOnly) && (!message.channel.nsfw)) {
           embed
@@ -223,9 +223,9 @@ module.exports = class MessageEvent {
       let webhook = new WebhookClient(client.config.tokens.logs.id, client.config.tokens.logs.token);
       try {
         cmd.run(message, args, data, embed);
-        if (cmd.help.name === 'eval') {return;} else {webhook.send(`El usuario \`${message.author.tag}\`, ha usado el comando \`${cmd.help.name}\` en: \`${message.guild ? message.guild.name : `mensaje directo`}\``);}
-      } catch(e) {
-        if (cmd.help.name === 'eval') {return;} else {webhook.send(`El usuario \`${message.author.tag}\`, ha usado el comando \`${cmd.help.name}\` en: \`${message.guild ? message.guild.name : `mensaje directo`}\``);}
+        if (cmd.help.name === 'eval') { return; } else { webhook.send(`El usuario \`${message.author.tag}\`, ha usado el comando \`${cmd.help.name}\` en: \`${message.guild ? message.guild.name : `mensaje directo`}\``); }
+      } catch (e) {
+        if (cmd.help.name === 'eval') { return; } else { webhook.send(`El usuario \`${message.author.tag}\`, ha usado el comando \`${cmd.help.name}\` en: \`${message.guild ? message.guild.name : `mensaje directo`}\``); }
         console.log(e);
       }
     } catch (e) {

@@ -28,7 +28,7 @@ module.exports = class Owner extends Command {
         client = message.client;
       try {
         let evalued = await eval(args.join(" "));
-        if (typeof(evalued) !== "string")
+        if (typeof (evalued) !== "string")
           evalued = require("util").inspect(evalued, { depth: 0 });
         if (evalued.length > 1950) {
           message.channel.send("> " + message.defaults.error + " El resultado es muy largo");

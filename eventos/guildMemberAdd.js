@@ -11,7 +11,7 @@ module.exports = class GuildMemberAddEvent {
       let embed = new MessageEmbed();
       embed
         .setAuthor(member.user.tag, member.user.displayAvatarURL({ size: 2048 }))
-        .setFooter(member.guild.name, member.guild.iconURL({ size: 2048}))
+        .setFooter(member.guild.name, member.guild.iconURL({ size: 2048 }))
         .setTimestamp();
       let guild = await this.client.findOrCreateGuild({ id: member.guild.id });
       if (guild.plugins.autoRoles.roles >= 1) {

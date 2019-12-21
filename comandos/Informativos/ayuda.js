@@ -1,5 +1,5 @@
 const Command = require("../../base/Command.js"),
-      { version } = require("../../package.json");
+  { version } = require("../../package.json");
 
 module.exports = class HelpCommand extends Command {
   constructor(client) {
@@ -34,7 +34,7 @@ module.exports = class HelpCommand extends Command {
           .addField('¡Enlaces útiles!', '[`Servidor de soporte   `](' + message.misc.others.support + ')  [`Enlace de invitación   `](' + message.misc.others.invite + ')\n[`Código abierto        `](' + message.misc.others.glitch + ')  [`Patreon                `](' + message.misc.others.donate + ')')
           .setImage('https://media.discordapp.net/attachments/632984081709269015/657037947895545866/ginkobanner.png')
           .setFooter((message.guild ? message.guild.name : this.client.user.username) + ' | Versión: ' + version, (message.guild ? message.guild.iconURL({ size: 2048 }) : this.client.user.displayAvatarURL({ size: 2048 })));
-       message.channel.send({ embed });
+        message.channel.send({ embed });
       } else if (args[0].toLowerCase() === 'lista' || args[0].toLowerCase() === 'comandos') {
         let or = {
           INFORMATIVOS: 10,
@@ -51,8 +51,8 @@ module.exports = class HelpCommand extends Command {
           }
         });
         let temp = [];
-        for (let i = 0; i < categorias.length; i++) { temp.push(null);}
-        for (let cat of categorias) { temp[or[cat.toUpperCase()]] = cat;}
+        for (let i = 0; i < categorias.length; i++) { temp.push(null); }
+        for (let cat of categorias) { temp[or[cat.toUpperCase()]] = cat; }
         categorias = temp.filter(x => x !== null);
         embed
           .setColor(message.colors.ginko)
