@@ -5,7 +5,7 @@ module.exports = class ReadyEvent {
 
   async run() {
     try {
-      this.client.user.setActivity("¡En remodelación! https://glitch.com/~ginko-xyz");
+      this.client.user.setActivity("¡En remodelación! https://github.com/wwmon/ginko");
     } catch (e) {
       console.log(e);
       this.client.postError({
