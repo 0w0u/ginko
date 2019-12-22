@@ -7,7 +7,7 @@ module.exports = class Event {
 
   async run() {
     try {
-      
+
     } catch (e) {
       console.log(e);
       this.client.postError({
