@@ -124,8 +124,21 @@ module.exports = class MessageEvent {
       let dmserverprefix = (message.guild ? data.guild.prefix : 'g!');
       message.dmguildprefix = dmserverprefix;
       if (user) {
-        user.premium = user.premium !== false ? true : false;
-        user.commandsUsed = user.commandsUsed !== 0 ? user.commandsUsed : 0;
+        user = {
+          premium: user.premium !== false ? true : false,
+          verified: user.verified !== false ? true : false,
+          commandsUsed: user.commandsUsed !== 0 ? user.commandsUsed : 0,
+          social: {
+            reputation: user.social.reputation !== 0 ? user.social.reputation : 0,
+            level: user.social.level !== 0 ? user.social.level : 0,
+            money: user.social.money !== 0 ? user.social.money : 0,
+            couple: user.social.couple !== undefined ? user.social.couple : undefined,
+            gender: user.social.gender !== 0 ? user.social.gender : 0, // si es 0 es indefinido, si es 1 es mujer, si es 2 es hombre
+            birthday: user.social.birthday !== undefined ? user.social.birthday : undefined,
+            description: user.social.description !== undefined ? user.social.description : undefined,
+            badges: []
+          }
+        }
         await user.save();
       }
       if (message.guild && data.guild.plugins.suggestions) {
