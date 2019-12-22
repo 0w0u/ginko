@@ -124,8 +124,9 @@ module.exports = class MessageEvent {
       let dmserverprefix = (message.guild ? data.guild.prefix : 'g!');
       message.dmguildprefix = dmserverprefix;
       if (user) {
-        user.premium = false;
-        user.save();
+        user.premium = user.premium !== false ? true : false;
+        user.commandsUsed = user.commandsUsed !== 0 ? user.commandsUsed : 0;
+        await user.save();
       }
       if (message.guild && data.guild.plugins.suggestions) {
         data.guild.plugins.suggestions = {
@@ -227,6 +228,9 @@ module.exports = class MessageEvent {
       } catch (e) {
         if (cmd.help.name === 'eval') { return; } else { webhook.send(`El usuario \`${message.author.tag}\`, ha usado el comando \`${cmd.help.name}\` en: \`${message.guild ? message.guild.name : `mensaje directo`}\``); }
         console.log(e);
+      } finally {
+        user.commandsUsed += 1;
+        await user.save();
       }
     } catch (e) {
       console.log(e);

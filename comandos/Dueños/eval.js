@@ -14,7 +14,7 @@ module.exports = class Owner extends Command {
       nsfwOnly: false,
       cooldown: 5000,
       aliases: ["e"],
-      memberPermissions: ["ADMINISTRATOR"],
+      memberPermissions: [],
       botPermissions: [],
       dirname: __dirname
     });

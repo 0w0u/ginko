@@ -14,7 +14,7 @@ module.exports = class OptionsCommand extends Command {
       nsfwOnly: false,
       cooldown: 5000,
       aliases: [],
-      memberPermissions: ["MANAGE_GUILD", "ADMINISTRATOR"],
+      memberPermissions: ["MANAGE_GUILD"],
       botPermissions: [],
       dirname: __dirname
     });
