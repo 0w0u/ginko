@@ -123,8 +123,8 @@ module.exports = class MessageEvent {
       data.user = user;
       let dmserverprefix = (message.guild ? data.guild.prefix : 'g!');
       message.dmguildprefix = dmserverprefix;
-      if (user) {
-        user = {
+      if (data.user) {
+        data.user = {
           premium: user.premium !== false ? true : false,
           verified: user.verified !== false ? true : false,
           commandsUsed: user.commandsUsed !== 0 ? user.commandsUsed : 0,
@@ -132,14 +132,14 @@ module.exports = class MessageEvent {
             reputation: user.social.reputation !== 0 ? user.social.reputation : 0,
             level: user.social.level !== 0 ? user.social.level : 0,
             money: user.social.money !== 0 ? user.social.money : 0,
-            couple: user.social.couple !== undefined ? user.social.couple : undefined,
+            couple: user.social.couple !== 0 ? user.social.couple : 0,
             gender: user.social.gender !== 0 ? user.social.gender : 0, // si es 0 es indefinido, si es 1 es mujer, si es 2 es hombre
-            birthday: user.social.birthday !== undefined ? user.social.birthday : undefined,
-            description: user.social.description !== undefined ? user.social.description : undefined,
+            birthday: user.social.birthday !== 0 ? user.social.birthday : 0,
+            description: user.social.description !== 0 ? user.social.description : 0,
             badges: []
           }
         }
-        await user.save();
+        user.save();
       }
       if (message.guild && data.guild.plugins.suggestions) {
         data.guild.plugins.suggestions = {
@@ -243,7 +243,7 @@ module.exports = class MessageEvent {
         console.log(e);
       } finally {
         user.commandsUsed += 1;
-        await user.save();
+        user.save();
       }
     } catch (e) {
       console.log(e);

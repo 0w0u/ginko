@@ -11,10 +11,10 @@ module.exports = mongoose.model(
       reputation: 0,
       level: 0,
       money: 0,
-      couple: undefined,
+      couple: 0, // string, undefined
       gender: 0, // si es 0 es indefinido, si es 1 es mujer, si es 2 es hombre
-      birthday: undefined,
-      description: undefined,
+      birthday: 0, // string, date
+      description: 0, //string undefined
       badges: []
     }
   })
