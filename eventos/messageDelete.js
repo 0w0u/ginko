@@ -5,14 +5,14 @@ module.exports = class MessageDeleteEvent {
     this.client = client;
   }
 
-  async run (message) {
+  async run(message) {
     if (message.author === this.client.user) return;
     try {
       if (message.channel.type === 'dm') return;
       let embed = new MessageEmbed();
       embed
         .setAuthor(message.author.tag, message.author.displayAvatarURL({ size: 2048 }))
-        .setFooter(message.guild.name, message.guild.iconURL({ size: 2048}))
+        .setFooter(message.guild.name, message.guild.iconURL({ size: 2048 }))
         .setTimestamp();
       let guild = await this.client.findOrCreateGuild({ id: message.guild.id });
       if (guild.plugins.logs.messageLogs.enabled === true) {

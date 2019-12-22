@@ -13,7 +13,7 @@ module.exports = class MessageDeleteBulkEvent {
         let embed = new MessageEmbed();
         embed
           .setAuthor(entries.executor.tag, entries.executor.displayAvatarURL({ size: 2048 }))
-          .setFooter(messages.first().channel.guild.name, messages.first().channel.guild.iconURL({ size: 2048}))
+          .setFooter(messages.first().channel.guild.name, messages.first().channel.guild.iconURL({ size: 2048 }))
           .setTimestamp();
         let guild = await this.client.findOrCreateGuild({ id: messages.first().channel.guild.id });
         if (guild.plugins.logs.messageLogs.enabled === true) {

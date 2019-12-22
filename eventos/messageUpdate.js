@@ -15,9 +15,9 @@ module.exports = class MessageUpdateEvent {
       let embed = new MessageEmbed();
       embed
         .setAuthor(oldMessage.author.tag, oldMessage.author.displayAvatarURL({ size: 2048 }))
-        .setFooter(oldMessage.guild.name, oldMessage.guild.iconURL({ size: 2048}))
+        .setFooter(oldMessage.guild.name, oldMessage.guild.iconURL({ size: 2048 }))
         .setTimestamp();
-      let guild = await this.client.findOrCreateGuild({id: oldMessage.guild.id });
+      let guild = await this.client.findOrCreateGuild({ id: oldMessage.guild.id });
       if (guild.plugins.logs.messageLogs.enabled === true) {
         if (guild.plugins.logs.messageLogs.logs.messageUpdate.enabled === false) {
           return;

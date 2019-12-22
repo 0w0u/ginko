@@ -59,10 +59,10 @@ module.exports = class Help extends Command {
                 .setDescription(textS.join(",") + "```");
               let msg = await message.channel.send({ embed });
               let index = await message.channel.awaitMessages(m => m.author.id == message.author.id && m.content > 0 && m.content < length + 1, {
-                    max: 1,
-                    time: 60000,
-                    errors: ["cancel", "cancelar"]
-                  });
+                max: 1,
+                time: 60000,
+                errors: ["cancel", "cancelar"]
+              });
               if (!index.first()) {
                 embed
                   .setColor(message.colors.red)
@@ -83,7 +83,7 @@ module.exports = class Help extends Command {
         async function o(m) {
           embed
             .setColor(message.colors.ginko)
-            .setDescription('Recuerda que en nuetro MD puedes buscar un avatar por ID');
+            .setDescription('Recuerda que en mi `mensaje directo` puedes buscar un usuario por ID');
           message.channel.send({ embed });
         }
       } else if (message.channel.type === "dm") {
@@ -98,7 +98,7 @@ module.exports = class Help extends Command {
         async function o(m) {
           embed
             .setColor(message.colors.ginko)
-            .setDescription('En MD solo puedes usar ID\'s como buscador');
+            .setDescription('En `mensaje directo` solo puedes usar ID\'s como buscador');
           message.channel.send({ embed });
         }
       }

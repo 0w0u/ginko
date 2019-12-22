@@ -1,5 +1,5 @@
 const Command = require("../../base/Command.js"),
-      { MessageEmbed } = require("discord.js");
+  { MessageEmbed } = require("discord.js");
 module.exports = class AvatarCommand extends Command {
   constructor(client) {
     super(client, {
@@ -58,10 +58,10 @@ module.exports = class AvatarCommand extends Command {
               .setDescription(textS.join(",") + "```");
             let msg = await message.channel.send({ embed });
             let index = await message.channel.awaitMessages(m => m.author.id == message.author.id && m.content > 0 && m.content < length + 1, {
-                  max: 1,
-                  time: 60000,
-                  errors: ["cancel", "cancelar"]
-                });
+              max: 1,
+              time: 60000,
+              errors: ["cancel", "cancelar"]
+            });
             if (!index.first()) {
               embed
                 .setColor(message.colors.red)

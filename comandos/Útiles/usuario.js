@@ -1,6 +1,6 @@
 const Command = require("../../base/Command.js"),
-      { MessageEmbed } = require("discord.js");
-module.exports = class AvatarCommand extends Command {
+  { MessageEmbed } = require("discord.js");
+module.exports = class UserCommand extends Command {
   constructor(client) {
     super(client, {
       name: "usuario",
@@ -58,10 +58,10 @@ module.exports = class AvatarCommand extends Command {
               .setDescription(textS.join(",") + "```");
             let msg = await message.channel.send({ embed });
             let index = await message.channel.awaitMessages(m => m.author.id == message.author.id && m.content > 0 && m.content < length + 1, {
-                  max: 1,
-                  time: 60000,
-                  errors: ["cancel", "cancelar"]
-                })
+              max: 1,
+              time: 60000,
+              errors: ["cancel", "cancelar"]
+            })
             if (!index.first()) {
               embed
                 .setColor(message.colors.red)
@@ -82,12 +82,12 @@ module.exports = class AvatarCommand extends Command {
           let p = m.user.presence.clientStatus;
           let status;
           let onlineE = client.emojis.get('650475659663114260'),
-              idleE = client.emojis.get('650475659302273045'),
-              dndE = client.emojis.get('650475659704926238'),
-              offlineE = client.emojis.get('650475659365187606'),
-              onlineME = client.emojis.get('650169275356676125'),
-              idleME = client.emojis.get('650169275125858318'),
-              dndME = client.emojis.get('650169275478441994');
+            idleE = client.emojis.get('650475659302273045'),
+            dndE = client.emojis.get('650475659704926238'),
+            offlineE = client.emojis.get('650475659365187606'),
+            onlineME = client.emojis.get('650169275356676125'),
+            idleME = client.emojis.get('650169275125858318'),
+            dndME = client.emojis.get('650169275478441994');
           if (p && p.desktop === 'online') status = onlineE.toString() + ' **Conectado**: en **escritorio**';
           else if (p && p.desktop === 'idle') status = idleE.toString() + ' **Ausente**: en **escritorio**';
           else if (p && p.desktop === 'dnd') status = dndE.toString() + ' **No molestar**: en **escritorio**';
@@ -110,7 +110,7 @@ module.exports = class AvatarCommand extends Command {
             .setDescription('Recuerda que en mi `mensaje directo` puedes buscar un usuario por ID')
             .setThumbnail(m.user.displayAvatarURL({ size: 2048 }))
             .addField('Información general', `Nombre: ${m.nickname ? `${m.nickname} (${m.user.username})` : `${m.user.username}`}\nTag: ${m.user.tag}\nID: ${m.user.id}`)
-            .addField('Presencia', `${status}\nJugando a: ${m.user.presence.activity ? `${m.user.presence.activity.name ? m.user.presence.activity.name : '*No está jugando nada*'}` : '*No está jugando nada*'}\nEstado personalizado: ${w === null || w.state === null ? `*No tiene*` : `${w.emoji === null ? `` : `${w.emoji.id === undefined ? `${w.emoji.name}`: `<${w.emoji.animated ? `a` : ``}:${w.emoji.name}:${w.emoji.id}>`}`} ${w.state}`}`)
+            .addField('Presencia', `${status}\nJugando a: ${m.user.presence.activity ? `${m.user.presence.activity.name ? m.user.presence.activity.name : '*No está jugando nada*'}` : '*No está jugando nada*'}\nEstado personalizado: ${w === null || w.state === null ? `*No tiene*` : `${w.emoji === null ? `` : `${w.emoji.id === undefined ? `${w.emoji.name}` : `<${w.emoji.animated ? `a` : ``}:${w.emoji.name}:${w.emoji.id}>`}`} ${w.state}`}`)
             .addField('Fechas', `Cuenta creada: ${usercreated}\nIngreso al servidor: ${membercreated}`)
             .addField('Rol más alto', highestRole === "@everyone" ? `*No tiene*` : `<@&${highestRole.id}>`, true)
             .addField('Permisos', `\`\`\`md\n${m.permissions.toArray().map(x => x.split("_").join(" ")).join(" | ")}\`\`\``);
@@ -129,12 +129,12 @@ module.exports = class AvatarCommand extends Command {
           let p = u.presence.clientStatus;
           let status;
           let onlineE = client.emojis.get('650475659663114260'),
-              idleE = client.emojis.get('650475659302273045'),
-              dndE = client.emojis.get('650475659704926238'),
-              offlineE = client.emojis.get('650475659365187606'),
-              onlineME = client.emojis.get('650169275356676125'),
-              idleME = client.emojis.get('650169275125858318'),
-              dndME = client.emojis.get('650169275478441994');
+            idleE = client.emojis.get('650475659302273045'),
+            dndE = client.emojis.get('650475659704926238'),
+            offlineE = client.emojis.get('650475659365187606'),
+            onlineME = client.emojis.get('650169275356676125'),
+            idleME = client.emojis.get('650169275125858318'),
+            dndME = client.emojis.get('650169275478441994');
           if (p && p.desktop === 'online') status = onlineE.toString() + ' **Conectado**: en **escritorio**';
           else if (p && p.desktop === 'idle') status = idleE.toString() + ' **Ausente**: en **escritorio**';
           else if (p && p.desktop === 'dnd') status = dndE.toString() + ' **No molestar**: en **escritorio**';
@@ -154,7 +154,7 @@ module.exports = class AvatarCommand extends Command {
             .setDescription('En `mensaje directo` solo puedes usar ID\'s como buscador')
             .setThumbnail(u.displayAvatarURL({ size: 2048 }))
             .addField('Información general', `Nombre: ${u.username}\nTag: ${u.tag}\nID: ${u.id}`)
-            .addField('Presencia', `${status}\nJugando a: ${u.presence.activity ? `${u.presence.activity.name ? u.presence.activity.name : '*No está jugando nada*'}` : '*No está jugando nada*'}\nEstado personalizado: ${w === null || w.state === null ? `*No tiene*` : `${w.emoji === null ? `` : `${w.emoji.id === undefined ? `${w.emoji.name}`: `<${w.emoji.animated ? `a` : ``}:${w.emoji.name}:${w.emoji.id}>`}`} ${w.state}`}`)
+            .addField('Presencia', `${status}\nJugando a: ${u.presence.activity ? `${u.presence.activity.name ? u.presence.activity.name : '*No está jugando nada*'}` : '*No está jugando nada*'}\nEstado personalizado: ${w === null || w.state === null ? `*No tiene*` : `${w.emoji === null ? `` : `${w.emoji.id === undefined ? `${w.emoji.name}` : `<${w.emoji.animated ? `a` : ``}:${w.emoji.name}:${w.emoji.id}>`}`} ${w.state}`}`)
             .addField('Fechas', `Cuenta creada: ${usercreated}`);
           message.channel.send({ embed });
         }

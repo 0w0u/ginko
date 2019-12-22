@@ -12,7 +12,7 @@ module.exports = class GuildCreateEvent {
         .setAuthor(this.client.user.tag, this.client.user.displayAvatarURL({ size: 2048 }))
         .setColor(this.client.colors.green)
         .setTitle(this.client.defaults.greenun + '¡Me agregaron a un servidor!')
-        .setDescription(guild.name + " (`"+guild.id+"`)")
+        .setDescription(guild.name + " (`" + guild.id + "`)")
         .setThumbnail(guild.iconURL({ size: 2048 }))
         .addField("Dueño", guild.owner.user.tag, true)
         .addField("Miembros", guild.members.size, true)

@@ -1,6 +1,6 @@
 const Command = require("../../base/Command.js");
 
-module.exports = class Help extends Command {
+module.exports = class FeedCommand extends Command {
   constructor(client) {
     super(client, {
       name: "alimentar",
@@ -69,10 +69,10 @@ module.exports = class Help extends Command {
               .setDescription(textS.join(",") + "```");
             let msg = await message.channel.send({ embed });
             let index = await message.channel.awaitMessages(m => m.author.id == message.author.id && m.content > 0 && m.content < length + 1, {
-                max: 1,
-                time: 60000,
-                errors: ["cancel", "cancelar"]
-              });
+              max: 1,
+              time: 60000,
+              errors: ["cancel", "cancelar"]
+            });
             if (!index.first()) {
               embed
                 .setColor(message.colors.red)
@@ -82,7 +82,7 @@ module.exports = class Help extends Command {
               if (message.channel.permissionsFor(this.client.user).has("MANAGE_MESSAGES")) message.delete();
               msg.delete();
               return;
-              } else {
+            } else {
               if (message.channel.permissionsFor(this.client.user).has("MANAGE_MESSAGES")) message.delete();
               msg.delete();
               return await o(members[index.first().content - 1]);

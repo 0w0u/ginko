@@ -13,11 +13,11 @@ module.exports = class client extends Client {
     this.aliases = new Collection();
 
     this.functions = require("./util/functions");
-    
+
     this.guildsData = require("./Guild");
 
     this.membersData = require("./Member");
-    
+
     this.usersData = require("./User");
 
     this.colors = {
@@ -28,9 +28,9 @@ module.exports = class client extends Client {
       yellow: 0xf1c40f
     };
     let Neko = require('nekos.life'),
-        { sfw, nsfw } = new Neko(),
-        Weez = require('weez'),
-        weez = new Weez.WeezAPI(this.config.tokens.weez);
+      { sfw, nsfw } = new Neko(),
+      Weez = require('weez'),
+      weez = new Weez.WeezAPI(this.config.tokens.weez);
     this.tools = {
       weez: weez,
       sfw: sfw,
@@ -85,7 +85,7 @@ module.exports = class client extends Client {
       MANAGE_EMOJIS: "Gestionar emojis"
     };
   }
-  
+
   loadCommands(commandPath, commandName) {
     try {
       const props = new (require(`.${commandPath}${path.sep}${commandName}`))(this);
@@ -104,7 +104,7 @@ module.exports = class client extends Client {
       return `No se pudo cargar el comando: ${commandName} Error: ${e}`;
     }
   }
-  
+
   async unloadCommand(commandPath, commandName) {
     let command;
     if (this.commands.has(commandName)) {
@@ -130,7 +130,7 @@ module.exports = class client extends Client {
     if (data.type === "command") {
       embed
         .addField("Error en", `Comando: \`${data.commandName}\``, true)
-        .addField("Descripción",`\`\`\`coffescript\n${data.description}\`\`\``)
+        .addField("Descripción", `\`\`\`coffescript\n${data.description}\`\`\``)
         .setFooter("Error ocurrido en " + (data.message.guild ? (data.message.guild.id + ' | ' + data.message.guild.name) : ('DM | ' + data.message.author.tag)));
       data.message.channel.send(new MessageEmbed().setAuthor(data.message.author.tag, data.message.author.displayAvatarURL({ size: 2048 })).setColor(this.colors.red).addField('<:au_MiscRedTick:599396704193740838> • Un error (des)conocido ha ocurrido', 'Por favor contacta con el personal del bot para que se solucione lo más pronto posible\n[Servidor de soporte](' + this.config.misc.others.support + ')'));
     } else if (data.type === "event") {
@@ -141,13 +141,13 @@ module.exports = class client extends Client {
     let channel = await this.channels.get("621114100868710402");
     channel.send(embed);
   }
-  
+
   async findOrCreateUser(param, isLean) {
     let usersData = this.usersData;
-    return new Promise(async function(resolve, reject) {
+    return new Promise(async function (resolve, reject) {
       let userData = isLean ? await usersData.findOne(param).lean() : await usersData.findOne(param);
       if (userData) {
-        userData.save = async function() {
+        userData.save = async function () {
           await usersData.where({ _id: userData._id }).updateOne({ $set: userData });
           userData = await usersData.findOne(param).lean();
           return userData;
@@ -156,7 +156,7 @@ module.exports = class client extends Client {
       } else {
         userData = new usersData(param);
         await userData.save();
-        userData.save = async function() {
+        userData.save = async function () {
           await usersData.where({ _id: userData._id }).updateOne({ $set: userData });
           userData = await usersData.findOne(param).lean();
           return userData;
@@ -165,14 +165,14 @@ module.exports = class client extends Client {
       }
     });
   }
-  
+
   async findOrCreateMember(param, isLean) {
     let membersData = this.membersData;
     let guildsData = this.guildsData;
-    return new Promise(async function(resolve, reject) {
+    return new Promise(async function (resolve, reject) {
       let memberData = isLean ? await membersData.findOne(param).lean() : await membersData.findOne(param);
       if (memberData) {
-        memberData.save = async function() {
+        memberData.save = async function () {
           await membersData.where({ _id: memberData._id }).updateOne({ $set: memberData });
           memberData = await membersData.findOne(param).lean();
           return memberData;
@@ -181,7 +181,7 @@ module.exports = class client extends Client {
       } else {
         memberData = new membersData(param);
         await memberData.save();
-        memberData.save = async function() {
+        memberData.save = async function () {
           await membersData.where({ _id: memberData._id }).updateOne({ $set: memberData });
           memberData = await membersData.findOne(param).lean();
           return memberData;
@@ -195,13 +195,13 @@ module.exports = class client extends Client {
       }
     });
   }
-  
+
   async findOrCreateGuild(param, isLean) {
     let guildsData = this.guildsData;
-    return new Promise(async function(resolve, reject) {
+    return new Promise(async function (resolve, reject) {
       let guildData = isLean ? await guildsData.findOne(param).populate("membersData").lean() : await guildsData.findOne(param).populate("membersData");
       if (guildData) {
-        guildData.save = async function() {
+        guildData.save = async function () {
           this.guildsData = guildsData;
           this.guildsData = guildsData;
           await this.guildsData.where({ _id: guildData._id }).updateOne({ $set: guildData });
@@ -212,7 +212,7 @@ module.exports = class client extends Client {
       } else {
         guildData = new guildsData(param);
         await guildData.save();
-        guildData.save = async function() {
+        guildData.save = async function () {
           this.guildsData = guildsData;
           await this.guildsData.where({ _id: guildData._id }).updateOne({ $set: guildData });
           guildData = await this.guildsData.findOne(param).lean();

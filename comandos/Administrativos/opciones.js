@@ -1,5 +1,5 @@
 const Command = require("../../base/Command.js"),
-      { MessageEmbed } = require('discord.js');
+  { MessageEmbed } = require('discord.js');
 
 module.exports = class OptionsCommand extends Command {
   constructor(client) {
@@ -14,7 +14,7 @@ module.exports = class OptionsCommand extends Command {
       nsfwOnly: false,
       cooldown: 5000,
       aliases: [],
-      memberPermissions: ["MANAGE_GUILD", "ADMINISTRATOR"],
+      memberPermissions: ["MANAGE_GUILD"],
       botPermissions: [],
       dirname: __dirname
     });
@@ -23,7 +23,7 @@ module.exports = class OptionsCommand extends Command {
   async run(message, args, data, embed) {
     try {
       let options = ['sugerencias', 'registros', 'prefijo', 'auto-roles'],
-          optionsJoin = options.join('`, `');
+        optionsJoin = options.join('`, `');
       let guild = data.guild;
       if (!args[0]) {
         embed
@@ -35,7 +35,7 @@ module.exports = class OptionsCommand extends Command {
         return;
       } else if (args[0].toLowerCase() === options[0]) {
         let options = ['habilitar', 'deshabilitar', 'mensaje'],
-            optionsJoin = options.join('`, `');
+          optionsJoin = options.join('`, `');
         if (!args[1]) {
           embed
             .setColor(message.colors.red)
@@ -44,105 +44,105 @@ module.exports = class OptionsCommand extends Command {
           message.channel.send({ embed });
           return;
         } else if (args[1].toLowerCase() === options[0]) {
-            let channel, channels;
-            if (!args[2]) {
-              if (guild.plugins.suggestions.channel !== undefined) {
-                embed
-                  .setColor(message.colors.green)
-                  .setTitle(message.defaults.done)
-                  .setDescription("Las sugerencias se han habilitado correctamente");
-                message.channel.send({ embed });
-                guild.plugins.suggestions.enabled = true;
-                guild.save();
-                return;
-              } else {
-                embed
-                  .setColor(message.colors.red)
-                  .setTitle(message.defaults.error)
-                  .setDescription("Necesitas mencionar un canal");
-                message.channel.send({ embed });
-                return;
-              }
-            } else {
-              channel = message.mentions.channels.first();
-              if (channel) return await o(channel);
-              else
-              channels = message.guild.channels.array().filter(m => m.type !== 'voice' && `${m.name}`.toLowerCase().includes(args.slice(2).join(" ").toLowerCase()));
-              if (channels.length < 1) {
-                embed
-                  .setColor(message.colors.red)
-                  .setTitle(message.defaults.error)
-                  .setDescription("No hay ningún canal que coincida con tu búsqueda, ¡intenta ser más específico!");
-                return message.channel.send({ embed });
-              } else if (channels.length === 1) {
-                return await o(channels[0]);
-              } else if (channels.length >= 10) {
-                embed
-                  .setColor(message.colors.red)
-                  .setTitle(message.defaults.error)
-                  .setDescription("Muchos canales coinciden con tu búsqueda, ¡intenta ser más específico!");
-                return message.channel.send({ embed });
-              } else {
-                let length = channels.length > 9 ? 10 : channels.length,
-                  text = "Selecciona un número entre 1 y " + length + "```js\n";
-                for (let i = 0; i < length; i++) {
-                  text += `${i + 1} - ${channels[i].name},\n`;
-                }
-                let textS = text.split(",");
-                textS.pop();
-                embed
-                  .setColor(message.colors.gray)
-                  .setTitle(message.defaults.grayun + "Esperando respuesta...")
-                  .setDescription(textS.join(",") + "```");
-                let msg = await message.channel.send({ embed });
-                let index = await message.channel.awaitMessages(m => m.author.id == message.author.id && m.content > 0 && m.content < length + 1, {
-                    max: 1,
-                    time: 60000,
-                    errors: ["cancel", "cancelar"]
-                  });
-                if (!index.first()) {
-                  embed
-                    .setColor(message.colors.red)
-                    .setTitle(message.defaults.redun + "¡No se recibió respuesta!")
-                    .setDescription("Debes seleccionar un número del índice, ¡inténtalo de nuevo!");
-                  message.channel.send({ embed });
-                  if (message.channel.permissionsFor(this.client.user).has("MANAGE_MESSAGES")) message.delete();
-                  msg.delete();
-                  return;
-                } else {
-                  if (message.channel.permissionsFor(this.client.user).has("MANAGE_MESSAGES")) message.delete();
-                  msg.delete();
-                  return await o(channels[index.first().content - 1]);
-                }
-              }
-            }
-            async function o(wa) {
+          let channel, channels;
+          if (!args[2]) {
+            if (guild.plugins.suggestions.channel !== undefined) {
               embed
                 .setColor(message.colors.green)
                 .setTitle(message.defaults.done)
-                .setDescription('Las sugerencias se han habilitado correctamente en `#' + wa.name + '`');
+                .setDescription("Las sugerencias se han habilitado correctamente");
               message.channel.send({ embed });
               guild.plugins.suggestions.enabled = true;
-              guild.plugins.suggestions.channel = wa.id;
               guild.save();
+              return;
+            } else {
+              embed
+                .setColor(message.colors.red)
+                .setTitle(message.defaults.error)
+                .setDescription("Necesitas mencionar un canal");
+              message.channel.send({ embed });
+              return;
             }
-        } else if (args[1].toLowerCase() === options[1]) {
+          } else {
+            channel = message.mentions.channels.first();
+            if (channel) return await o(channel);
+            else
+              channels = message.guild.channels.array().filter(m => m.type !== 'voice' && `${m.name}`.toLowerCase().includes(args.slice(2).join(" ").toLowerCase()));
+            if (channels.length < 1) {
+              embed
+                .setColor(message.colors.red)
+                .setTitle(message.defaults.error)
+                .setDescription("No hay ningún canal que coincida con tu búsqueda, ¡intenta ser más específico!");
+              return message.channel.send({ embed });
+            } else if (channels.length === 1) {
+              return await o(channels[0]);
+            } else if (channels.length >= 10) {
+              embed
+                .setColor(message.colors.red)
+                .setTitle(message.defaults.error)
+                .setDescription("Muchos canales coinciden con tu búsqueda, ¡intenta ser más específico!");
+              return message.channel.send({ embed });
+            } else {
+              let length = channels.length > 9 ? 10 : channels.length,
+                text = "Selecciona un número entre 1 y " + length + "```js\n";
+              for (let i = 0; i < length; i++) {
+                text += `${i + 1} - ${channels[i].name},\n`;
+              }
+              let textS = text.split(",");
+              textS.pop();
+              embed
+                .setColor(message.colors.gray)
+                .setTitle(message.defaults.grayun + "Esperando respuesta...")
+                .setDescription(textS.join(",") + "```");
+              let msg = await message.channel.send({ embed });
+              let index = await message.channel.awaitMessages(m => m.author.id == message.author.id && m.content > 0 && m.content < length + 1, {
+                max: 1,
+                time: 60000,
+                errors: ["cancel", "cancelar"]
+              });
+              if (!index.first()) {
+                embed
+                  .setColor(message.colors.red)
+                  .setTitle(message.defaults.redun + "¡No se recibió respuesta!")
+                  .setDescription("Debes seleccionar un número del índice, ¡inténtalo de nuevo!");
+                message.channel.send({ embed });
+                if (message.channel.permissionsFor(this.client.user).has("MANAGE_MESSAGES")) message.delete();
+                msg.delete();
+                return;
+              } else {
+                if (message.channel.permissionsFor(this.client.user).has("MANAGE_MESSAGES")) message.delete();
+                msg.delete();
+                return await o(channels[index.first().content - 1]);
+              }
+            }
+          }
+          async function o(wa) {
             embed
               .setColor(message.colors.green)
               .setTitle(message.defaults.done)
-              .setDescription('Los registros se han deshabilitado correctamente');
+              .setDescription('Las sugerencias se han habilitado correctamente en `#' + wa.name + '`');
             message.channel.send({ embed });
-            guild.plugins.suggestions.enabled = false;
+            guild.plugins.suggestions.enabled = true;
+            guild.plugins.suggestions.channel = wa.id;
             guild.save();
-            return;
+          }
+        } else if (args[1].toLowerCase() === options[1]) {
+          embed
+            .setColor(message.colors.green)
+            .setTitle(message.defaults.done)
+            .setDescription('Los registros se han deshabilitado correctamente');
+          message.channel.send({ embed });
+          guild.plugins.suggestions.enabled = false;
+          guild.save();
+          return;
         } else if (args[1].toLowerCase() === options[2]) {
           let options = ['md', 'canal'],
-              optionsJoin = options.join('`, `');
+            optionsJoin = options.join('`, `');
           if (!args[2]) {
             embed
               .setColor(message.colors.red)
               .setTitle(message.defaults.noargs)
-              .setDescription('Necesitas elegir una opción\nOpciones:\n`' + optionsJoin +'`');
+              .setDescription('Necesitas elegir una opción\nOpciones:\n`' + optionsJoin + '`');
             message.channel.send({ embed });
             return;
           } else if (args[2].toLowerCase() === options[0]) {
@@ -237,7 +237,7 @@ module.exports = class OptionsCommand extends Command {
         }
       } else if (args[0].toLowerCase() === options[1]) {
         let categories = ['mensajes', 'servidor', 'miembros'],
-            categoriesJoin = categories.join('`, `');
+          categoriesJoin = categories.join('`, `');
         if (!args[1]) {
           embed
             .setColor(message.colors.red)
@@ -247,7 +247,7 @@ module.exports = class OptionsCommand extends Command {
           return;
         } else if (args[1].toLowerCase() === categories[0]) {
           let options = ['habilitar', 'deshabilitar', 'mensajes-editados', 'mensajes-borrados'],
-              optionsJoin = options.join('`, `');
+            optionsJoin = options.join('`, `');
           if (!args[2]) {
             embed
               .setColor(message.colors.red)
@@ -279,7 +279,7 @@ module.exports = class OptionsCommand extends Command {
               channel = message.mentions.channels.first();
               if (channel) return await o(channel);
               else
-              channels = message.guild.channels.array().filter(m => `${m.name}`.toLowerCase().includes(args.slice(3).join(" ").toLowerCase()));
+                channels = message.guild.channels.array().filter(m => `${m.name}`.toLowerCase().includes(args.slice(3).join(" ").toLowerCase()));
               if (channels.length < 1) {
                 embed
                   .setColor(message.colors.red)
@@ -308,10 +308,10 @@ module.exports = class OptionsCommand extends Command {
                   .setDescription(textS.join(",") + "```");
                 let msg = await message.channel.send({ embed });
                 let index = await message.channel.awaitMessages(m => m.author.id == message.author.id && m.content > 0 && m.content < length + 1, {
-                    max: 1,
-                    time: 60000,
-                    errors: ["cancel", "cancelar"]
-                  });
+                  max: 1,
+                  time: 60000,
+                  errors: ["cancel", "cancelar"]
+                });
                 if (!index.first()) {
                   embed
                     .setColor(message.colors.red)
@@ -329,7 +329,7 @@ module.exports = class OptionsCommand extends Command {
               }
             }
             async function o(m) {
-              
+
               embed
                 .setColor(message.colors.green)
                 .setTitle(message.defaults.done)
@@ -392,7 +392,7 @@ module.exports = class OptionsCommand extends Command {
           }
         } else if (args[1].toLowerCase() === categories[1]) {
           let options = ['habilitar', 'deshabilitar', 'canal-creado', 'canal-actualizado', 'canal-eliminado', 'rol-creado', 'rol-actualizado', 'rol-eliminado', 'servidor-actualizado', 'emojis'],
-              optionsJoin = options.join('`, `');
+            optionsJoin = options.join('`, `');
           if (!args[2]) {
             embed
               .setColor(message.colors.red)
@@ -425,7 +425,7 @@ module.exports = class OptionsCommand extends Command {
               channel = message.mentions.channels.first();
               if (channel) return await o(channel);
               else
-              channels = message.guild.channels.array().filter(m => `${m.name}`.toLowerCase().includes(args.slice(3).join(" ").toLowerCase()));
+                channels = message.guild.channels.array().filter(m => `${m.name}`.toLowerCase().includes(args.slice(3).join(" ").toLowerCase()));
               if (channels.length < 1) {
                 embed
                   .setColor(message.colors.red)
@@ -454,10 +454,10 @@ module.exports = class OptionsCommand extends Command {
                   .setDescription(textS.join(",") + "```");
                 let msg = await message.channel.send({ embed });
                 let index = await message.channel.awaitMessages(m => m.author.id == message.author.id && m.content > 0 && m.content < length + 1, {
-                    max: 1,
-                    time: 60000,
-                    errors: ["cancel", "cancelar"]
-                  });
+                  max: 1,
+                  time: 60000,
+                  errors: ["cancel", "cancelar"]
+                });
                 if (!index.first()) {
                   embed
                     .setColor(message.colors.red)
@@ -475,14 +475,14 @@ module.exports = class OptionsCommand extends Command {
               }
             }
             async function o(m) {
-                embed
-                  .setColor(message.colors.green)
-                  .setTitle(message.defaults.done)
-                  .setDescription('Las sugerencias se han habilitado correctamente en `#' + m.name + '`');
-                message.channel.send({ embed });
-                guild.plugins.logs.serverLogs.enabled = true;
-                guild.plugins.logs.serverLogs.channel = m.id;
-                guild.save();
+              embed
+                .setColor(message.colors.green)
+                .setTitle(message.defaults.done)
+                .setDescription('Las sugerencias se han habilitado correctamente en `#' + m.name + '`');
+              message.channel.send({ embed });
+              guild.plugins.logs.serverLogs.enabled = true;
+              guild.plugins.logs.serverLogs.channel = m.id;
+              guild.save();
             }
           } else if (args[2].toLowerCase() === options[1]) {
             embed
@@ -639,7 +639,7 @@ module.exports = class OptionsCommand extends Command {
           }
         } else if (args[1].toLowerCase() === categories[2]) {
           let options = ['habilitar', 'deshabilitar', 'roles', 'nombre', 'avatar', 'veto', 'veto-removido', 'entrada', 'salida'],
-              optionsJoin = options.join('`, `');
+            optionsJoin = options.join('`, `');
           if (!args[2]) {
             embed
               .setColor(message.colors.red)
@@ -672,7 +672,7 @@ module.exports = class OptionsCommand extends Command {
               channel = message.mentions.channels.first();
               if (channel) return await o(channel);
               else
-              channels = message.guild.channels.array().filter(m => `${m.name}`.toLowerCase().includes(args.slice(3).join(" ").toLowerCase()));
+                channels = message.guild.channels.array().filter(m => `${m.name}`.toLowerCase().includes(args.slice(3).join(" ").toLowerCase()));
               if (channels.length < 1) {
                 embed
                   .setColor(message.colors.red)
@@ -701,10 +701,10 @@ module.exports = class OptionsCommand extends Command {
                   .setDescription(textS.join(",") + "```");
                 let msg = await message.channel.send({ embed });
                 let index = await message.channel.awaitMessages(m => m.author.id == message.author.id && m.content > 0 && m.content < length + 1, {
-                    max: 1,
-                    time: 60000,
-                    errors: ["cancel", "cancelar"]
-                  });
+                  max: 1,
+                  time: 60000,
+                  errors: ["cancel", "cancelar"]
+                });
                 if (!index.first()) {
                   embed
                     .setColor(message.colors.red)
@@ -722,14 +722,14 @@ module.exports = class OptionsCommand extends Command {
               }
             }
             async function o(m) {
-                embed
-                  .setColor(message.colors.green)
-                  .setTitle(message.defaults.done)
-                  .setDescription('Las sugerencias se han habilitado correctamente en `#' + m.name + '`');
-                message.channel.send({ embed });
-                guild.plugins.logs.memberLogs.enabled = true;
-                guild.plugins.logs.memberLogs.channel = m.id;
-                guild.save();
+              embed
+                .setColor(message.colors.green)
+                .setTitle(message.defaults.done)
+                .setDescription('Las sugerencias se han habilitado correctamente en `#' + m.name + '`');
+              message.channel.send({ embed });
+              guild.plugins.logs.memberLogs.enabled = true;
+              guild.plugins.logs.memberLogs.channel = m.id;
+              guild.save();
             }
           } else if (args[2].toLowerCase() === options[1]) {
             embed
@@ -894,11 +894,11 @@ module.exports = class OptionsCommand extends Command {
           guild.save();
           return;
         }
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       } else if (args[0].toLowerCase() === options[3]) {
         let dataroles = data.guild.plugins.autoRoles.roles,
-            options = ['agregar', 'remover', 'lista'],
-            optionsJoin = options.join('`, `');
+          options = ['agregar', 'remover', 'lista'],
+          optionsJoin = options.join('`, `');
         if (!args[1]) {
           embed
             .setColor(message.colors.red)
@@ -937,7 +937,7 @@ module.exports = class OptionsCommand extends Command {
                 let length = roles.length > 9 ? 10 : roles.length,
                   text = "Selecciona un número entre 1 y " + length + "```js\n";
                 for (let i = 0; i < length; i++) {
-                text += `${i + 1} - ${roles[i].name},\n`;
+                  text += `${i + 1} - ${roles[i].name},\n`;
                 }
                 let textS = text.split(",");
                 textS.pop();
@@ -947,10 +947,10 @@ module.exports = class OptionsCommand extends Command {
                   .setDescription(textS.join(",") + "```");
                 let msg = await message.channel.send({ embed });
                 let index = await message.channel.awaitMessages(m => m.author.id == message.author.id && m.content > 0 && m.content < length + 1, {
-                    max: 1,
-                    time: 60000,
-                    errors: ["cancel", "cancelar"]
-                  });
+                  max: 1,
+                  time: 60000,
+                  errors: ["cancel", "cancelar"]
+                });
                 if (!index.first()) {
                   embed
                     .setColor(message.colors.red)
@@ -1032,10 +1032,10 @@ module.exports = class OptionsCommand extends Command {
                 .setDescription(textS.join(",") + "```");
               let msg = await message.channel.send({ embed });
               let index = await message.channel.awaitMessages(m => m.author.id == message.author.id && m.content > 0 && m.content < length + 1, {
-                  max: 1,
-                  time: 60000,
-                  errors: ["cancel", "cancelar"]
-                });
+                max: 1,
+                time: 60000,
+                errors: ["cancel", "cancelar"]
+              });
               if (!index.first()) {
                 embed
                   .setColor(message.colors.red)

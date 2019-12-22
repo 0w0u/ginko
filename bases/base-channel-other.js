@@ -32,7 +32,7 @@ module.exports = class Help extends Command {
         channel = message.mentions.channels.first();
         if (channel) return await o(channel);
         else
-        channels = message.guild.channels.array().filter(m => `${m.name}`.toLowerCase().includes(args.join(" ").toLowerCase()));
+          channels = message.guild.channels.array().filter(m => `${m.name}`.toLowerCase().includes(args.join(" ").toLowerCase()));
         if (channels.length < 1) {
           embed
             .setColor(message.colors.red)
@@ -61,10 +61,10 @@ module.exports = class Help extends Command {
             .setDescription(textS.join(",") + "```");
           let msg = await message.channel.send({ embed });
           let index = await message.channel.awaitMessages(m => m.author.id == message.author.id && m.content > 0 && m.content < length + 1, {
-              max: 1,
-              time: 60000,
-              errors: ["cancel", "cancelar"]
-            });
+            max: 1,
+            time: 60000,
+            errors: ["cancel", "cancelar"]
+          });
           if (!index.first()) {
             embed
               .setColor(message.colors.red)
