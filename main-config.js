@@ -3,7 +3,6 @@ module.exports = {
   tokens: {
     bot: process.env.tokensBot,
     mongo: process.env.tokensMongo,
-    weez: process.env.tokensWeez,
     votes: {
       password: process.env.tokensVotePass,
       webhook: process.env.tokensVoteWebhook
