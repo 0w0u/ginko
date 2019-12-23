@@ -17,7 +17,7 @@ module.exports = class GuildMemberAddEvent {
       if (guild.plugins.autoRoles.roles >= 1) {
         if (!member.guild.me.permissions.has('MANAGE_ROLES')) {
           return;
-        } else if (member.roles.highest.comparePositionTo(member.guild.me.roles.highest) < 0) {
+        } else if (member.roles.highest.comparePositionTo(member.guild.me.roles.highest) > 0) {
           return;
         } else {
           member.roles.add(guild.plugins.autoRoles.roles);

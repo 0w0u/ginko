@@ -25,7 +25,10 @@ module.exports = class Owner extends Command {
       let author = message.author,
         guild = message.guild,
         channel = message.channel,
-        client = message.client;
+        client = message.client,
+        duser = await client.findOrCreateUser({ id: message.author.id }),
+        dguild;
+      message.guild ? (dguild = await client.findOrCreateGuild({ id: message.guild.id })) : ''
       try {
         let evalued = await eval(args.join(" "));
         if (typeof (evalued) !== "string")
