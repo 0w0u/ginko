@@ -1,6 +1,8 @@
 const { Client, Collection, MessageEmbed } = require("discord.js");
 const util = require("util");
 const path = require("path");
+const Neko = require('nekos.life');
+const { sfw, nsfw } = new Neko()
 
 module.exports = class client extends Client {
   constructor(options) {
@@ -27,12 +29,7 @@ module.exports = class client extends Client {
       gray: 0x747f8d,
       yellow: 0xf1c40f
     };
-    let Neko = require('nekos.life'),
-      { sfw, nsfw } = new Neko(),
-      Weez = require('weez'),
-      weez = new Weez.WeezAPI(this.config.tokens.weez);
     this.tools = {
-      weez: weez,
       sfw: sfw,
       nsfw: nsfw
     };

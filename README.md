@@ -7,25 +7,74 @@ Es un bot multiproposito de código abierto construido en [discord.js ^12 (maste
 ## Enlaces importantes
 
 - [Glitch](https://glitch.com/edit/#!/ginko-xyz)
-- [Página web](https://ginko-xyz.glitch.me) ~ _En desarrollo_
 - [Servidor de soporte](https://ginko-xyz.glitch.me/support)
 - [Contribuir](https://ginko-xyz.glitch.me/donate/patreon)
 - [Créditos](##créditos)
 
-## Requisitos
+#### Requisitos
 
 - [Aplicación de Discord](https://discordapp.com/developers/applications/)
 - [Node.JS](https://nodejs.org)
 
-## Invitar
+#### Invitar
 
 [¡Invitar a Ginko a mi servidor!](https://ginko-xyz.glitch.me/invite)
 
-## Créditos
+#### Créditos
 
 - mon ~ `Creadora`
 - Devsaider ~ `Desarrollador`
-- Gameboy ~ `Colaborador`
-- Apocritas99 ~ `Colaborador`
-- ushi ~ `Mejor amiguito`
-- Jesucristo Aka: Diosito ~ `Por enseñarme a programar`
+- Gameboy ~ `Desarrollador`
+
+## Cómo contrubuir
+
+#### Pull request y cambios
+Puedes hacer pull request con cambios que hayas hecho en el bot, lo único que necesitas es conocimiento básico de Git y pullear a la rama `dev`.
+
+#### Issues
+Reporta los issues con el siguiente formato: 
+```
+Título: 
+    - Título del problema
+Descripción:
+    - Más detalles sobre el problema
+    - ¿Cuándo pasó?
+    - ¿Cómo reproducirlo?
+    - Opcional: Si tienes alguna idea de como solucionar el problema háznoslo saber o crea un pull request.
+```
+
+#### Plantilla .env
+Si gustas contribuir deberás tener un .env (que es donde se guardan datos globales importantes, como el token del bot)
+```
+# Tokens del bot
+
+# # Token principal
+  tokensBot=
+# # MongoDB
+  tokensMongo=""
+# # Logs Token
+  tokensLogsToken=
+# # Logs ID 
+  tokensLogsID=
+
+#########################
+
+# Misc
+
+# # Owners
+  ownerKarol=
+  ownerDevsaider=
+  ownerGameboy=
+# # Prefix
+  prefix=a!
+# # Github
+  github=https://github.com/wwmon/ginko
+# # Glitch
+  glitch=https://glitch.com/edit/#!/ginko-xyz
+# # Donate
+  donate=https://www.patreon.com/ginkobot
+# # Support
+  support=https://discordapp.com/invite/M8z4mgN
+# # Invite
+  invite=''
+```

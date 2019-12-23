@@ -1,6 +1,6 @@
 {
   "name": "ginko",
-  "version": "0.0.54",
+  "version": "0.0.55",
   "description": "Ginko es un bot multipróposito de Discord programado en la librería discord.js.",
   "main": "main-root.js",
   "scripts": {
@@ -29,8 +29,7 @@
     "mongoose": "5.7.1",
     "nekos.life": "^2.0.4",
     "phin": "^3.4.0",
-    "util": "^0.12.1",
-    "weez": "^1.5.6"
+    "util": "^0.12.1"
   },
   "engines": {
     "node": "10.x"
