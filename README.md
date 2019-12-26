@@ -1,8 +1,10 @@
-![](https://cdn.discordapp.com/attachments/602566816903987213/656536668941320223/Ginko.png)
+<p align="center"><img width=60% src="https://i.imgur.com/ENeGsaK.png"><br>Es un bot multiproposito de código abierto construido en discord.js.</p>
 
-# Ginko
-
-Es un bot multiproposito de código abierto construido en [discord.js ^12 (master)](https://discord.js.org).
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+[![](https://img.shields.io/github/issues/wwmon/ginko)](https://github.com/wwmon/ginko/issues)
+[![](https://img.shields.io/github/forks/wwmon/ginko)](https://github.com/wwmon/ginko/network/members)
+[![](https://img.shields.io/github/stars/wwmon/ginko)](https://github.com/wwmon/ginko/stargazers)
+![](https://img.shields.io/github/license/wwmon/ginko)
 
 ## Enlaces importantes
 
@@ -18,7 +20,11 @@ Es un bot multiproposito de código abierto construido en [discord.js ^12 (maste
 
 #### Invitar
 
-[¡Invitar a Ginko a mi servidor!](https://ginko-xyz.glitch.me/invite)
+🔗 ~ [¡Invitar a Ginko a mi servidor!](https://ginko-xyz.glitch.me/invite)
+
+🤝~ ¿Necesitas ayuda? [Visita nuestro servidor de Discord.](https://ginko-xyz.glitch.me/support)
+
+<iframe src="https://discordapp.com/widget?id=620822952778137601&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0"></iframe>
 
 #### Créditos
 
@@ -26,7 +32,7 @@ Es un bot multiproposito de código abierto construido en [discord.js ^12 (maste
 - Devsaider ~ `Desarrollador`
 - Gameboy ~ `Desarrollador`
 
-## Cómo contrubuir
+## ¿Cómo contrubuir?
 
 #### Pull request y cambios
 
