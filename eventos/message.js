@@ -27,7 +27,6 @@ module.exports = class MessageEvent {
 					guildID: message.guild.id
 				});
 				data.member = member;
-				message.client = client;
 				prefix = client.functions.getPrefix(message, data);
 				if (!prefix) return;
 				if (guild.prefix === 'undefined' || guild.prefix === 'false') {
