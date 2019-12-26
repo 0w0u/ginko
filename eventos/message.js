@@ -198,7 +198,8 @@ module.exports = class MessageEvent {
 					client.user.username,
 					client.user.displayAvatarURL({ size: 2048 })
 				);
-				prefix = 'g!';
+				prefix = client.config.misc.prefix;
+				if (!message.content.startsWith(prefix)) return;
 				if (message.content.toLowerCase().startsWith('prefijo')) {
 					embed
 						.setColor(client.colors.ginko)

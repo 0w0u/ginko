@@ -27,6 +27,28 @@ module.exports = class AvatarCommand extends Command {
 				if (!args[0]) {
 					member = message.member;
 					return await o(member);
+				} else if (
+					args[0].toLowerCase() === 'servidor' ||
+					args[0].toLowerCase() === 'server' ||
+					args[0].toLowerCase() === 'guild'
+				) {
+					embed
+						.setColor(message.colors.ginko)
+						.setTitle(message.defaults.ginkoun + 'Icono del servidor')
+						.setDescription(
+							`Formatos:\n[\`JPG\`](${message.guild.iconURL({
+								size: 2048,
+								format: 'jpg'
+							})}) | [\`PNG\`](${message.guild.iconURL({
+								size: 2048,
+								format: 'png'
+							})}) | [\`GIF\`](${message.guild.iconURL({
+								size: 2048,
+								format: 'gif'
+							})})`
+						)
+						.setImage(message.guild.iconURL({ size: 2048 }));
+					return message.channel.send({ embed });
 				} else {
 					member = message.mentions.members.first();
 					if (member) return await o(member);
@@ -122,7 +144,17 @@ module.exports = class AvatarCommand extends Command {
 								(m.nickname ? `${m.nickname} (${m.user.tag})` : m.user.tag)
 						)
 						.setDescription(
-							'Recuerda que en mi `mensaje directo` puedes buscar un avatar por ID'
+							`Recuerda que en mi \`mensaje directo\` puedes buscar un avatar por ID\n
+							Formatos:\n[\`JPG\`](${m.user.displayAvatarURL({
+								size: 2048,
+								format: 'jpg'
+							})}) | [\`PNG\`](${m.user.displayAvatarURL({
+								size: 2048,
+								format: 'png'
+							})}) | [\`GIF\`](${m.user.displayAvatarURL({
+								size: 2048,
+								format: 'gif'
+							})})`
 						)
 						.setImage(m.user.displayAvatarURL({ size: 2048 }));
 					message.channel.send({ embed });
@@ -141,7 +173,17 @@ module.exports = class AvatarCommand extends Command {
 						.setColor(message.colors.ginko)
 						.setTitle(message.defaults.ginkoun + 'Avatar de ' + m.tag)
 						.setDescription(
-							"En `mensaje directo` solo puedes usar ID's como buscador"
+							`En \`mensaje directo\` solo puedes usar ID's como buscador\n
+							Formatos:\n[\`JPG\`](${m.displayAvatarURL({
+								size: 2048,
+								format: 'jpg'
+							})}) | [\`PNG\`](${m.displayAvatarURL({
+								size: 2048,
+								format: 'png'
+							})}) | [\`GIF\`](${m.displayAvatarURL({
+								size: 2048,
+								format: 'gif'
+							})})`
 						)
 						.setImage(m.displayAvatarURL({ size: 2048 }));
 					message.channel.send({ embed });
