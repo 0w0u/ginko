@@ -5,6 +5,9 @@
 [![](https://img.shields.io/github/forks/wwmon/ginko)](https://github.com/wwmon/ginko/network/members)
 [![](https://img.shields.io/github/stars/wwmon/ginko)](https://github.com/wwmon/ginko/stargazers)
 ![](https://img.shields.io/github/license/wwmon/ginko)
+[![](https://img.shields.io/github/issues-pr/wwmon/ginko)](https://github.com/wwmon/ginko/pulls)
+[![](https://img.shields.io/github/stars/wwmon/ginko)](https://github.com/wwmon/ginko/stargazers)
+[![](https://raster.shields.io/badge/sexo-con%20dev-green.png)](https://youtu.be/_CzSCWpF7TM)
 
 ## Enlaces importantes
 
