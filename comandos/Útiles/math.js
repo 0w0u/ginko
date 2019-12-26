@@ -1,12 +1,18 @@
-const Command = require('../../base/Command.js');
+const Command = require('../../base/Command.js'),
+	math = require('math-expression-evaluator');
 
 module.exports = class Help extends Command {
 	constructor(client) {
 		super(client, {
-			name: ' ',
-			description: ' ',
-			usage: prefix => '`' + prefix + '`',
-			examples: prefix => '`' + prefix + '`',
+			name: 'calcular',
+			description: 'Calcula una ecuación',
+			usage: prefix => '`' + prefix + 'calcular <ecuación>`',
+			examples: prefix =>
+				'`' +
+				prefix +
+				'calcular 10 + 56 * 50`, `' +
+				prefix +
+				'calcular 36 / 15 * 2`',
 			enabled: true,
 			ownerOnly: false,
 			guildOnly: false,

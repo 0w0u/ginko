@@ -29,12 +29,15 @@ Es un bot multiproposito de código abierto construido en [discord.js ^12 (maste
 ## Cómo contrubuir
 
 #### Pull request y cambios
+
 Puedes hacer pull request con cambios que hayas hecho en el bot, lo único que necesitas es conocimiento básico de Git y pullear a la rama `dev`.
 
 #### Issues
-Reporta los issues con el siguiente formato: 
+
+Reporta los issues con el siguiente formato:
+
 ```
-Título: 
+Título:
     - Título del problema
 Descripción:
     - Más detalles sobre el problema
@@ -44,7 +47,9 @@ Descripción:
 ```
 
 #### Plantilla .env
+
 Si gustas contribuir deberás tener un .env (que es donde se guardan datos globales importantes, como el token del bot)
+
 ```
 # Tokens del bot
 
@@ -54,7 +59,7 @@ Si gustas contribuir deberás tener un .env (que es donde se guardan datos globa
   tokensMongo=""
 # # Logs Token
   tokensLogsToken=
-# # Logs ID 
+# # Logs ID
   tokensLogsID=
 
 #########################
