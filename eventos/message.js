@@ -27,10 +27,11 @@ module.exports = class MessageEvent {
 					guildID: message.guild.id
 				});
 				data.member = member;
+				message.client = client;
 				prefix = client.functions.getPrefix(message, data);
 				if (!prefix) return;
 				if (guild.prefix === 'undefined' || guild.prefix === 'false') {
-					guild.prefix = 'g!';
+					guild.prefix = client.config.misc.prefix;
 					guild.save();
 				}
 				data.guild.plugins.logs = {
@@ -205,7 +206,9 @@ module.exports = class MessageEvent {
 						.setColor(client.colors.ginko)
 						.setTitle(client.defaults.ginkoun + '**¡Hola!**')
 						.setDescription(
-							'¡¿Olvidaste mi prefijo?! No importa, aquí te lo digo; `g!`'
+							'¡¿Olvidaste mi prefijo?! No importa, aquí te lo digo; `' +
+								prefix +
+								'`'
 						);
 					message.channel.send({ embed });
 					return;
@@ -221,7 +224,9 @@ module.exports = class MessageEvent {
 			message.misc = misc;
 			let user = await client.findOrCreateUser({ id: message.author.id });
 			data.user = user;
-			let dmserverprefix = message.guild ? data.guild.prefix : 'g!';
+			let dmserverprefix = message.guild
+				? data.guild.prefix
+				: client.config.misc.prefix;
 			message.dmguildprefix = dmserverprefix;
 			if (data.user) {
 				data.user = {

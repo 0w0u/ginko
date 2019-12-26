@@ -25,12 +25,14 @@ module.exports = {
 		);
 		const prefixes = [
 			`${mentionPrefix}`,
-			message.guild ? data.guild.prefix : 'g'
+			message.guild ? data.guild.prefix : message.client.config.misc.prefix
 		];
 		let prefix = undefined;
 		prefixes.forEach(p => {
 			if (message.content.startsWith(p)) {
-				message.guild ? (prefix = p) : (prefix = 'g!');
+				message.guild
+					? (prefix = p)
+					: (prefix = message.client.config.misc.prefix);
 			}
 		});
 		return prefix;
