@@ -1,4 +1,4 @@
-<p align="center"><img width=60% src="https://i.imgur.com/ENeGsaK.png"><br>Es un bot multiproposito de código abierto construido en discord.js.</p>
+<p align="center"><img width=30% src="https://i.imgur.com/ENeGsaK.png"><br>Es un bot multiproposito de código abierto construido en discord.js.</p>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 [![](https://img.shields.io/github/issues/wwmon/ginko)](https://github.com/wwmon/ginko/issues)
