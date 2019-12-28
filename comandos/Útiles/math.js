@@ -1,7 +1,7 @@
 const Command = require('../../base/Command.js'),
 	math = require('math-expression-evaluator');
 
-module.exports = class Help extends Command {
+module.exports = class MathCommand extends Command {
 	constructor(client) {
 		super(client, {
 			name: 'calcular',
