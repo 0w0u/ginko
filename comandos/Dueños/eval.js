@@ -64,16 +64,25 @@ module.exports = class Owner extends Command {
 					);
 				}
 			} catch (err) {
-				err = util.inspect(err, { depth: 0 });
 				if (
-					err.includes(client.config.tokens.bot || client.config.tokens.mongo)
+					err
+						.toString()
+						.includes(client.config.tokens.bot || client.config.tokens.mongo)
 				)
-					err = err.replace(
-						client.config.tokens.bot || client.config.tokens.mongo,
-						'T0K3N'
-					);
+					err = err
+						.toString()
+						.replace(
+							client.config.tokens.bot || client.config.tokens.mongo,
+							'T0K3N'
+						);
 				message.channel.send(
-					'> ' + message.defaults.error + '\n```js\n' + err + '\n```'
+					'> ' +
+						message.defaults.error +
+						'\n```js\n' +
+						(typeof err !== 'object'
+							? err.toString()
+							: util.inspect(err, { depth: 0 })) +
+						'\n```'
 				);
 			}
 		} catch (e) {

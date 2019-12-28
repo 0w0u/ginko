@@ -112,7 +112,7 @@ module.exports = class client extends Client {
 			command = this.commands.get(this.aliases.get(commandName));
 		}
 		if (!command) {
-			return `The command \`${commandName}\` doesn't seem to exist, nor is it an alias. Try again!`;
+			return `¡El comando \`${commandName}\` no existe o no es un alias!`;
 		}
 		if (command.shutdown) {
 			await command.shutdown(this);
