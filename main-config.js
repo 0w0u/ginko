@@ -12,6 +12,11 @@ module.exports = {
       id: process.env.tokensLogsID
     }
   },
+  web: {
+    secret: process.env.clientSecret,
+    url: process.env.webURL,
+    id: '621097720781996072'
+  },
   misc: {
     owners: [
       process.env.ownerKarol,
