@@ -54,6 +54,7 @@ module.exports = class Web {
         loginstatus = false;
       }
       res.render('paginas/indice', {
+        client: this.client,
         isLogged: {
           status: loginstatus
         }
@@ -77,7 +78,8 @@ module.exports = class Web {
     });
     app.get('/perfil', checkAuth, function(req, res) {
       res.render('paginas/perfil', {
-        userdata: req.user
+        userdata: req.user,
+        ginkoavatar: client.user.displayAvatarURL
       });
     });
     function checkAuth(req, res, next) {
