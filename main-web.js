@@ -1,8 +1,10 @@
 require('dotenv').config();
-const { tokens } = require('./main-config.js'),
-  phin = require('phin'),
-  bodyParser = require('body-parser'),
-  express = require('express'),
+var express = require('express'),
+  path = require('path'),
+  config = require('./main-config.js'),
+  session = require('express-session'),
+  passport = require('passport'),
+  { Strategy } = require('passport-discord'),
   app = express();
 
 module.exports = class Web {
@@ -11,88 +13,80 @@ module.exports = class Web {
     this.start();
   }
   start() {
-    app.use(bodyParser.json());
-    app.use(bodyParser.urlencoded({ extended: false }));
-    app.use(express.static('public'));
-    app.set('json spaces', 2);
-
-    app.get('/', function(request, response) {
-      response.sendStatus(200);
+    app.engine('ejs', require('ejs').__express);
+    app.set('view engine', 'ejs');
+    app.set('views', path.join(__dirname, '/web/rutas'));
+    app.use(express.static(__dirname + '/web/public'));
+    passport.serializeUser(function(user, done) {
+      done(null, user);
     });
-    app.get('/g', (req, res) => {
-      res.redirect('https://glitch.com/edit/#!/ginko-xyz');
+    passport.deserializeUser(function(obj, done) {
+      done(null, obj);
     });
-    app.get('/donate/patreon', (req, res) => {
-      res.redirect('https://www.patreon.com/ginkobot');
-    });
-    app.get('/donate/buymeacoffee', (req, res) => {
-      res.redirect('https://www.buymeacoffee.com/ginkobot');
-    });
-    app.get('/donate/paypal', (req, res) => {
-      res.redirect('https://www.paypal.me/ginkobot');
-    });
-    app.get('/invite', (req, res) => {
-      res.redirect(
-        'https://discordapp.com/oauth2/authorize?client_id=621097720781996072&scope=bot&permissions=2146958839'
-      );
-    });
-    app.get('/support', (req, res) => {
-      res.redirect('https://discordapp.com/invite/M8z4mgN');
-    });
-    app.get('/scripthub', function(request, response) {
-      response.sendFile(__dirname + '/views/scripthub.html');
-    });
-
-    app.post('/wbl/dbl', async (req, res) => {
-      if (
-        !req.headers.authorization ||
-        req.headers.authorization !== tokens.votes.password
+    var scopes = ['identify', 'guilds'];
+    passport.use(
+      new Strategy(
+        {
+          clientID: config.web.id,
+          clientSecret: config.web.secret,
+          callbackURL: config.web.url + 'callback',
+          scope: scopes
+        },
+        function(accessToken, refreshToken, profile, done) {
+          process.nextTick(function() {
+            return done(null, profile);
+          });
+        }
       )
-        return res.json({
-          status: 400,
-          message: 'Contraseña inválida'
-        });
-
-      let { user, bot } = req.body;
-
-      let usuario =
-        (await this.client.users.get(user)) ||
-        (await this.client.fetchUser(user));
-
-      let embed = {
-        title: '¡Acaba de votar!',
-        description:
-          '[¡Vota por mí en **top.gg**!](https://top.gg/bot/621097720781996072/vote)',
-        color: 3553599,
-        author: {
-          name: usuario.tag,
-          icon_url: usuario.displayAvatarURL()
+    );
+    app.use(
+      session({
+        secret: 'satella',
+        resave: false,
+        saveUninitialized: false
+      })
+    );
+    app.use(passport.initialize());
+    app.use(passport.session());
+    app.get('/', function(req, res) {
+      let loginstatus = true;
+      if (!req.isAuthenticated()) {
+        loginstatus = false;
+      }
+      res.render('paginas/indice', {
+        isLogged: {
+          status: loginstatus
         }
-      };
-
-      await phin({
-        url: tokens.votes.webhook,
-        method: 'POST',
-        data: {
-          embeds: [embed],
-          avatar_url: this.client.user.displayAvatarURL(),
-          username: this.client.user.username
-        }
-      });
-
-      res.json({
-        status: 200,
-        message: 'Voto registrado'
       });
     });
-
-    const listener = app.listen(process.env.PORT, function() {
-      console.log(
-        'Tu aplicación está viendo peticiones en el puerto ' +
-          listener.address().port
-      );
+    app.get(
+      '/login',
+      passport.authenticate('discord', { scope: scopes }),
+      function(req, res) {}
+    );
+    app.get(
+      '/callback',
+      passport.authenticate('discord', { failureRedirect: '/' }),
+      function(req, res) {
+        res.redirect('/perfil');
+      }
+    );
+    app.get('/logout', function(req, res) {
+      req.logout();
+      res.redirect('/');
+    });
+    app.get('/perfil', checkAuth, function(req, res) {
+      res.render('paginas/perfil', {
+        userdata: req.user
+      });
+    });
+    function checkAuth(req, res, next) {
+      if (req.isAuthenticated()) return next();
+      res.redirect('/');
+    }
+    app.listen(5000, function(err) {
+      if (err) return console.log(err);
+      console.log('Escuchando en 5000');
     });
   }
-
-  async reward(user) {}
 };

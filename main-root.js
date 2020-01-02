@@ -1,8 +1,7 @@
 const util = require('util'),
   fs = require('fs'),
   Client = require('./base/Ginko'),
-  web = require('./main-web'),
-  Web = new web(Client),
+  web = new (require('./main-web'))(Client),
   readdir = util.promisify(fs.readdir),
   client = new Client({ ws: { properties: { $browser: 'Discord iOS' } } }),
   mongoose = require('mongoose'),
@@ -19,7 +18,6 @@ const util = require('util'),
           }
         });
     });
-
     const evtFiles = await readdir('./eventos/');
     evtFiles.forEach(file => {
       const eventName = file.split('.')[0];
@@ -27,13 +25,10 @@ const util = require('util'),
       client.on(eventName, (...args) => event.run(...args));
       delete require.cache[require.resolve(`./eventos/${file}`)];
     });
-
     client.login(client.config.tokens.bot);
-
     setInterval(() => {
-      Web.client = client;
-    }, 5000);
-
+      web.client = client;
+    }, 5000)
     mongoose
       .connect(client.config.tokens.mongo, {
         useNewUrlParser: true,
@@ -48,5 +43,4 @@ const util = require('util'),
         );
       });
   };
-
 init();

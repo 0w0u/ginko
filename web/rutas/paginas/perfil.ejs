@@ -1,0 +1,19 @@
+<head>
+  <title><%= userdata.username %></title>
+</head>
+<style>
+  p, a, h1 {
+    color: #D1DCE1
+  }
+  body {
+    background-color: #36393F
+  }
+</style>
+<body>
+  <h1>
+    <%= userdata.username %>
+  </h1>
+  <p>
+    Datos obtenidos: <%- userdata.username %>#<%- userdata.discriminator %></p>
+  </p>
+</body>
