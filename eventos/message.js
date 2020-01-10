@@ -5,8 +5,8 @@ module.exports = class MessageEvent {
   }
   async run(message) {
     let client = this.client;
+    let data = {};
     try {
-      let data = {};
       let prefix;
       let embed = new MessageEmbed();
       embed
@@ -422,8 +422,8 @@ module.exports = class MessageEvent {
         }
         console.log(e);
       } finally {
-        user.commandsUsed += 1;
-        user.save();
+        data.user.commandsUsed += 1;
+        await data.user.save();
       }
     } catch (e) {
       console.log(e);
