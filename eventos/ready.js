@@ -10,11 +10,10 @@ module.exports = class ReadyEvent {
         '🥑 ~ Comiendo palta',
         '🥑 ~ Comiendo aguacate',
         '❤️ ~ Jugando con Charlotte',
+        '🎉 ~ ¡Próspero año 2020!',
         '☔ ~ @' + this.client.user.tag,
-        '🧩 ~ Atendiendo ' + this.client.users.size + ' usuarios',
-        '🧩 ~ Viendo ' + this.client.guilds.size + ' servidores',
-        '✨ ~ ¡Feliz año nuevo!',
-        '🎉 ~ ¡2020!'
+        '🧩 ~ Atendiendo a ' + this.client.users.size + ' usuarios',
+        '🧩 ~ Activa en ' + this.client.guilds.size + ' servidores'
       ];
       setInterval(() => {
         let index = Math.floor(Math.random() * (array.length - 1) + 1);
