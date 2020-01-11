@@ -5,14 +5,8 @@ module.exports = class Fun extends Command {
     super(client, {
       name: 'bizarrap',
       description: 'Conviértete en un BZRP Music session',
-      usage: prefix =>
-        '`' + prefix + 'bizarrap <usuario | texto> | <número> | [lado]`',
-      examples: prefix =>
-        '`' +
-        prefix +
-        'bizarrap Wos/22`, `' +
-        prefix +
-        'bizarrap Kinder Malo/22/C`',
+      usage: prefix => '`' + prefix + 'bizarrap <usuario | texto> | <número> | [lado]`',
+      examples: prefix => '`' + prefix + 'bizarrap Wos/22`, `' + prefix + 'bizarrap Kinder Malo/22/C`',
       enabled: true,
       ownerOnly: false,
       guildOnly: false,
@@ -54,17 +48,7 @@ module.exports = class Fun extends Command {
           embed
             .setColor(message.colors.ginko)
             .setTitle(message.defaults.ginkoun + 'Bizarrap Music Sessions')
-            .setDescription(
-              message.author.username +
-                ' aquí está tu music session\n```\n' +
-                (message.mentions.users.first()
-                  ? message.mentions.users.first().username.toUpperCase()
-                  : argu[0].toUpperCase()) +
-                ' || BZRP Music Sessions #' +
-                argu[1] +
-                (argu[2] ? ` || LADO ${argu[2][0].toUpperCase()}` : '') +
-                '\n```'
-            );
+            .setDescription(message.author.username + ' aquí está tu music session\n```\n' + (message.mentions.users.first() ? message.mentions.users.first().username.toUpperCase() : argu[0].toUpperCase()) + ' || BZRP Music Sessions #' + argu[1] + (argu[2] ? ` || LADO ${argu[2][0].toUpperCase()}` : '') + '\n```');
           return message.channel.send({ embed });
         }
       }

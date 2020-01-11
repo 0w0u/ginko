@@ -8,10 +8,7 @@ module.exports = class GuildDeleteEvent {
     try {
       let embed = new MessageEmbed();
       embed
-        .setAuthor(
-          this.client.user.tag,
-          this.client.user.displayAvatarURL({ size: 2048 })
-        )
+        .setAuthor(this.client.user.tag, this.client.user.displayAvatarURL({ size: 2048 }))
         .setColor(this.client.colors.red)
         .setTitle(this.client.defaults.redun + '¡Me sacaron de un servidor!')
         .setDescription(guild.name + ' (`' + guild.id + '`)')

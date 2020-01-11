@@ -18,11 +18,7 @@ module.exports = {
     id: '621097720781996072'
   },
   misc: {
-    owners: [
-      process.env.ownerKarol,
-      process.env.ownerDevsaider,
-      process.env.ownerGameboy
-    ],
+    owners: [process.env.ownerKarol, process.env.ownerDevsaider, process.env.ownerGameboy],
     prefix: process.env.prefix,
     others: {
       github: process.env.github,

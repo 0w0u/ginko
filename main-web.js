@@ -13,6 +13,7 @@ module.exports = class Web {
     this.start();
   }
   start() {
+    let client = this.client;
     app.engine('ejs', require('ejs').__express);
     app.set('view engine', 'ejs');
     app.set('views', path.join(__dirname, '/web/rutas'));
@@ -27,7 +28,7 @@ module.exports = class Web {
     passport.use(
       new Strategy(
         {
-          clientID: config.web.id,
+          clientID: '621097720781996072',
           clientSecret: config.web.secret,
           callbackURL: config.web.url + 'callback',
           scope: scopes
@@ -54,24 +55,16 @@ module.exports = class Web {
         loginstatus = false;
       }
       res.render('paginas/indice', {
-        client: this.client,
+        client: client,
         isLogged: {
           status: loginstatus
         }
       });
     });
-    app.get(
-      '/login',
-      passport.authenticate('discord', { scope: scopes }),
-      function(req, res) {}
-    );
-    app.get(
-      '/callback',
-      passport.authenticate('discord', { failureRedirect: '/' }),
-      function(req, res) {
-        res.redirect('/perfil');
-      }
-    );
+    app.get('/login', passport.authenticate('discord', { scope: scopes }), function(req, res) {});
+    app.get('/callback', passport.authenticate('discord', { failureRedirect: '/' }), function(req, res) {
+      res.redirect('/perfil');
+    });
     app.get('/logout', function(req, res) {
       req.logout();
       res.redirect('/');
@@ -79,7 +72,7 @@ module.exports = class Web {
     app.get('/perfil', checkAuth, function(req, res) {
       res.render('paginas/perfil', {
         userdata: req.user,
-        ginkoavatar: client.user.displayAvatarURL
+        ginkoavatar: client.user.displayAvatarURL()
       });
     });
     function checkAuth(req, res, next) {

@@ -21,29 +21,19 @@ module.exports = class Fun extends Command {
 
   async run(message, args, data, embed) {
     try {
-      let nekoKao = [
-          '（＾・ω・＾❁',
-          '(=｀ω´=)',
-          '(=^･ω･^=)',
-          '(=^･ｪ･^=))ﾉ彡☆',
-          '（=´∇｀=）'
-        ],
+      let nekoKao = ['（＾・ω・＾❁', '(=｀ω´=)', '(=^･ω･^=)', '(=^･ｪ･^=))ﾉ彡☆', '（=´∇｀=）'],
         ranKao = nekoKao[Math.floor(Math.random() * nekoKao.length)],
         nekoSel = ['neko', 'nekogif', 'neko', 'nekogif'],
         ranSel = nekoSel[Math.floor(Math.random() * nekoSel.length)],
         img;
       if (!args[0]) {
-        ranSel === 'neko'
-          ? (img = await this.client.tools.sfw.neko())
-          : (img = await this.client.tools.sfw.nekoGif());
+        ranSel === 'neko' ? (img = await this.client.tools.sfw.neko()) : (img = await this.client.tools.sfw.nekoGif());
       } else if (args[0].toLowerCase() === 'gif') {
         img = await this.client.tools.sfw.nekoGif();
       } else if (args[0].toLowerCase() === 'imagen') {
         img = await this.client.tools.sfw.neko();
       } else {
-        ranSel === 'neko'
-          ? (img = await this.client.tools.sfw.neko())
-          : (img = await this.client.tools.sfw.nekoGif());
+        ranSel === 'neko' ? (img = await this.client.tools.sfw.neko()) : (img = await this.client.tools.sfw.nekoGif());
       }
       embed
         .setColor(this.client.colors.ginko)
