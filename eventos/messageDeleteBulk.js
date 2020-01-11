@@ -8,51 +8,29 @@ module.exports = class MessageDeleteBulkEvent {
     try {
       if (messages.first().channel.type === 'dm') return;
       setTimeout(async () => {
-        let entries = (
-          await messages
-            .first()
-            .channel.guild.fetchAuditLogs({ type: 'MESSAGE_BULK_DELETE' })
-        ).entries
-          .array()
-          .sort((a, b) => b.createdAt - a.createdAt)[0];
+        let entries = (await messages.first().channel.guild.fetchAuditLogs({ type: 'MESSAGE_BULK_DELETE' })).entries.array().sort((a, b) => b.createdAt - a.createdAt)[0];
         let embed = new MessageEmbed();
         embed
-          .setAuthor(
-            entries.executor.tag,
-            entries.executor.displayAvatarURL({ size: 2048 })
-          )
-          .setFooter(
-            messages.first().channel.guild.name,
-            messages.first().channel.guild.iconURL({ size: 2048 })
-          )
+          .setAuthor(entries.executor.tag, entries.executor.displayAvatarURL({ size: 2048 }))
+          .setFooter(messages.first().channel.guild.name, messages.first().channel.guild.iconURL({ size: 2048 }))
           .setTimestamp();
         let guild = await this.client.findOrCreateGuild({
           id: messages.first().channel.guild.id
         });
         if (guild.plugins.logs.messageLogs.enabled === true) {
-          if (
-            guild.plugins.logs.messageLogs.logs.messageDelete.enabled === false
-          ) {
+          if (guild.plugins.logs.messageLogs.logs.messageDelete.enabled === false) {
             return;
           } else if (guild.plugins.logs.messageLogs.channel === undefined) {
             return;
           } else {
-            let channel = messages
-              .first()
-              .channel.guild.channels.get(
-                guild.plugins.logs.messageLogs.channel
-              );
+            let channel = messages.first().channel.guild.channels.get(guild.plugins.logs.messageLogs.channel);
             if (!channel) {
               return;
             } else {
               embed
                 .setColor(this.client.colors.red)
-                .setTitle(
-                  this.client.defaults.redun + 'Mensajes borrados en masa'
-                )
-                .setDescription(
-                  'Canal: `' + messages.first().channel.name + '`'
-                )
+                .setTitle(this.client.defaults.redun + 'Mensajes borrados en masa')
+                .setDescription('Canal: `' + messages.first().channel.name + '`')
                 .addField(
                   'Primeros 5 mensajes',
                   messages

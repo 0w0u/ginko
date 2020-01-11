@@ -1,7 +1,6 @@
 const util = require('util'),
   fs = require('fs'),
   Client = require('./base/Ginko'),
-  web = new (require('./main-web'))(Client),
   readdir = util.promisify(fs.readdir),
   client = new Client({ ws: { properties: { $browser: 'Discord iOS' } } }),
   mongoose = require('mongoose'),
@@ -26,9 +25,6 @@ const util = require('util'),
       delete require.cache[require.resolve(`./eventos/${file}`)];
     });
     client.login(client.config.tokens.bot);
-    setInterval(() => {
-      web.client = client;
-    }, 5000)
     mongoose
       .connect(client.config.tokens.mongo, {
         useNewUrlParser: true,
@@ -38,9 +34,11 @@ const util = require('util'),
         console.log('¡Conectando con la base de datos!');
       })
       .catch(err => {
-        console.log(
-          '¡No se ha podido contectar a la base de datos!\nError:' + err
-        );
+        console.log('¡No se ha podido contectar a la base de datos!\nError:' + err);
       });
+    let web = new (require('./main-web'))(client);
+    setInterval(() => {
+      web.client = client;
+    }, 5000);
   };
 init();

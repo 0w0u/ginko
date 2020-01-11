@@ -21,19 +21,7 @@ module.exports = class Fun extends Command {
 
   async run(message, args, data, embed) {
     try {
-      let wawa = [
-        'Sí',
-        'No',
-        '¡Por supuesto!',
-        'No lo creo...',
-        'Talvez',
-        'Muy probablemente',
-        'Puede que sí',
-        'No lo sé',
-        'No tengo idea',
-        'Probablemente',
-        'Espero así sea'
-      ];
+      let wawa = ['Sí', 'No', '¡Por supuesto!', 'No lo creo...', 'Talvez', 'Muy probablemente', 'Puede que sí', 'No lo sé', 'No tengo idea', 'Probablemente', 'Espero así sea'];
       let uwu = wawa[Math.floor(Math.random() * wawa.length)];
       if (!args[0]) {
         embed

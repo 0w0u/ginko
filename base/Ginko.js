@@ -85,9 +85,7 @@ module.exports = class client extends Client {
 
   loadCommands(commandPath, commandName) {
     try {
-      const props = new (require(`.${commandPath}${path.sep}${commandName}`))(
-        this
-      );
+      const props = new (require(`.${commandPath}${path.sep}${commandName}`))(this);
       console.log(`Cargando comando: ${props.help.name} 👌`);
       props.config.location = commandPath;
       if (props.init) {
@@ -117,9 +115,7 @@ module.exports = class client extends Client {
     if (command.shutdown) {
       await command.shutdown(this);
     }
-    delete require.cache[
-      require.resolve(`.${commandPath}${path.sep}${commandName}.js`)
-    ];
+    delete require.cache[require.resolve(`.${commandPath}${path.sep}${commandName}.js`)];
     return false;
   }
 
@@ -130,33 +126,15 @@ module.exports = class client extends Client {
       embed
         .addField('Error en', `Comando: \`${data.commandName}\``, true)
         .addField('Descripción', `\`\`\`coffescript\n${data.description}\`\`\``)
-        .setFooter(
-          'Error ocurrido en ' +
-            (data.message.guild
-              ? data.message.guild.id + ' | ' + data.message.guild.name
-              : 'DM | ' + data.message.author.tag)
-        );
+        .setFooter('Error ocurrido en ' + (data.message.guild ? data.message.guild.id + ' | ' + data.message.guild.name : 'DM | ' + data.message.author.tag));
       data.message.channel.send(
         new MessageEmbed()
-          .setAuthor(
-            data.message.author.tag,
-            data.message.author.displayAvatarURL({ size: 2048 })
-          )
+          .setAuthor(data.message.author.tag, data.message.author.displayAvatarURL({ size: 2048 }))
           .setColor(this.colors.red)
-          .addField(
-            '<:au_MiscRedTick:599396704193740838> • Un error (des)conocido ha ocurrido',
-            'Por favor contacta con el personal del bot para que se solucione lo más pronto posible\n[Servidor de soporte](' +
-              this.config.misc.others.support +
-              ')'
-          )
+          .addField('<:au_MiscRedTick:599396704193740838> • Un error (des)conocido ha ocurrido', 'Por favor contacta con el personal del bot para que se solucione lo más pronto posible\n[Servidor de soporte](' + this.config.misc.others.support + ')')
       );
     } else if (data.type === 'event') {
-      embed
-        .addField('Error en', `Evento: \`${data.eventName}\``, true)
-        .addField(
-          'Descripción',
-          `\`\`\`coffescript\n${data.description}\`\`\``
-        );
+      embed.addField('Error en', `Evento: \`${data.eventName}\``, true).addField('Descripción', `\`\`\`coffescript\n${data.description}\`\`\``);
     }
     let channel = await this.channels.get('621114100868710402');
     channel.send(embed);
@@ -165,14 +143,10 @@ module.exports = class client extends Client {
   async findOrCreateUser(param, isLean) {
     let usersData = this.usersData;
     return new Promise(async function(resolve, reject) {
-      let userData = isLean
-        ? await usersData.findOne(param).lean()
-        : await usersData.findOne(param);
+      let userData = isLean ? await usersData.findOne(param).lean() : await usersData.findOne(param);
       if (userData) {
         userData.save = async function() {
-          await usersData
-            .where({ _id: userData._id })
-            .updateOne({ $set: userData });
+          await usersData.where({ _id: userData._id }).updateOne({ $set: userData });
           userData = await usersData.findOne(param).lean();
           return userData;
         };
@@ -181,9 +155,7 @@ module.exports = class client extends Client {
         userData = new usersData(param);
         await userData.save();
         userData.save = async function() {
-          await usersData
-            .where({ _id: userData._id })
-            .updateOne({ $set: userData });
+          await usersData.where({ _id: userData._id }).updateOne({ $set: userData });
           userData = await usersData.findOne(param).lean();
           return userData;
         };
@@ -196,14 +168,10 @@ module.exports = class client extends Client {
     let membersData = this.membersData;
     let guildsData = this.guildsData;
     return new Promise(async function(resolve, reject) {
-      let memberData = isLean
-        ? await membersData.findOne(param).lean()
-        : await membersData.findOne(param);
+      let memberData = isLean ? await membersData.findOne(param).lean() : await membersData.findOne(param);
       if (memberData) {
         memberData.save = async function() {
-          await membersData
-            .where({ _id: memberData._id })
-            .updateOne({ $set: memberData });
+          await membersData.where({ _id: memberData._id }).updateOne({ $set: memberData });
           memberData = await membersData.findOne(param).lean();
           return memberData;
         };
@@ -212,9 +180,7 @@ module.exports = class client extends Client {
         memberData = new membersData(param);
         await memberData.save();
         memberData.save = async function() {
-          await membersData
-            .where({ _id: memberData._id })
-            .updateOne({ $set: memberData });
+          await membersData.where({ _id: memberData._id }).updateOne({ $set: memberData });
           memberData = await membersData.findOne(param).lean();
           return memberData;
         };
@@ -241,9 +207,7 @@ module.exports = class client extends Client {
         guildData.save = async function() {
           this.guildsData = guildsData;
           this.guildsData = guildsData;
-          await this.guildsData
-            .where({ _id: guildData._id })
-            .updateOne({ $set: guildData });
+          await this.guildsData.where({ _id: guildData._id }).updateOne({ $set: guildData });
           guildData = await this.guildsData.findOne(param).lean();
           return guildData;
         };
@@ -253,9 +217,7 @@ module.exports = class client extends Client {
         await guildData.save();
         guildData.save = async function() {
           this.guildsData = guildsData;
-          await this.guildsData
-            .where({ _id: guildData._id })
-            .updateOne({ $set: guildData });
+          await this.guildsData.where({ _id: guildData._id }).updateOne({ $set: guildData });
           guildData = await this.guildsData.findOne(param).lean();
           return guildData;
         };
