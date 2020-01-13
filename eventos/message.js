@@ -241,22 +241,27 @@ module.exports = class MessageEvent {
       }
       let webhook = new WebhookClient(client.config.tokens.logs.id, client.config.tokens.logs.token);
       try {
-        cmd.run(message, args, data, embed);
-        if (cmd.help.name === 'eval') {
-          return;
-        } else {
-          webhook.send(`El usuario \`${message.author.tag}\`, ha usado el comando \`${cmd.help.name}\` en: \`${message.guild ? message.guild.name : `mensaje directo`}\``);
-        }
+        message.channel.send('Ginko pasará por una etapa de falta de desarrollo. Actualmente trabajando en un nuevo proyecto; **Yui**\nMás información en: https://discord.gg/p4vyNjV');
+        /**
+         * cmd.run(message, args, data, embed);
+         * if (cmd.help.name === 'eval') {
+         *  return;*/
+        /**
+         * Deshabilitado por tiempo indefinido.
+         *
+         * webhook.send(`El usuario \`${message.author.tag}\`, ha usado el comando \`${cmd.help.name}\` en: \`${message.guild ? message.guild.name : `mensaje directo`}\``);
+         */
       } catch (e) {
         if (cmd.help.name === 'eval') {
           return;
         } else {
-          webhook.send(`El usuario \`${message.author.tag}\`, ha usado el comando \`${cmd.help.name}\` en: \`${message.guild ? message.guild.name : `mensaje directo`}\``);
+          /**
+           * Deshabilitado por tiempo indefinido.
+           *
+           * webhook.send(`El usuario \`${message.author.tag}\`, ha usado el comando \`${cmd.help.name}\` en: \`${message.guild ? message.guild.name : `mensaje directo`}\``);
+           */
         }
         console.log(e);
-      } finally {
-        data.user.commandsUsed += 1;
-        await data.user.save();
       }
     } catch (e) {
       console.log(e);
