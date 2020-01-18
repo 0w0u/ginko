@@ -87,3 +87,5 @@ Si gustas contribuir deberás tener un .env (que es donde se guardan datos globa
 # # Invite
   invite=''
 ```
+
+Todo es un sentido de vida.
