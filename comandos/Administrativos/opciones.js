@@ -6,16 +6,8 @@ module.exports = class Admin extends Command {
     super(client, {
       name: 'opciones',
       description: 'Cambia las opciones del servidor',
-      usage: prefix =>
-        '`' +
-        prefix +
-        'opciones <opción> <primer valor> [<segundo o más valores>]`',
-      examples: prefix =>
-        '`' +
-        prefix +
-        'opciones prefijo uwu!`, `' +
-        prefix +
-        'opciones sugerencias mensaje md ¡Muchas gracias por tu sugerencia!`',
+      usage: prefix => '`' + prefix + 'opciones <opción> <primer valor> [<segundo o más valores>]`',
+      examples: prefix => '`' + prefix + 'opciones prefijo uwu!`, `' + prefix + 'opciones sugerencias mensaje md ¡Muchas gracias por tu sugerencia!`',
       enabled: true,
       ownerOnly: false,
       guildOnly: true,
@@ -37,15 +29,8 @@ module.exports = class Admin extends Command {
         embed
           .setColor(message.colors.red)
           .setTitle(message.defaults.noargs)
-          .setDescription(
-            'Necesitas elegir una opción\nOpciones:\n`' + optionsJoin + '`'
-          )
-          .addField(
-            'Uso',
-            '`' +
-              message.dmguildprefix +
-              'opciones <opción> <primer valor> [<segundo o más valores>]`'
-          );
+          .setDescription('Necesitas elegir una opción\nOpciones:\n`' + optionsJoin + '`')
+          .addField('Uso', '`' + message.dmguildprefix + 'opciones <opción> <primer valor> [<segundo o más valores>]`');
         message.channel.send({ embed });
         return;
       } else if (args[0].toLowerCase() === options[0]) {
@@ -55,9 +40,7 @@ module.exports = class Admin extends Command {
           embed
             .setColor(message.colors.red)
             .setTitle(message.defaults.noargs)
-            .setDescription(
-              'Necesitas elegir una opción\nOpciones:\n`' + optionsJoin + '`'
-            );
+            .setDescription('Necesitas elegir una opción\nOpciones:\n`' + optionsJoin + '`');
           message.channel.send({ embed });
           return;
         } else if (args[1].toLowerCase() === options[0]) {
@@ -67,9 +50,7 @@ module.exports = class Admin extends Command {
               embed
                 .setColor(message.colors.green)
                 .setTitle(message.defaults.done)
-                .setDescription(
-                  'Las sugerencias se han habilitado correctamente'
-                );
+                .setDescription('Las sugerencias se han habilitado correctamente');
               message.channel.send({ embed });
               guild.plugins.suggestions.enabled = true;
               guild.save();
@@ -100,9 +81,7 @@ module.exports = class Admin extends Command {
               embed
                 .setColor(message.colors.red)
                 .setTitle(message.defaults.error)
-                .setDescription(
-                  'No hay ningún canal que coincida con tu búsqueda, ¡intenta ser más específico!'
-                );
+                .setDescription('No hay ningún canal que coincida con tu búsqueda, ¡intenta ser más específico!');
               return message.channel.send({ embed });
             } else if (channels.length === 1) {
               return await o(channels[0]);
@@ -110,9 +89,7 @@ module.exports = class Admin extends Command {
               embed
                 .setColor(message.colors.red)
                 .setTitle(message.defaults.error)
-                .setDescription(
-                  'Muchos canales coinciden con tu búsqueda, ¡intenta ser más específico!'
-                );
+                .setDescription('Muchos canales coinciden con tu búsqueda, ¡intenta ser más específico!');
               return message.channel.send({ embed });
             } else {
               let length = channels.length > 9 ? 10 : channels.length,
@@ -127,42 +104,22 @@ module.exports = class Admin extends Command {
                 .setTitle(message.defaults.grayun + 'Esperando respuesta...')
                 .setDescription(textS.join(',') + '```');
               let msg = await message.channel.send({ embed });
-              let index = await message.channel.awaitMessages(
-                m =>
-                  m.author.id == message.author.id &&
-                  m.content > 0 &&
-                  m.content < length + 1,
-                {
-                  max: 1,
-                  time: 60000,
-                  errors: ['cancel', 'cancelar']
-                }
-              );
+              let index = await message.channel.awaitMessages(m => m.author.id == message.author.id && m.content > 0 && m.content < length + 1, {
+                max: 1,
+                time: 60000,
+                errors: ['cancel', 'cancelar']
+              });
               if (!index.first()) {
                 embed
                   .setColor(message.colors.red)
-                  .setTitle(
-                    message.defaults.redun + '¡No se recibió respuesta!'
-                  )
-                  .setDescription(
-                    'Debes seleccionar un número del índice, ¡inténtalo de nuevo!'
-                  );
+                  .setTitle(message.defaults.redun + '¡No se recibió respuesta!')
+                  .setDescription('Debes seleccionar un número del índice, ¡inténtalo de nuevo!');
                 message.channel.send({ embed });
-                if (
-                  message.channel
-                    .permissionsFor(this.client.user)
-                    .has('MANAGE_MESSAGES')
-                )
-                  message.delete();
+                if (message.channel.permissionsFor(this.client.user).has('MANAGE_MESSAGES')) message.delete();
                 msg.delete();
                 return;
               } else {
-                if (
-                  message.channel
-                    .permissionsFor(this.client.user)
-                    .has('MANAGE_MESSAGES')
-                )
-                  message.delete();
+                if (message.channel.permissionsFor(this.client.user).has('MANAGE_MESSAGES')) message.delete();
                 msg.delete();
                 return await o(channels[index.first().content - 1]);
               }
@@ -172,11 +129,7 @@ module.exports = class Admin extends Command {
             embed
               .setColor(message.colors.green)
               .setTitle(message.defaults.done)
-              .setDescription(
-                'Las sugerencias se han habilitado correctamente en `#' +
-                  wa.name +
-                  '`'
-              );
+              .setDescription('Las sugerencias se han habilitado correctamente en `#' + wa.name + '`');
             message.channel.send({ embed });
             guild.plugins.suggestions.enabled = true;
             guild.plugins.suggestions.channel = wa.id;
@@ -198,9 +151,7 @@ module.exports = class Admin extends Command {
             embed
               .setColor(message.colors.red)
               .setTitle(message.defaults.noargs)
-              .setDescription(
-                'Necesitas elegir una opción\nOpciones:\n`' + optionsJoin + '`'
-              );
+              .setDescription('Necesitas elegir una opción\nOpciones:\n`' + optionsJoin + '`');
             message.channel.send({ embed });
             return;
           } else if (args[2].toLowerCase() === options[0]) {
@@ -208,40 +159,20 @@ module.exports = class Admin extends Command {
               embed
                 .setColor(message.colors.red)
                 .setTitle(message.defaults.noargs)
-                .setDescription(
-                  'Necesitas escribir el mensaje que se enviará' +
-                    (guild.plugins.suggestions.options.reply.dm.enabled.default
-                      ? '\nSi quieres desactivar los mensajes puedes escribir `' +
-                        guild.prefix +
-                        'opciones sugerencias mensaje md cambiar`'
-                      : null) +
-                    '\nVariables colocables dentro de la respuesta\n>>> ' +
-                    '`{servidor:nombre}` • Coloca el nombre del servidor\n' +
-                    '`{servidor:id}` • Coloca la ID del servidor\n' +
-                    '`{autor:nombre}` • Coloca el nombre del autor de la sugerencia\n' +
-                    '`{autor:mencion}` • Coloca una mención al autor de la sugerencia\n' +
-                    '`{autor:tag}` • Coloca el tag del autor de la sugerencia, ej; `mon#0010`\n' +
-                    '`{autor:id}` • Coloca la ID del autor de la sugerencia'
-                );
+                .setDescription('Necesitas escribir el mensaje que se enviará' + (guild.plugins.suggestions.options.reply.dm.enabled.default ? '\nSi quieres desactivar los mensajes puedes escribir `' + guild.prefix + 'opciones sugerencias mensaje md cambiar`' : null) + '\nVariables colocables dentro de la respuesta\n>>> ' + '`{servidor:nombre}` • Coloca el nombre del servidor\n' + '`{servidor:id}` • Coloca la ID del servidor\n' + '`{autor:nombre}` • Coloca el nombre del autor de la sugerencia\n' + '`{autor:mencion}` • Coloca una mención al autor de la sugerencia\n' + '`{autor:tag}` • Coloca el tag del autor de la sugerencia, ej; `mon#0010`\n' + '`{autor:id}` • Coloca la ID del autor de la sugerencia');
               message.channel.send({ embed });
               return;
             } else if (args[3].toLowerCase() === 'cambiar') {
               let sugg = guild.plugins.suggestions.options.reply.dm;
-              embed
-                .setColor(message.colors.green)
-                .setTitle(message.defaults.done);
+              embed.setColor(message.colors.green).setTitle(message.defaults.done);
               if (sugg.enabled) {
-                embed.setDescription(
-                  'Los mensajes se han deshabilitado correctamente'
-                );
+                embed.setDescription('Los mensajes se han deshabilitado correctamente');
                 message.channel.send({ embed });
                 sugg.enabled = false;
                 guild.save();
                 return;
               } else {
-                embed.setDescription(
-                  'Los mensajes se han habilitado correctamente'
-                );
+                embed.setDescription('Los mensajes se han habilitado correctamente');
                 message.channel.send({ embed });
                 sugg.enabled = true;
                 guild.save();
@@ -252,11 +183,7 @@ module.exports = class Admin extends Command {
               embed
                 .setColor(message.colors.green)
                 .setTitle(message.defaults.done)
-                .setDescription(
-                  'El mensaje que se enviará se ha establecido a: `' +
-                    sugg +
-                    '`'
-                );
+                .setDescription('El mensaje que se enviará se ha establecido a: `' + sugg + '`');
               message.channel.send({ embed });
               guild.plugins.suggestions.options.reply.dm = sugg;
               guild.save();
@@ -267,40 +194,20 @@ module.exports = class Admin extends Command {
               embed
                 .setColor(message.colors.red)
                 .setTitle(message.defaults.noargs)
-                .setDescription(
-                  'Necesitas escribir el mensaje que se enviará' +
-                    (guild.plugins.suggestions.options.reply.channel.enabled
-                      ? '\nSi quieres desactivar los mensajes puedes escribir `' +
-                        guild.prefix +
-                        'opciones sugerencias mensaje canal cambiar`'
-                      : null) +
-                    '\nVariables colocables dentro de la respuesta\n>>> ' +
-                    '`{servidor:nombre}` • Coloca el nombre del servidor\n' +
-                    '`{servidor:id}` • Coloca la ID del servidor\n' +
-                    '`{autor:nombre}` • Coloca el nombre del autor de la sugerencia\n' +
-                    '`{autor:mencion}` • Coloca una mención al autor de la sugerencia\n' +
-                    '`{autor:tag}` • Coloca el tag del autor de la sugerencia, ej; `mon#0010`\n' +
-                    '`{autor:id}` • Coloca la ID del autor de la sugerencia'
-                );
+                .setDescription('Necesitas escribir el mensaje que se enviará' + (guild.plugins.suggestions.options.reply.channel.enabled ? '\nSi quieres desactivar los mensajes puedes escribir `' + guild.prefix + 'opciones sugerencias mensaje canal cambiar`' : null) + '\nVariables colocables dentro de la respuesta\n>>> ' + '`{servidor:nombre}` • Coloca el nombre del servidor\n' + '`{servidor:id}` • Coloca la ID del servidor\n' + '`{autor:nombre}` • Coloca el nombre del autor de la sugerencia\n' + '`{autor:mencion}` • Coloca una mención al autor de la sugerencia\n' + '`{autor:tag}` • Coloca el tag del autor de la sugerencia, ej; `mon#0010`\n' + '`{autor:id}` • Coloca la ID del autor de la sugerencia');
               message.channel.send({ embed });
               return;
             } else if (args[3].toLowerCase() === 'cambiar') {
               let sugg = guild.plugins.suggestions.options.reply.channel;
-              embed
-                .setColor(message.colors.green)
-                .setTitle(message.defaults.done);
+              embed.setColor(message.colors.green).setTitle(message.defaults.done);
               if (sugg.enabled) {
-                embed.setDescription(
-                  'Los mensajes se han deshabilitado correctamente'
-                );
+                embed.setDescription('Los mensajes se han deshabilitado correctamente');
                 message.channel.send({ embed });
                 sugg.enabled = false;
                 guild.save();
                 return;
               } else {
-                embed.setDescription(
-                  'Los mensajes se han habilitado correctamente'
-                );
+                embed.setDescription('Los mensajes se han habilitado correctamente');
                 message.channel.send({ embed });
                 sugg.enabled = true;
                 guild.save();
@@ -311,11 +218,7 @@ module.exports = class Admin extends Command {
               embed
                 .setColor(message.colors.green)
                 .setTitle(message.defaults.done)
-                .setDescription(
-                  'El mensaje que se enviará se ha establecido a: `' +
-                    sugg +
-                    '`'
-                );
+                .setDescription('El mensaje que se enviará se ha establecido a: `' + sugg + '`');
               message.channel.send({ embed });
               guild.plugins.suggestions.options.reply.channel = sugg;
               guild.save();
@@ -325,11 +228,7 @@ module.exports = class Admin extends Command {
             embed
               .setColor(message.colors.red)
               .setTitle(message.defaults.error)
-              .setDescription(
-                'Esa no es una opción válida, las opciones válidas son:\n`' +
-                  optionsJoin +
-                  '`'
-              );
+              .setDescription('Esa no es una opción válida, las opciones válidas son:\n`' + optionsJoin + '`');
             message.channel.send({ embed });
             return;
           }
@@ -337,11 +236,7 @@ module.exports = class Admin extends Command {
           embed
             .setColor(message.colors.red)
             .setTitle(message.defaults.error)
-            .setDescription(
-              'Esa no es una opción válida, las opciones válidas son:\n`' +
-                optionsJoin +
-                '`'
-            );
+            .setDescription('Esa no es una opción válida, las opciones válidas son:\n`' + optionsJoin + '`');
           message.channel.send({ embed });
           return;
         }
@@ -352,26 +247,17 @@ module.exports = class Admin extends Command {
           embed
             .setColor(message.colors.red)
             .setTitle(message.defaults.noargs)
-            .setDescription(
-              'Necesitas elegir una opción\nOpciones:\n`' + categoriesJoin + '`'
-            );
+            .setDescription('Necesitas elegir una opción\nOpciones:\n`' + categoriesJoin + '`');
           message.channel.send({ embed });
           return;
         } else if (args[1].toLowerCase() === categories[0]) {
-          let options = [
-              'habilitar',
-              'deshabilitar',
-              'mensajes-editados',
-              'mensajes-borrados'
-            ],
+          let options = ['habilitar', 'deshabilitar', 'mensajes-editados', 'mensajes-borrados'],
             optionsJoin = options.join('`, `');
           if (!args[2]) {
             embed
               .setColor(message.colors.red)
               .setTitle(message.defaults.noargs)
-              .setDescription(
-                'Necesitas elegir una opción\nOpciones:\n`' + optionsJoin + '`'
-              );
+              .setDescription('Necesitas elegir una opción\nOpciones:\n`' + optionsJoin + '`');
             message.channel.send({ embed });
             return;
           } else if (args[2].toLowerCase() === options[0]) {
@@ -381,9 +267,7 @@ module.exports = class Admin extends Command {
                 embed
                   .setColor(message.colors.green)
                   .setTitle(message.defaults.done)
-                  .setDescription(
-                    'Las sugerencias se han habilitado correctamente'
-                  );
+                  .setDescription('Las sugerencias se han habilitado correctamente');
                 message.channel.send({ embed });
                 guild.plugins.logs.messageLogs.enabled = true;
                 guild.save();
@@ -412,9 +296,7 @@ module.exports = class Admin extends Command {
                 embed
                   .setColor(message.colors.red)
                   .setTitle(message.defaults.error)
-                  .setDescription(
-                    'No hay ningún canal que coincida con tu búsqueda, ¡intenta ser más específico!'
-                  );
+                  .setDescription('No hay ningún canal que coincida con tu búsqueda, ¡intenta ser más específico!');
                 return message.channel.send({ embed });
               } else if (channels.length === 1) {
                 return await o(channels[0]);
@@ -422,9 +304,7 @@ module.exports = class Admin extends Command {
                 embed
                   .setColor(message.colors.red)
                   .setTitle(message.defaults.error)
-                  .setDescription(
-                    'Muchos canales coinciden con tu búsqueda, ¡intenta ser más específico!'
-                  );
+                  .setDescription('Muchos canales coinciden con tu búsqueda, ¡intenta ser más específico!');
                 return message.channel.send({ embed });
               } else {
                 let length = channels.length > 9 ? 10 : channels.length,
@@ -439,42 +319,22 @@ module.exports = class Admin extends Command {
                   .setTitle(message.defaults.grayun + 'Esperando respuesta...')
                   .setDescription(textS.join(',') + '```');
                 let msg = await message.channel.send({ embed });
-                let index = await message.channel.awaitMessages(
-                  m =>
-                    m.author.id == message.author.id &&
-                    m.content > 0 &&
-                    m.content < length + 1,
-                  {
-                    max: 1,
-                    time: 60000,
-                    errors: ['cancel', 'cancelar']
-                  }
-                );
+                let index = await message.channel.awaitMessages(m => m.author.id == message.author.id && m.content > 0 && m.content < length + 1, {
+                  max: 1,
+                  time: 60000,
+                  errors: ['cancel', 'cancelar']
+                });
                 if (!index.first()) {
                   embed
                     .setColor(message.colors.red)
-                    .setTitle(
-                      message.defaults.redun + '¡No se recibió respuesta!'
-                    )
-                    .setDescription(
-                      'Debes seleccionar un número del índice, ¡inténtalo de nuevo!'
-                    );
+                    .setTitle(message.defaults.redun + '¡No se recibió respuesta!')
+                    .setDescription('Debes seleccionar un número del índice, ¡inténtalo de nuevo!');
                   message.channel.send({ embed });
-                  if (
-                    message.channel
-                      .permissionsFor(this.client.user)
-                      .has('MANAGE_MESSAGES')
-                  )
-                    message.delete();
+                  if (message.channel.permissionsFor(this.client.user).has('MANAGE_MESSAGES')) message.delete();
                   msg.delete();
                   return;
                 } else {
-                  if (
-                    message.channel
-                      .permissionsFor(this.client.user)
-                      .has('MANAGE_MESSAGES')
-                  )
-                    message.delete();
+                  if (message.channel.permissionsFor(this.client.user).has('MANAGE_MESSAGES')) message.delete();
                   msg.delete();
                   return await o(channels[index.first().content - 1]);
                 }
@@ -484,11 +344,7 @@ module.exports = class Admin extends Command {
               embed
                 .setColor(message.colors.green)
                 .setTitle(message.defaults.done)
-                .setDescription(
-                  'Las sugerencias se han habilitado correctamente en `#' +
-                    m.name +
-                    '`'
-                );
+                .setDescription('Las sugerencias se han habilitado correctamente en `#' + m.name + '`');
               message.channel.send({ embed });
               guild.plugins.logs.messageLogs.enabled = true;
               guild.plugins.logs.messageLogs.channel = m.id;
@@ -498,58 +354,36 @@ module.exports = class Admin extends Command {
             embed
               .setColor(message.colors.green)
               .setTitle(message.defaults.done)
-              .setDescription(
-                'Los registros se han deshabilitado correctamente'
-              );
+              .setDescription('Los registros se han deshabilitado correctamente');
             message.channel.send({ embed });
             guild.plugins.logs.messageLogs.enabled = false;
             guild.save();
             return;
           } else if (args[2].toLowerCase() === options[2]) {
-            embed
-              .setColor(message.colors.green)
-              .setTitle(message.defaults.done);
+            embed.setColor(message.colors.green).setTitle(message.defaults.done);
             if (guild.plugins.logs.messageLogs.logs.messageUpdate.enabled) {
-              embed.setDescription(
-                'Los registros de `' +
-                  options[2].replace(/-/g, ' ') +
-                  '` se han deshabilitado correctamente'
-              );
+              embed.setDescription('Los registros de `' + options[2].replace(/-/g, ' ') + '` se han deshabilitado correctamente');
               message.channel.send({ embed });
               guild.plugins.logs.messageLogs.logs.messageUpdate.enabled = false;
               guild.save();
               return;
             } else {
-              embed.setDescription(
-                'Los registros de `' +
-                  options[2].replace(/-/g, ' ') +
-                  '` se han habilitado correctamente'
-              );
+              embed.setDescription('Los registros de `' + options[2].replace(/-/g, ' ') + '` se han habilitado correctamente');
               message.channel.send({ embed });
               guild.plugins.logs.messageLogs.logs.messageUpdate.enabled = true;
               guild.save();
               return;
             }
           } else if (args[2].toLowerCase() === options[3]) {
-            embed
-              .setColor(message.colors.green)
-              .setTitle(message.defaults.done);
+            embed.setColor(message.colors.green).setTitle(message.defaults.done);
             if (guild.plugins.logs.messageLogs.logs.messageDelete.enabled) {
-              embed.setDescription(
-                'Los registros de `' +
-                  options[3].replace(/-/g, ' ') +
-                  '` se han deshabilitado correctamente'
-              );
+              embed.setDescription('Los registros de `' + options[3].replace(/-/g, ' ') + '` se han deshabilitado correctamente');
               message.channel.send({ embed });
               guild.plugins.logs.messageLogs.logs.messageDelete.enabled = false;
               guild.save();
               return;
             } else {
-              embed.setDescription(
-                'Los registros de `' +
-                  options[3].replace(/-/g, ' ') +
-                  '` se han habilitado correctamente'
-              );
+              embed.setDescription('Los registros de `' + options[3].replace(/-/g, ' ') + '` se han habilitado correctamente');
               message.channel.send({ embed });
               guild.plugins.logs.messageLogs.logs.messageDelete.enabled = true;
               guild.save();
@@ -559,41 +393,19 @@ module.exports = class Admin extends Command {
             embed
               .setColor(message.colors.red)
               .setTitle(message.defaults.error)
-              .setDescription(
-                'Esa no es una opción válida, las opciones válidas son:\n`' +
-                  optionsJoin +
-                  '`'
-              );
+              .setDescription('Esa no es una opción válida, las opciones válidas son:\n`' + optionsJoin + '`');
             message.channel.send({ embed });
             return;
           }
         } else if (args[1].toLowerCase() === categories[1]) {
-          let options = [
-              'habilitar',
-              'deshabilitar',
-              'canal-creado',
-              'canal-actualizado',
-              'canal-eliminado',
-              'rol-creado',
-              'rol-actualizado',
-              'rol-eliminado',
-              'servidor-actualizado',
-              'emojis'
-            ],
+          let options = ['habilitar', 'deshabilitar', 'canal-creado', 'canal-actualizado', 'canal-eliminado', 'rol-creado', 'rol-actualizado', 'rol-eliminado', 'servidor-actualizado', 'emojis'],
             optionsJoin = options.join('`, `');
           if (!args[2]) {
             embed
               .setColor(message.colors.red)
               .setTitle(message.defaults.noargs)
-              .setDescription(
-                'Necesitas elegir una opción\nOpciones:\n`' + optionsJoin + '`'
-              )
-              .addField(
-                'Uso',
-                '`' +
-                  message.dmguildprefix +
-                  'opciones registros servidor <<habilitar | deshabilitar>|<canal-creado | canal-actualizado | canal-eliminado | rol-creado | rol-actualizado | rol-eliminado | servidor-actualizado | emojis>> [#canal]`'
-              );
+              .setDescription('Necesitas elegir una opción\nOpciones:\n`' + optionsJoin + '`')
+              .addField('Uso', '`' + message.dmguildprefix + 'opciones registros servidor <<habilitar | deshabilitar>|<canal-creado | canal-actualizado | canal-eliminado | rol-creado | rol-actualizado | rol-eliminado | servidor-actualizado | emojis>> [#canal]`');
             message.channel.send({ embed });
             return;
           } else if (args[2].toLowerCase() === options[0]) {
@@ -603,9 +415,7 @@ module.exports = class Admin extends Command {
                 embed
                   .setColor(message.colors.green)
                   .setTitle(message.defaults.done)
-                  .setDescription(
-                    'Las sugerencias se han habilitado correctamente'
-                  );
+                  .setDescription('Las sugerencias se han habilitado correctamente');
                 message.channel.send({ embed });
                 guild.plugins.logs.serverLogs.enabled = true;
                 guild.save();
@@ -634,9 +444,7 @@ module.exports = class Admin extends Command {
                 embed
                   .setColor(message.colors.red)
                   .setTitle(message.defaults.error)
-                  .setDescription(
-                    'No hay ningún canal que coincida con tu búsqueda, ¡intenta ser más específico!'
-                  );
+                  .setDescription('No hay ningún canal que coincida con tu búsqueda, ¡intenta ser más específico!');
                 return message.channel.send({ embed });
               } else if (channels.length === 1) {
                 return await o(channels[0]);
@@ -644,9 +452,7 @@ module.exports = class Admin extends Command {
                 embed
                   .setColor(message.colors.red)
                   .setTitle(message.defaults.error)
-                  .setDescription(
-                    'Muchos canales coinciden con tu búsqueda, ¡intenta ser más específico!'
-                  );
+                  .setDescription('Muchos canales coinciden con tu búsqueda, ¡intenta ser más específico!');
                 return message.channel.send({ embed });
               } else {
                 let length = channels.length > 9 ? 10 : channels.length,
@@ -661,42 +467,22 @@ module.exports = class Admin extends Command {
                   .setTitle(message.defaults.grayun + 'Esperando respuesta...')
                   .setDescription(textS.join(',') + '```');
                 let msg = await message.channel.send({ embed });
-                let index = await message.channel.awaitMessages(
-                  m =>
-                    m.author.id == message.author.id &&
-                    m.content > 0 &&
-                    m.content < length + 1,
-                  {
-                    max: 1,
-                    time: 60000,
-                    errors: ['cancel', 'cancelar']
-                  }
-                );
+                let index = await message.channel.awaitMessages(m => m.author.id == message.author.id && m.content > 0 && m.content < length + 1, {
+                  max: 1,
+                  time: 60000,
+                  errors: ['cancel', 'cancelar']
+                });
                 if (!index.first()) {
                   embed
                     .setColor(message.colors.red)
-                    .setTitle(
-                      message.defaults.redun + '¡No se recibió respuesta!'
-                    )
-                    .setDescription(
-                      'Debes seleccionar un número del índice, ¡inténtalo de nuevo!'
-                    );
+                    .setTitle(message.defaults.redun + '¡No se recibió respuesta!')
+                    .setDescription('Debes seleccionar un número del índice, ¡inténtalo de nuevo!');
                   message.channel.send({ embed });
-                  if (
-                    message.channel
-                      .permissionsFor(this.client.user)
-                      .has('MANAGE_MESSAGES')
-                  )
-                    message.delete();
+                  if (message.channel.permissionsFor(this.client.user).has('MANAGE_MESSAGES')) message.delete();
                   msg.delete();
                   return;
                 } else {
-                  if (
-                    message.channel
-                      .permissionsFor(this.client.user)
-                      .has('MANAGE_MESSAGES')
-                  )
-                    message.delete();
+                  if (message.channel.permissionsFor(this.client.user).has('MANAGE_MESSAGES')) message.delete();
                   msg.delete();
                   return await o(channels[index.first().content - 1]);
                 }
@@ -706,11 +492,7 @@ module.exports = class Admin extends Command {
               embed
                 .setColor(message.colors.green)
                 .setTitle(message.defaults.done)
-                .setDescription(
-                  'Las sugerencias se han habilitado correctamente en `#' +
-                    m.name +
-                    '`'
-                );
+                .setDescription('Las sugerencias se han habilitado correctamente en `#' + m.name + '`');
               message.channel.send({ embed });
               guild.plugins.logs.serverLogs.enabled = true;
               guild.plugins.logs.serverLogs.channel = m.id;
@@ -720,208 +502,126 @@ module.exports = class Admin extends Command {
             embed
               .setColor(message.colors.green)
               .setTitle(message.defaults.done)
-              .setDescription(
-                'Los registros se han deshabilitado correctamente'
-              );
+              .setDescription('Los registros se han deshabilitado correctamente');
             message.channel.send({ embed });
             guild.plugins.logs.serverLogs.enabled = false;
             guild.save();
             return;
           } else if (args[2].toLowerCase() === options[2]) {
-            embed
-              .setColor(message.colors.green)
-              .setTitle(message.defaults.done);
+            embed.setColor(message.colors.green).setTitle(message.defaults.done);
             if (guild.plugins.logs.serverLogs.logs.channelCreate.enabled) {
-              embed.setDescription(
-                'Los registros de `' +
-                  options[2].replace(/-/g, ' ') +
-                  '` se han deshabilitado correctamente'
-              );
+              embed.setDescription('Los registros de `' + options[2].replace(/-/g, ' ') + '` se han deshabilitado correctamente');
               message.channel.send({ embed });
               guild.plugins.logs.serverLogs.logs.channelCreate.enabled = false;
               guild.save();
               return;
             } else {
-              embed.setDescription(
-                'Los registros de `' +
-                  options[2].replace(/-/g, ' ') +
-                  '` se han habilitado correctamente'
-              );
+              embed.setDescription('Los registros de `' + options[2].replace(/-/g, ' ') + '` se han habilitado correctamente');
               message.channel.send({ embed });
               guild.plugins.logs.serverLogs.logs.channelCreate.enabled = true;
               guild.save();
               return;
             }
           } else if (args[2].toLowerCase() === options[3]) {
-            embed
-              .setColor(message.colors.green)
-              .setTitle(message.defaults.done);
+            embed.setColor(message.colors.green).setTitle(message.defaults.done);
             if (guild.plugins.logs.serverLogs.logs.channelUpdate.enabled) {
-              embed.setDescription(
-                'Los registros de `' +
-                  options[3].replace(/-/g, ' ') +
-                  '` se han deshabilitado correctamente'
-              );
+              embed.setDescription('Los registros de `' + options[3].replace(/-/g, ' ') + '` se han deshabilitado correctamente');
               message.channel.send({ embed });
               guild.plugins.logs.serverLogs.logs.channelUpdate.enabled = false;
               guild.save();
               return;
             } else {
-              embed.setDescription(
-                'Los registros de `' +
-                  options[3].replace(/-/g, ' ') +
-                  '` se han habilitado correctamente'
-              );
+              embed.setDescription('Los registros de `' + options[3].replace(/-/g, ' ') + '` se han habilitado correctamente');
               message.channel.send({ embed });
               guild.plugins.logs.serverLogs.logs.channelUpdate.enabled = true;
               guild.save();
               return;
             }
           } else if (args[2].toLowerCase() === options[4]) {
-            embed
-              .setColor(message.colors.green)
-              .setTitle(message.defaults.done);
+            embed.setColor(message.colors.green).setTitle(message.defaults.done);
             if (guild.plugins.logs.serverLogs.logs.channelDelete.enabled) {
-              embed.setDescription(
-                'Los registros de `' +
-                  options[4].replace(/-/g, ' ') +
-                  '` se han deshabilitado correctamente'
-              );
+              embed.setDescription('Los registros de `' + options[4].replace(/-/g, ' ') + '` se han deshabilitado correctamente');
               message.channel.send({ embed });
               guild.plugins.logs.serverLogs.logs.channelDelete.enabled = false;
               guild.save();
               return;
             } else {
-              embed.setDescription(
-                'Los registros de `' +
-                  options[4].replace(/-/g, ' ') +
-                  '` se han habilitado correctamente'
-              );
+              embed.setDescription('Los registros de `' + options[4].replace(/-/g, ' ') + '` se han habilitado correctamente');
               message.channel.send({ embed });
               guild.plugins.logs.serverLogs.logs.channelDelete.enabled = true;
               guild.save();
               return;
             }
           } else if (args[2].toLowerCase() === options[5]) {
-            embed
-              .setColor(message.colors.green)
-              .setTitle(message.defaults.done);
+            embed.setColor(message.colors.green).setTitle(message.defaults.done);
             if (guild.plugins.logs.serverLogs.logs.roleCreate.enabled) {
-              embed.setDescription(
-                'Los registros de `' +
-                  options[5].replace(/-/g, ' ') +
-                  '` se han deshabilitado correctamente'
-              );
+              embed.setDescription('Los registros de `' + options[5].replace(/-/g, ' ') + '` se han deshabilitado correctamente');
               message.channel.send({ embed });
               guild.plugins.logs.serverLogs.logs.roleCreate.enabled = false;
               guild.save();
               return;
             } else {
-              embed.setDescription(
-                'Los registros `' +
-                  options[5].replace(/-/g, ' ') +
-                  '` se han habilitado correctamente'
-              );
+              embed.setDescription('Los registros `' + options[5].replace(/-/g, ' ') + '` se han habilitado correctamente');
               message.channel.send({ embed });
               guild.plugins.logs.serverLogs.logs.roleCreate.enabled = true;
               guild.save();
               return;
             }
           } else if (args[2].toLowerCase() === options[6]) {
-            embed
-              .setColor(message.colors.green)
-              .setTitle(message.defaults.done);
+            embed.setColor(message.colors.green).setTitle(message.defaults.done);
             if (guild.plugins.logs.serverLogs.logs.roleUpdate.enabled) {
-              embed.setDescription(
-                'Los registros de `' +
-                  options[6].replace(/-/g, ' ') +
-                  '` se han deshabilitado correctamente'
-              );
+              embed.setDescription('Los registros de `' + options[6].replace(/-/g, ' ') + '` se han deshabilitado correctamente');
               message.channel.send({ embed });
               guild.plugins.logs.serverLogs.logs.roleUpdate.enabled = false;
               guild.save();
               return;
             } else {
-              embed.setDescription(
-                'Los registros de `' +
-                  options[6].replace(/-/g, ' ') +
-                  '` se han habilitado correctamente'
-              );
+              embed.setDescription('Los registros de `' + options[6].replace(/-/g, ' ') + '` se han habilitado correctamente');
               message.channel.send({ embed });
               guild.plugins.logs.serverLogs.logs.roleUpdate.enabled = true;
               guild.save();
               return;
             }
           } else if (args[2].toLowerCase() === options[7]) {
-            embed
-              .setColor(message.colors.green)
-              .setTitle(message.defaults.done);
+            embed.setColor(message.colors.green).setTitle(message.defaults.done);
             if (guild.plugins.logs.serverLogs.logs.roleDelete.enabled) {
-              embed.setDescription(
-                'Los registros `' +
-                  options[7].replace(/-/g, ' ') +
-                  '` se han deshabilitado correctamente'
-              );
+              embed.setDescription('Los registros `' + options[7].replace(/-/g, ' ') + '` se han deshabilitado correctamente');
               message.channel.send({ embed });
               guild.plugins.logs.serverLogs.logs.roleDelete.enabled = false;
               guild.save();
               return;
             } else {
-              embed.setDescription(
-                'Los registros `' +
-                  options[7].replace(/-/g, ' ') +
-                  '` se han habilitado correctamente'
-              );
+              embed.setDescription('Los registros `' + options[7].replace(/-/g, ' ') + '` se han habilitado correctamente');
               message.channel.send({ embed });
               guild.plugins.logs.serverLogs.logs.roleDelete.enabled = true;
               guild.save();
               return;
             }
           } else if (args[2].toLowerCase() === options[8]) {
-            embed
-              .setColor(message.colors.green)
-              .setTitle(message.defaults.done);
+            embed.setColor(message.colors.green).setTitle(message.defaults.done);
             if (guild.plugins.logs.serverLogs.logs.serverUpdate.enabled) {
-              embed.setDescription(
-                'Los registros `' +
-                  options[8].replace(/-/g, ' ') +
-                  '` se han deshabilitado correctamente'
-              );
+              embed.setDescription('Los registros `' + options[8].replace(/-/g, ' ') + '` se han deshabilitado correctamente');
               message.channel.send({ embed });
               guild.plugins.logs.serverLogs.logs.serverUpdate.enabled = false;
               guild.save();
               return;
             } else {
-              embed.setDescription(
-                'Los registros `' +
-                  options[8].replace(/-/g, ' ') +
-                  '` se han habilitado correctamente'
-              );
+              embed.setDescription('Los registros `' + options[8].replace(/-/g, ' ') + '` se han habilitado correctamente');
               message.channel.send({ embed });
               guild.plugins.logs.serverLogs.logs.serverUpdate.enabled = true;
               guild.save();
               return;
             }
           } else if (args[2].toLowerCase() === options[9]) {
-            embed
-              .setColor(message.colors.green)
-              .setTitle(message.defaults.done);
+            embed.setColor(message.colors.green).setTitle(message.defaults.done);
             if (guild.plugins.logs.serverLogs.logs.emojisChanges.enabled) {
-              embed.setDescription(
-                'Los registros `' +
-                  options[9] +
-                  '` se han deshabilitado correctamente'
-              );
+              embed.setDescription('Los registros `' + options[9] + '` se han deshabilitado correctamente');
               message.channel.send({ embed });
               guild.plugins.logs.serverLogs.logs.emojisChanges.enabled = false;
               guild.save();
               return;
             } else {
-              embed.setDescription(
-                'Los registros `' +
-                  options[9] +
-                  '` se han habilitado correctamente'
-              );
+              embed.setDescription('Los registros `' + options[9] + '` se han habilitado correctamente');
               message.channel.send({ embed });
               guild.plugins.logs.serverLogs.logs.emojisChanges.enabled = true;
               guild.save();
@@ -931,40 +631,19 @@ module.exports = class Admin extends Command {
             embed
               .setColor(message.colors.red)
               .setTitle(message.defaults.error)
-              .setDescription(
-                'Esa no es una opción válida, las opciones válidas son:\n`' +
-                  optionsJoin +
-                  '`'
-              );
+              .setDescription('Esa no es una opción válida, las opciones válidas son:\n`' + optionsJoin + '`');
             message.channel.send({ embed });
             return;
           }
         } else if (args[1].toLowerCase() === categories[2]) {
-          let options = [
-              'habilitar',
-              'deshabilitar',
-              'roles',
-              'nombre',
-              'avatar',
-              'veto',
-              'veto-removido',
-              'entrada',
-              'salida'
-            ],
+          let options = ['habilitar', 'deshabilitar', 'roles', 'nombre', 'avatar', 'veto', 'veto-removido', 'entrada', 'salida'],
             optionsJoin = options.join('`, `');
           if (!args[2]) {
             embed
               .setColor(message.colors.red)
               .setTitle(message.defaults.noargs)
-              .setDescription(
-                'Necesitas elegir una opción\nOpciones:\n`' + optionsJoin + '`'
-              )
-              .addField(
-                'Uso',
-                '`' +
-                  message.dmguildprefix +
-                  'opciones registros miembros <<habilitar | deshabilitar>|<roles | nombre | avatar | veto | veto-removido>> [#canal]`'
-              );
+              .setDescription('Necesitas elegir una opción\nOpciones:\n`' + optionsJoin + '`')
+              .addField('Uso', '`' + message.dmguildprefix + 'opciones registros miembros <<habilitar | deshabilitar>|<roles | nombre | avatar | veto | veto-removido>> [#canal]`');
             message.channel.send({ embed });
             return;
           } else if (args[2].toLowerCase() === options[0]) {
@@ -974,9 +653,7 @@ module.exports = class Admin extends Command {
                 embed
                   .setColor(message.colors.green)
                   .setTitle(message.defaults.done)
-                  .setDescription(
-                    'Las sugerencias se han habilitado correctamente'
-                  );
+                  .setDescription('Las sugerencias se han habilitado correctamente');
                 message.channel.send({ embed });
                 guild.plugins.logs.memberLogs.enabled = true;
                 guild.save();
@@ -1005,9 +682,7 @@ module.exports = class Admin extends Command {
                 embed
                   .setColor(message.colors.red)
                   .setTitle(message.defaults.error)
-                  .setDescription(
-                    'No hay ningún canal que coincida con tu búsqueda, ¡intenta ser más específico!'
-                  );
+                  .setDescription('No hay ningún canal que coincida con tu búsqueda, ¡intenta ser más específico!');
                 return message.channel.send({ embed });
               } else if (channels.length === 1) {
                 return await o(channels[0]);
@@ -1015,9 +690,7 @@ module.exports = class Admin extends Command {
                 embed
                   .setColor(message.colors.red)
                   .setTitle(message.defaults.error)
-                  .setDescription(
-                    'Muchos canales coinciden con tu búsqueda, ¡intenta ser más específico!'
-                  );
+                  .setDescription('Muchos canales coinciden con tu búsqueda, ¡intenta ser más específico!');
                 return message.channel.send({ embed });
               } else {
                 let length = channels.length > 9 ? 10 : channels.length,
@@ -1032,42 +705,22 @@ module.exports = class Admin extends Command {
                   .setTitle(message.defaults.grayun + 'Esperando respuesta...')
                   .setDescription(textS.join(',') + '```');
                 let msg = await message.channel.send({ embed });
-                let index = await message.channel.awaitMessages(
-                  m =>
-                    m.author.id == message.author.id &&
-                    m.content > 0 &&
-                    m.content < length + 1,
-                  {
-                    max: 1,
-                    time: 60000,
-                    errors: ['cancel', 'cancelar']
-                  }
-                );
+                let index = await message.channel.awaitMessages(m => m.author.id == message.author.id && m.content > 0 && m.content < length + 1, {
+                  max: 1,
+                  time: 60000,
+                  errors: ['cancel', 'cancelar']
+                });
                 if (!index.first()) {
                   embed
                     .setColor(message.colors.red)
-                    .setTitle(
-                      message.defaults.redun + '¡No se recibió respuesta!'
-                    )
-                    .setDescription(
-                      'Debes seleccionar un número del índice, ¡inténtalo de nuevo!'
-                    );
+                    .setTitle(message.defaults.redun + '¡No se recibió respuesta!')
+                    .setDescription('Debes seleccionar un número del índice, ¡inténtalo de nuevo!');
                   message.channel.send({ embed });
-                  if (
-                    message.channel
-                      .permissionsFor(this.client.user)
-                      .has('MANAGE_MESSAGES')
-                  )
-                    message.delete();
+                  if (message.channel.permissionsFor(this.client.user).has('MANAGE_MESSAGES')) message.delete();
                   msg.delete();
                   return;
                 } else {
-                  if (
-                    message.channel
-                      .permissionsFor(this.client.user)
-                      .has('MANAGE_MESSAGES')
-                  )
-                    message.delete();
+                  if (message.channel.permissionsFor(this.client.user).has('MANAGE_MESSAGES')) message.delete();
                   msg.delete();
                   return await o(channels[index.first().content - 1]);
                 }
@@ -1077,11 +730,7 @@ module.exports = class Admin extends Command {
               embed
                 .setColor(message.colors.green)
                 .setTitle(message.defaults.done)
-                .setDescription(
-                  'Las sugerencias se han habilitado correctamente en `#' +
-                    m.name +
-                    '`'
-                );
+                .setDescription('Las sugerencias se han habilitado correctamente en `#' + m.name + '`');
               message.channel.send({ embed });
               guild.plugins.logs.memberLogs.enabled = true;
               guild.plugins.logs.memberLogs.channel = m.id;
@@ -1091,183 +740,111 @@ module.exports = class Admin extends Command {
             embed
               .setColor(message.colors.green)
               .setTitle(message.defaults.done)
-              .setDescription(
-                'Los registros se han deshabilitado correctamente'
-              );
+              .setDescription('Los registros se han deshabilitado correctamente');
             message.channel.send({ embed });
             guild.plugins.logs.memberLogs.enabled = false;
             guild.save();
             return;
           } else if (args[2].toLowerCase() === options[2]) {
-            embed
-              .setColor(message.colors.green)
-              .setTitle(message.defaults.done);
+            embed.setColor(message.colors.green).setTitle(message.defaults.done);
             if (guild.plugins.logs.memberLogs.logs.roleUpdate.enabled) {
-              embed.setDescription(
-                'Los registros `' +
-                  options[3] +
-                  '` se han deshabilitado correctamente'
-              );
+              embed.setDescription('Los registros `' + options[3] + '` se han deshabilitado correctamente');
               message.channel.send({ embed });
               guild.plugins.logs.memberLogs.logs.roleUpdate.enabled = false;
               guild.save();
               return;
             } else {
-              embed.setDescription(
-                'Los registros `' +
-                  options[3] +
-                  '` se han habilitado correctamente'
-              );
+              embed.setDescription('Los registros `' + options[3] + '` se han habilitado correctamente');
               message.channel.send({ embed });
               guild.plugins.logs.memberLogs.logs.roleUpdate.enabled = true;
               guild.save();
               return;
             }
           } else if (args[2].toLowerCase() === options[3]) {
-            embed
-              .setColor(message.colors.green)
-              .setTitle(message.defaults.done);
+            embed.setColor(message.colors.green).setTitle(message.defaults.done);
             if (guild.plugins.logs.memberLogs.logs.nameChange.enabled) {
-              embed.setDescription(
-                'Los registros `' +
-                  options[3] +
-                  '` se han deshabilitado correctamente'
-              );
+              embed.setDescription('Los registros `' + options[3] + '` se han deshabilitado correctamente');
               message.channel.send({ embed });
               guild.plugins.logs.memberLogs.logs.nameChange.enabled = false;
               guild.save();
               return;
             } else {
-              embed.setDescription(
-                'Los registros `' +
-                  options[3] +
-                  '` se han habilitado correctamente'
-              );
+              embed.setDescription('Los registros `' + options[3] + '` se han habilitado correctamente');
               message.channel.send({ embed });
               guild.plugins.logs.memberLogs.logs.nameChange.enabled = true;
               guild.save();
               return;
             }
           } else if (args[2].toLowerCase() === options[4]) {
-            embed
-              .setColor(message.colors.green)
-              .setTitle(message.defaults.done);
+            embed.setColor(message.colors.green).setTitle(message.defaults.done);
             if (guild.plugins.logs.memberLogs.logs.avatarChange.enabled) {
-              embed.setDescription(
-                'Los registros `' +
-                  options[4] +
-                  '` se han deshabilitado correctamente'
-              );
+              embed.setDescription('Los registros `' + options[4] + '` se han deshabilitado correctamente');
               message.channel.send({ embed });
               guild.plugins.logs.memberLogs.logs.avatarChange.enabled = false;
               guild.save();
               return;
             } else {
-              embed.setDescription(
-                'Los registros `' +
-                  options[4] +
-                  '` se han habilitado correctamente'
-              );
+              embed.setDescription('Los registros `' + options[4] + '` se han habilitado correctamente');
               message.channel.send({ embed });
               guild.plugins.logs.memberLogs.logs.avatarChange.enabled = true;
               guild.save();
               return;
             }
           } else if (args[2].toLowerCase() === options[5]) {
-            embed
-              .setColor(message.colors.green)
-              .setTitle(message.defaults.done);
+            embed.setColor(message.colors.green).setTitle(message.defaults.done);
             if (guild.plugins.logs.memberLogs.logs.memberBan.enabled) {
-              embed.setDescription(
-                'Los registros `' +
-                  options[5] +
-                  '` se han deshabilitado correctamente'
-              );
+              embed.setDescription('Los registros `' + options[5] + '` se han deshabilitado correctamente');
               message.channel.send({ embed });
               guild.plugins.logs.memberLogs.logs.memberBan.enabled = false;
               guild.save();
               return;
             } else {
-              embed.setDescription(
-                'Los registros `' +
-                  options[5] +
-                  '` se han habilitado correctamente'
-              );
+              embed.setDescription('Los registros `' + options[5] + '` se han habilitado correctamente');
               message.channel.send({ embed });
               guild.plugins.logs.memberLogs.logs.memberBan.enabled = true;
               guild.save();
               return;
             }
           } else if (args[2].toLowerCase() === options[6]) {
-            embed
-              .setColor(message.colors.green)
-              .setTitle(message.defaults.done);
+            embed.setColor(message.colors.green).setTitle(message.defaults.done);
             if (guild.plugins.logs.memberLogs.logs.memberUnban.enabled) {
-              embed.setDescription(
-                'Los registros `' +
-                  options[6].replace(/-/g, ' ') +
-                  '` se han deshabilitado correctamente'
-              );
+              embed.setDescription('Los registros `' + options[6].replace(/-/g, ' ') + '` se han deshabilitado correctamente');
               message.channel.send({ embed });
               guild.plugins.logs.memberLogs.logs.memberUnban.enabled = false;
               guild.save();
               return;
             } else {
-              embed.setDescription(
-                'Los registros `' +
-                  options[6].replace(/-/g, ' ') +
-                  '` se han habiltado correctamente'
-              );
+              embed.setDescription('Los registros `' + options[6].replace(/-/g, ' ') + '` se han habiltado correctamente');
               message.channel.send({ embed });
               guild.plugins.logs.memberLogs.logs.memberUnban.enabled = true;
               guild.save();
               return;
             }
           } else if (args[2].toLowerCase() === options[7]) {
-            embed
-              .setColor(message.colors.green)
-              .setTitle(message.defaults.done);
+            embed.setColor(message.colors.green).setTitle(message.defaults.done);
             if (guild.plugins.logs.memberLogs.logs.memberJoin.enabled) {
-              embed.setDescription(
-                'Los registros `' +
-                  options[7] +
-                  '` se han deshabilitado correctamente'
-              );
+              embed.setDescription('Los registros `' + options[7] + '` se han deshabilitado correctamente');
               message.channel.send({ embed });
               guild.plugins.logs.memberLogs.logs.memberJoin.enabled = false;
               guild.save();
               return;
             } else {
-              embed.setDescription(
-                'Los registros `' +
-                  options[7] +
-                  '` se han habiltado correctamente'
-              );
+              embed.setDescription('Los registros `' + options[7] + '` se han habiltado correctamente');
               message.channel.send({ embed });
               guild.plugins.logs.memberLogs.logs.memberJoin.enabled = true;
               guild.save();
               return;
             }
           } else if (args[2].toLowerCase() === options[8]) {
-            embed
-              .setColor(message.colors.green)
-              .setTitle(message.defaults.done);
+            embed.setColor(message.colors.green).setTitle(message.defaults.done);
             if (guild.plugins.logs.memberLogs.logs.memberLeave.enabled) {
-              embed.setDescription(
-                'Los registros `' +
-                  options[7] +
-                  '` se han deshabilitado correctamente'
-              );
+              embed.setDescription('Los registros `' + options[7] + '` se han deshabilitado correctamente');
               message.channel.send({ embed });
               guild.plugins.logs.memberLogs.logs.memberLeave.enabled = false;
               guild.save();
               return;
             } else {
-              embed.setDescription(
-                'Los registros `' +
-                  options[7] +
-                  '` se han habiltado correctamente'
-              );
+              embed.setDescription('Los registros `' + options[7] + '` se han habiltado correctamente');
               message.channel.send({ embed });
               guild.plugins.logs.memberLogs.logs.memberLeave.enabled = true;
               guild.save();
@@ -1277,11 +854,7 @@ module.exports = class Admin extends Command {
             embed
               .setColor(message.colors.red)
               .setTitle(message.defaults.error)
-              .setDescription(
-                'Esa no es una opción válida, las opciones válidas son:\n`' +
-                  optionsJoin +
-                  '`'
-              );
+              .setDescription('Esa no es una opción válida, las opciones válidas son:\n`' + optionsJoin + '`');
             message.channel.send({ embed });
             return;
           }
@@ -1289,11 +862,7 @@ module.exports = class Admin extends Command {
           embed
             .setColor(message.colors.red)
             .setTitle(message.defaults.error)
-            .setDescription(
-              'Esa no es una opción válida, las opciones válidas son:\n`' +
-                categoriesJoin +
-                '`'
-            );
+            .setDescription('Esa no es una opción válida, las opciones válidas son:\n`' + categoriesJoin + '`');
           message.channel.send({ embed });
           return;
         }
@@ -1303,23 +872,14 @@ module.exports = class Admin extends Command {
             .setColor(message.colors.red)
             .setTitle(message.defaults.noargs)
             .setDescription('Necesitas especificar el nuevo prefijo')
-            .addField(
-              'Uso',
-              '`' + message.dmguildprefix + 'opciones prefijo <nuevo prefijo>`'
-            );
+            .addField('Uso', '`' + message.dmguildprefix + 'opciones prefijo <nuevo prefijo>`');
           message.channel.send({ embed });
           return;
         } else {
           embed
             .setColor(message.colors.green)
             .setTitle(message.defaults.done)
-            .setDescription(
-              'El prefijo de este servidor se ha cambiado a `' +
-                args[1] +
-                '`\nPuedes ver la ayuda utilizando `' +
-                args[1] +
-                'ayuda`'
-            );
+            .setDescription('El prefijo de este servidor se ha cambiado a `' + args[1] + '`\nPuedes ver la ayuda utilizando `' + args[1] + 'ayuda`');
           message.channel.send({ embed });
           guild.prefix = args[1];
           guild.save();
@@ -1334,9 +894,7 @@ module.exports = class Admin extends Command {
           embed
             .setColor(message.colors.red)
             .setTitle(message.defaults.noargs)
-            .setDescription(
-              'Necesitas elegir una opción\nOpciones:\n`' + optionsJoin + '`'
-            );
+            .setDescription('Necesitas elegir una opción\nOpciones:\n`' + optionsJoin + '`');
           message.channel.send({ embed });
           return;
         } else if (args[1].toLowerCase() === options[0]) {
@@ -1363,9 +921,7 @@ module.exports = class Admin extends Command {
                 embed
                   .setColor(message.colors.red)
                   .setTitle(message.defaults.error)
-                  .setDescription(
-                    'No hay ningún rol que coincida con tu búsqueda, ¡intenta ser más específico!'
-                  );
+                  .setDescription('No hay ningún rol que coincida con tu búsqueda, ¡intenta ser más específico!');
                 return message.channel.send({ embed });
               } else if (roles.length === 1) {
                 return await o(roles[0]);
@@ -1373,9 +929,7 @@ module.exports = class Admin extends Command {
                 embed
                   .setColor(message.colors.red)
                   .setTitle(message.defaults.error)
-                  .setDescription(
-                    'Muchos roles coinciden con tu búsqueda, ¡intenta ser más específico!'
-                  );
+                  .setDescription('Muchos roles coinciden con tu búsqueda, ¡intenta ser más específico!');
                 return message.channel.send({ embed });
               } else {
                 let length = roles.length > 9 ? 10 : roles.length,
@@ -1390,42 +944,22 @@ module.exports = class Admin extends Command {
                   .setTitle(message.defaults.grayun + 'Esperando respuesta...')
                   .setDescription(textS.join(',') + '```');
                 let msg = await message.channel.send({ embed });
-                let index = await message.channel.awaitMessages(
-                  m =>
-                    m.author.id == message.author.id &&
-                    m.content > 0 &&
-                    m.content < length + 1,
-                  {
-                    max: 1,
-                    time: 60000,
-                    errors: ['cancel', 'cancelar']
-                  }
-                );
+                let index = await message.channel.awaitMessages(m => m.author.id == message.author.id && m.content > 0 && m.content < length + 1, {
+                  max: 1,
+                  time: 60000,
+                  errors: ['cancel', 'cancelar']
+                });
                 if (!index.first()) {
                   embed
                     .setColor(message.colors.red)
-                    .setTitle(
-                      message.defaults.redun + '¡No se recibió respuesta!'
-                    )
-                    .setDescription(
-                      'Debes seleccionar un número del índice, ¡inténtalo de nuevo!'
-                    );
+                    .setTitle(message.defaults.redun + '¡No se recibió respuesta!')
+                    .setDescription('Debes seleccionar un número del índice, ¡inténtalo de nuevo!');
                   message.channel.send({ embed });
-                  if (
-                    message.channel
-                      .permissionsFor(this.client.user)
-                      .has('MANAGE_MESSAGES')
-                  )
-                    message.delete();
+                  if (message.channel.permissionsFor(this.client.user).has('MANAGE_MESSAGES')) message.delete();
                   msg.delete();
                   return;
                 } else {
-                  if (
-                    message.channel
-                      .permissionsFor(this.client.user)
-                      .has('MANAGE_MESSAGES')
-                  )
-                    message.delete();
+                  if (message.channel.permissionsFor(this.client.user).has('MANAGE_MESSAGES')) message.delete();
                   msg.delete();
                   return await o(roles[index.first().content - 1]);
                 }
@@ -1449,11 +983,7 @@ module.exports = class Admin extends Command {
               embed
                 .setColor(message.colors.green)
                 .setTitle(message.defaults.done)
-                .setDescription(
-                  'Ahora el rol `' +
-                    m.name +
-                    '` se le entregará a los usuarios que ingresen al servidor'
-                );
+                .setDescription('Ahora el rol `' + m.name + '` se le entregará a los usuarios que ingresen al servidor');
               message.channel.send({ embed });
               dataroles.push(m.id);
               data.guild.save();
@@ -1483,9 +1013,7 @@ module.exports = class Admin extends Command {
               embed
                 .setColor(message.colors.red)
                 .setTitle(message.defaults.error)
-                .setDescription(
-                  'No hay ningún rol que coincida con tu búsqueda, ¡intenta ser más específico!'
-                );
+                .setDescription('No hay ningún rol que coincida con tu búsqueda, ¡intenta ser más específico!');
               return message.channel.send({ embed });
             } else if (roles.length === 1) {
               return await o(roles[0]);
@@ -1493,9 +1021,7 @@ module.exports = class Admin extends Command {
               embed
                 .setColor(message.colors.red)
                 .setTitle(message.defaults.error)
-                .setDescription(
-                  'Muchos roles coinciden con tu búsqueda, ¡intenta ser más específico!'
-                );
+                .setDescription('Muchos roles coinciden con tu búsqueda, ¡intenta ser más específico!');
               return message.channel.send({ embed });
             } else {
               let length = roles.length > 9 ? 10 : roles.length,
@@ -1510,42 +1036,22 @@ module.exports = class Admin extends Command {
                 .setTitle(message.defaults.grayun + 'Esperando respuesta...')
                 .setDescription(textS.join(',') + '```');
               let msg = await message.channel.send({ embed });
-              let index = await message.channel.awaitMessages(
-                m =>
-                  m.author.id == message.author.id &&
-                  m.content > 0 &&
-                  m.content < length + 1,
-                {
-                  max: 1,
-                  time: 60000,
-                  errors: ['cancel', 'cancelar']
-                }
-              );
+              let index = await message.channel.awaitMessages(m => m.author.id == message.author.id && m.content > 0 && m.content < length + 1, {
+                max: 1,
+                time: 60000,
+                errors: ['cancel', 'cancelar']
+              });
               if (!index.first()) {
                 embed
                   .setColor(message.colors.red)
-                  .setTitle(
-                    message.defaults.redun + '¡No se recibió respuesta!'
-                  )
-                  .setDescription(
-                    'Debes seleccionar un número del índice, ¡inténtalo de nuevo!'
-                  );
+                  .setTitle(message.defaults.redun + '¡No se recibió respuesta!')
+                  .setDescription('Debes seleccionar un número del índice, ¡inténtalo de nuevo!');
                 message.channel.send({ embed });
-                if (
-                  message.channel
-                    .permissionsFor(this.client.user)
-                    .has('MANAGE_MESSAGES')
-                )
-                  message.delete();
+                if (message.channel.permissionsFor(this.client.user).has('MANAGE_MESSAGES')) message.delete();
                 msg.delete();
                 return;
               } else {
-                if (
-                  message.channel
-                    .permissionsFor(this.client.user)
-                    .has('MANAGE_MESSAGES')
-                )
-                  message.delete();
+                if (message.channel.permissionsFor(this.client.user).has('MANAGE_MESSAGES')) message.delete();
                 msg.delete();
                 return await o(roles[index.first().content - 1]);
               }
@@ -1556,19 +1062,13 @@ module.exports = class Admin extends Command {
               embed
                 .setColor(message.colors.red)
                 .setTitle(message.defaults.error)
-                .setDescription(
-                  'Ese rol no está en los auto-roles, verifica de nuevo usando `' +
-                    data.guild.prefix +
-                    'opciones auto-roles lista`'
-                );
+                .setDescription('Ese rol no está en los auto-roles, verifica de nuevo usando `' + data.guild.prefix + 'opciones auto-roles lista`');
               return message.channel.send({ embed });
             } else {
               embed
                 .setColor(message.colors.green)
                 .setTitle(message.defaults.done)
-                .setDescription(
-                  'El rol `' + m.name + '` ha sido removido de los auto-roles'
-                );
+                .setDescription('El rol `' + m.name + '` ha sido removido de los auto-roles');
               message.channel.send({ embed });
               dataroles.splice(dataroles.indexOf(m.id), 1);
               data.guild.save();
@@ -1576,9 +1076,7 @@ module.exports = class Admin extends Command {
             }
           }
         } else if (args[1].toLowerCase() === options[2]) {
-          embed
-            .setColor(message.colors.ginko)
-            .setTitle(message.defaults.ginkoun + 'Lista de auto-roles');
+          embed.setColor(message.colors.ginko).setTitle(message.defaults.ginkoun + 'Lista de auto-roles');
           let x = '';
           for (let i = 0; i < dataroles.length; i++) {
             x += `${i + 1} - ${message.guild.roles.get(dataroles[i]).name}\n`;
@@ -1589,11 +1087,7 @@ module.exports = class Admin extends Command {
           embed
             .setColor(message.colors.red)
             .setTitle(message.defaults.error)
-            .setDescription(
-              'Esa no es una opción válida, las opciones válidas son:\n`' +
-                optionsJoin +
-                '`'
-            );
+            .setDescription('Esa no es una opción válida, las opciones válidas son:\n`' + optionsJoin + '`');
           message.channel.send({ embed });
           return;
         }
@@ -1601,11 +1095,7 @@ module.exports = class Admin extends Command {
         embed
           .setColor(message.colors.red)
           .setTitle(message.defaults.error)
-          .setDescription(
-            'Esa no es una opción válida, las opciones válidas son:\n`' +
-              optionsJoin +
-              '`'
-          );
+          .setDescription('Esa no es una opción válida, las opciones válidas son:\n`' + optionsJoin + '`');
         message.channel.send({ embed });
         return;
       }

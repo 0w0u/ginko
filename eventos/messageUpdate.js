@@ -13,29 +13,19 @@ module.exports = class MessageUpdateEvent {
       if ((oldMessage || newMessage).channel.type === 'dm') return;
       let embed = new MessageEmbed();
       embed
-        .setAuthor(
-          oldMessage.author.tag,
-          oldMessage.author.displayAvatarURL({ size: 2048 })
-        )
-        .setFooter(
-          oldMessage.guild.name,
-          oldMessage.guild.iconURL({ size: 2048 })
-        )
+        .setAuthor(oldMessage.author.tag, oldMessage.author.displayAvatarURL({ size: 2048 }))
+        .setFooter(oldMessage.guild.name, oldMessage.guild.iconURL({ size: 2048 }))
         .setTimestamp();
       let guild = await this.client.findOrCreateGuild({
         id: oldMessage.guild.id
       });
       if (guild.plugins.logs.messageLogs.enabled === true) {
-        if (
-          guild.plugins.logs.messageLogs.logs.messageUpdate.enabled === false
-        ) {
+        if (guild.plugins.logs.messageLogs.logs.messageUpdate.enabled === false) {
           return;
         } else if (guild.plugins.logs.messageLogs.channel === undefined) {
           return;
         } else {
-          let channel = oldMessage.guild.channels.get(
-            guild.plugins.logs.messageLogs.channel
-          );
+          let channel = oldMessage.guild.channels.get(guild.plugins.logs.messageLogs.channel);
           if (!channel) {
             return;
           } else {
@@ -43,16 +33,8 @@ module.exports = class MessageUpdateEvent {
               .setColor(this.client.colors.yellow)
               .setTitle(this.client.defaults.yellowun + 'Mensaje editado')
               .setDescription('Canal: `' + oldMessage.channel.name + '`')
-              .addField(
-                '> Antes: ',
-                oldMessage.content ? oldMessage.content : '*Mensaje vacío*',
-                oldMessage.content.length > 16 ? false : true
-              )
-              .addField(
-                '> Después: ',
-                newMessage.content ? newMessage.content : '*Mensaje vacío*',
-                newMessage.content.length > 16 ? false : true
-              );
+              .addField('> Antes: ', oldMessage.content ? oldMessage.content : '*Mensaje vacío*', oldMessage.content.length > 16 ? false : true)
+              .addField('> Después: ', newMessage.content ? newMessage.content : '*Mensaje vacío*', newMessage.content.length > 16 ? false : true);
             channel.send({ embed });
           }
         }

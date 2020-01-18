@@ -8,10 +8,7 @@ module.exports = class GuildCreateEvent {
     try {
       let embed = new MessageEmbed();
       embed
-        .setAuthor(
-          this.client.user.tag,
-          this.client.user.displayAvatarURL({ size: 2048 })
-        )
+        .setAuthor(this.client.user.tag, this.client.user.displayAvatarURL({ size: 2048 }))
         .setColor(this.client.colors.green)
         .setTitle(this.client.defaults.greenun + '¡Me agregaron a un servidor!')
         .setDescription(guild.name + ' (`' + guild.id + '`)')

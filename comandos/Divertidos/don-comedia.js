@@ -31,24 +31,12 @@ module.exports = class Fun extends Command {
           member = message.mentions.members.first();
           if (member) return await o(member);
           else {
-            members = message.guild.members
-              .array()
-              .filter(m =>
-                `${
-                  m.nickname
-                    ? `${m.nickname + m.user.tag}`
-                    : `${m.displayName + m.user.tag}`
-                }`
-                  .toLowerCase()
-                  .includes(args.join(' ').toLowerCase())
-              );
+            members = message.guild.members.array().filter(m => `${m.nickname ? `${m.nickname + m.user.tag}` : `${m.displayName + m.user.tag}`}`.toLowerCase().includes(args.join(' ').toLowerCase()));
             if (members.length < 1) {
               embed
                 .setColor(message.colors.red)
                 .setTitle(message.defaults.error)
-                .setDescription(
-                  'No hay ningún miembro que coincida con tu búsqueda, ¡intenta ser más específico!'
-                );
+                .setDescription('No hay ningún miembro que coincida con tu búsqueda, ¡intenta ser más específico!');
               return message.channel.send({ embed });
             } else if (members.length === 1) {
               return await o(members[0]);
@@ -56,17 +44,13 @@ module.exports = class Fun extends Command {
               embed
                 .setColor(message.colors.red)
                 .setTitle(message.defaults.error)
-                .setDescription(
-                  'Muchos usuarios coinciden con tu búsqueda, ¡intenta ser más específico!'
-                );
+                .setDescription('Muchos usuarios coinciden con tu búsqueda, ¡intenta ser más específico!');
               return message.channel.send({ embed });
             } else {
               let length = members.length > 9 ? 10 : members.length,
                 text = 'Selecciona un número entre 1 y ' + length + '```js\n';
               for (let i = 0; i < length; i++) {
-                text += `${i + 1} - ${members[i].displayName}: (${
-                  members[i].user.tag
-                }),\n`;
+                text += `${i + 1} - ${members[i].displayName}: (${members[i].user.tag}),\n`;
               }
               let textS = text.split(',');
               textS.pop();
@@ -75,42 +59,22 @@ module.exports = class Fun extends Command {
                 .setTitle(message.defaults.grayun + 'Esperando respuesta...')
                 .setDescription(textS.join(',') + '```');
               let msg = await message.channel.send({ embed });
-              let index = await message.channel.awaitMessages(
-                m =>
-                  m.author.id == message.author.id &&
-                  m.content > 0 &&
-                  m.content < length + 1,
-                {
-                  max: 1,
-                  time: 60000,
-                  errors: ['cancel', 'cancelar']
-                }
-              );
+              let index = await message.channel.awaitMessages(m => m.author.id == message.author.id && m.content > 0 && m.content < length + 1, {
+                max: 1,
+                time: 60000,
+                errors: ['cancel', 'cancelar']
+              });
               if (!index.first()) {
                 embed
                   .setColor(message.colors.red)
-                  .setTitle(
-                    message.defaults.redun + '¡No se recibió respuesta!'
-                  )
-                  .setDescription(
-                    'Debes seleccionar un número del índice, ¡inténtalo de nuevo!'
-                  );
+                  .setTitle(message.defaults.redun + '¡No se recibió respuesta!')
+                  .setDescription('Debes seleccionar un número del índice, ¡inténtalo de nuevo!');
                 message.channel.send({ embed });
-                if (
-                  message.channel
-                    .permissionsFor(this.client.user)
-                    .has('MANAGE_MESSAGES')
-                )
-                  message.delete();
+                if (message.channel.permissionsFor(this.client.user).has('MANAGE_MESSAGES')) message.delete();
                 msg.delete();
                 return;
               } else {
-                if (
-                  message.channel
-                    .permissionsFor(this.client.user)
-                    .has('MANAGE_MESSAGES')
-                )
-                  message.delete();
+                if (message.channel.permissionsFor(this.client.user).has('MANAGE_MESSAGES')) message.delete();
                 msg.delete();
                 return await o(members[index.first().content - 1]);
               }
@@ -121,14 +85,7 @@ module.exports = class Fun extends Command {
           embed
             .setColor(message.colors.ginko)
             .setTitle(message.defaults.ginkoun + 'Don Comedia')
-            .setDescription(
-              (m !== message.member
-                ? `El nivel de "Don Comedia" de **${m.displayName}**`
-                : `Tu nivel de "Don Comedia"`) +
-                ' es de ' +
-                ran +
-                '%'
-            );
+            .setDescription((m !== message.member ? `El nivel de "Don Comedia" de **${m.displayName}**` : `Tu nivel de "Don Comedia"`) + ' es de ' + ran + '%');
           message.channel.send({ embed });
         }
       } else if (message.channel.type === 'dm') {
@@ -144,14 +101,7 @@ module.exports = class Fun extends Command {
           embed
             .setColor(message.colors.ginko)
             .setTitle(message.defaults.ginkoun + 'Don Comedia')
-            .setDescription(
-              (m !== message.author
-                ? `El nivel de "Don Comedia" de **${m.username}**`
-                : `Tu nivel de "Don Comedia"`) +
-                ' es de ' +
-                ran +
-                '%'
-            );
+            .setDescription((m !== message.author ? `El nivel de "Don Comedia" de **${m.username}**` : `Tu nivel de "Don Comedia"`) + ' es de ' + ran + '%');
           message.channel.send({ embed });
         }
       }

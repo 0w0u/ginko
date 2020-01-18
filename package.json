@@ -28,7 +28,6 @@
     "lodash": "^4.17.15",
     "math-expression-evaluator": "^1.2.17",
     "moment": "^2.24.0",
-    "mongodb": "^3.3.2",
     "mongoose": "5.7.1",
     "nekos.life": "^2.0.4",
     "passport": "^0.4.1",

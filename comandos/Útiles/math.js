@@ -7,12 +7,7 @@ module.exports = class Utils extends Command {
       name: 'calcular',
       description: 'Calcula una ecuación',
       usage: prefix => '`' + prefix + 'calcular <ecuación>`',
-      examples: prefix =>
-        '`' +
-        prefix +
-        'calcular 10 + 56 * 50`, `' +
-        prefix +
-        'calcular 36 / 15 * 2`',
+      examples: prefix => '`' + prefix + 'calcular 10 + 56 * 50`, `' + prefix + 'calcular 36 / 15 * 2`',
       enabled: true,
       ownerOnly: false,
       guildOnly: false,
@@ -37,13 +32,7 @@ module.exports = class Utils extends Command {
           embed
             .setColor(message.colors.ginko)
             .setTitle(message.defaults.ginkoun + 'Calculadora')
-            .setDescription(
-              'La respuesta a tu ecuación\n```\n' +
-                args.join(' ') +
-                '```es:```\n' +
-                math.eval(args.join(' ')) +
-                '```'
-            );
+            .setDescription('La respuesta a tu ecuación\n```\n' + args.join(' ') + '```es:```\n' + math.eval(args.join(' ')) + '```');
           return message.channel.send({ embed });
         } catch {
           embed

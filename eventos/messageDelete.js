@@ -10,24 +10,17 @@ module.exports = class MessageDeleteEvent {
       if (message.channel.type === 'dm') return;
       let embed = new MessageEmbed();
       embed
-        .setAuthor(
-          message.author.tag,
-          message.author.displayAvatarURL({ size: 2048 })
-        )
+        .setAuthor(message.author.tag, message.author.displayAvatarURL({ size: 2048 }))
         .setFooter(message.guild.name, message.guild.iconURL({ size: 2048 }))
         .setTimestamp();
       let guild = await this.client.findOrCreateGuild({ id: message.guild.id });
       if (guild.plugins.logs.messageLogs.enabled === true) {
-        if (
-          guild.plugins.logs.messageLogs.logs.messageDelete.enabled === false
-        ) {
+        if (guild.plugins.logs.messageLogs.logs.messageDelete.enabled === false) {
           return;
         } else if (guild.plugins.logs.messageLogs.channel === undefined) {
           return;
         } else {
-          let channel = message.guild.channels.get(
-            guild.plugins.logs.messageLogs.channel
-          );
+          let channel = message.guild.channels.get(guild.plugins.logs.messageLogs.channel);
           if (!channel) {
             return;
           } else {
@@ -39,12 +32,7 @@ module.exports = class MessageDeleteEvent {
               embed.addField('Contenido', message.content);
             }
             if (message.attachments.size > 0) {
-              let urls = message.attachments
-                .map(
-                  r =>
-                    `https://media.discordapp.net/attachments/${message.channel.id}/${r.id}/${r.name}`
-                )
-                .join('\n');
+              let urls = message.attachments.map(r => `https://media.discordapp.net/attachments/${message.channel.id}/${r.id}/${r.name}`).join('\n');
               embed.addField('Archivos adjuntos', urls);
             }
             channel.send({ embed });
