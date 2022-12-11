@@ -23,7 +23,7 @@
     "discord.js": "github:discordjs/discord.js#master",
     "dotenv": "^8.2.0",
     "ejs": "^3.0.1",
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "express-session": "^1.17.0",
     "lodash": "^4.17.15",
     "math-expression-evaluator": "^1.2.17",
